@@ -67,13 +67,19 @@ class Status
         }
     }
 
-    public static function labels()
+    public static function labels($id = null)
     {
-        return [
+        $data = [
             self::STATUS_ACTIVE => Yii::t('app', 'STATUS_ACTIVE'),
             self::STATUS_INACTIVE => Yii::t('app', 'STATUS_INACTIVE'),
             self::STATUS_DELETED => Yii::t('app', 'STATUS_DELETED'),
         ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
     }
 
     public function getLabel($id)
