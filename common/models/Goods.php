@@ -55,7 +55,7 @@ class Goods extends \yii\db\ActiveRecord
     {
         return [
             TimestampBehavior::className(),
-            // BlameableBehavior::className(),
+            BlameableBehavior::className(),
         ];
     }
 
@@ -127,6 +127,22 @@ class Goods extends \yii\db\ActiveRecord
     public function getOrderGoods()
     {
         return $this->hasMany(OrderGoods::className(), ['goods_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
     /**

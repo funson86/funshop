@@ -67,11 +67,23 @@ return [
 
     'Directly Input Time' => '可直接输入日期，格式：2015-01-01',
 
+    'Regions' => '地区',
+    'Region' => '地区',
+    'Parent ID' => '父节点',
+    'Language' => '语言',
+    'Grade' => '级别',
+    'GRADE_COUNTRY' => '国',
+    'GRADE_PROVINCE' => '省',
+    'GRADE_CITY' => '市',
+    'GRADE_DISTRICT' => '区',
+
     'Blog' => '博客',
     'Catalog' => '分类',
     'Post' => '文章',
     'Comment' => '评论',
     'Tag' => '标签',
+
+    'Category ID' => '分类',
 
 
 ];

@@ -27,7 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'category_id',
+            [
+                'attribute' => 'category_id',
+                'value' => $model->category ? $model->category->name : '-',
+            ],
             'name',
             'sku',
             'stock',
@@ -38,15 +41,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'content:ntext',
             'thumb',
             'image',
-            'origin',
             'keywords',
             'description:ntext',
-            'is_gift',
-            'status',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            [
+                'attribute' => 'is_gift',
+                'value' => \common\models\YesNo::labels($model->is_gift),
+            ],
+            [
+                'attribute' => 'status',
+                'value' => \common\models\Status::labels($model->status),
+            ],
+            'created_at:datetime',
+            'updated_at:datetime',
+            [
+                'attribute' => 'created_by',
+                'value' => $model->createdBy->username,
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => $model->updatedBy->username,
+            ],
         ],
     ]) ?>
 

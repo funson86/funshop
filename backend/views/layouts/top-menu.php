@@ -11,25 +11,33 @@ NavBar::begin([
 ]);
 $menuItemsMain = [
     [
-        'label' => Yii::t('app', 'Blog'),
+        'label' => Yii::t('app', 'Order'),
         'url' => ['#'],
         'active' => false,
         'items' => [
             [
-                'label' => Yii::t('app', 'Catalog'),
-                'url' => ['/blog/blog-catalog'],
+                'label' => Yii::t('app', 'Order'),
+                'url' => ['/order'],
             ],
             [
-                'label' => Yii::t('app', 'Post'),
-                'url' => ['/blog/blog-post'],
+                'label' => Yii::t('app', 'Goods'),
+                'url' => ['/goods'],
+            ],
+        ],
+        //'visible' => Yii::$app->user->can('readPost'),
+    ],
+    [
+        'label' => Yii::t('app', 'Goods'),
+        'url' => ['#'],
+        'active' => false,
+        'items' => [
+            [
+                'label' => Yii::t('app', 'Category'),
+                'url' => ['/category'],
             ],
             [
-                'label' => Yii::t('app', 'Comment'),
-                'url' => ['/blog/blog-comment'],
-            ],
-            [
-                'label' => Yii::t('app', 'Tag'),
-                'url' => ['/blog/blog-tag'],
+                'label' => Yii::t('app', 'Goods'),
+                'url' => ['/goods'],
             ],
         ],
         //'visible' => Yii::$app->user->can('readPost'),
@@ -47,6 +55,10 @@ $menuItemsMain = [
             [
                 'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Auth Role'),
                 'url' => ['/auth'],
+            ],
+            [
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Region'),
+                'url' => ['/region'],
             ],
         ],
     ],

@@ -2,12 +2,9 @@
 
 namespace backend\controllers;
 
-use backend\widgets\image\RemoveAction;
-use backend\widgets\image\UploadAction;
-use common\models\GoodsImage;
 use Yii;
-use common\models\Goods;
-use common\models\GoodsSearch;
+use common\models\Region;
+use common\models\RegionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -15,9 +12,9 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
- * GoodsController implements the CRUD actions for Goods model.
+ * RegionController implements the CRUD actions for Region model.
  */
-class GoodsController extends Controller
+class RegionController extends Controller
 {
     public function behaviors()
     {
@@ -40,30 +37,15 @@ class GoodsController extends Controller
         ];
     }
 
-    public function actions()
-    {
-        return [
-            'upload' => [
-                'class' => UploadAction::className(),
-                'upload' => 'upload',
-            ],
-            'remove' => [
-                'class' => RemoveAction::className(),
-                'uploadDir' => '@frontend/web/upload',
-            ],
-        ];
-    }
-
-
     /**
-     * Lists all Goods models.
+     * Lists all Region models.
      * @return mixed
      */
     public function actionIndex()
     {
         //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $searchModel = new GoodsSearch();
+        $searchModel = new RegionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -73,7 +55,7 @@ class GoodsController extends Controller
     }
 
     /**
-     * Displays a single Goods model.
+     * Displays a single Region model.
      * @param integer $id
      * @return mixed
      */
@@ -87,7 +69,7 @@ class GoodsController extends Controller
     }
 
     /**
-     * Creates a new Goods model.
+     * Creates a new Region model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -95,11 +77,11 @@ class GoodsController extends Controller
     {
         //if(!Yii::$app->user->can('createYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $model = new Goods();
+        $model = new Region();
         $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['update', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -108,7 +90,7 @@ class GoodsController extends Controller
     }
 
     /**
-     * Updates an existing Goods model.
+     * Updates an existing Region model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -120,11 +102,6 @@ class GoodsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $goodsImage = GoodsImage::find()->where(['goods_id' => $id])->orderBy(['id' => SORT_DESC])->one();
-            $model->image = $goodsImage->src;
-            $model->thumb = $goodsImage->thumb_src;
-            $model->save();
-
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -134,7 +111,7 @@ class GoodsController extends Controller
     }
 
     /**
-     * Deletes an existing Goods model.
+     * Deletes an existing Region model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -152,15 +129,15 @@ class GoodsController extends Controller
     }
 
     /**
-     * Finds the Goods model based on its primary key value.
+     * Finds the Region model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Goods the loaded model
+     * @return Region the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Goods::findOne($id)) !== null) {
+        if (($model = Region::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use common\models\Category;
 //use backend\widgets\image\ImageDropzone;
 
 /* @var $this yii\web\View */
@@ -13,7 +15,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'category_id')->textInput() ?>
+    <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::get(0, Category::find()->asArray()->all()), 'id', 'label')) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 128]) ?>
 
@@ -31,15 +33,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'origin')->textInput(['maxlength' => 255]) ?>
-
     <?= $form->field($model, 'keywords')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'is_gift')->textInput() ?>
+    <?= $form->field($model, 'is_gift')->dropDownList(\common\models\YesNo::labels()) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList(\common\models\Status::labels()) ?>
 
     <?php if (!$model->isNewRecord) { ?>
         <div class="form-group">

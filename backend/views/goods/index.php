@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
+use common\models\Category;
+use common\models\Status;
+use common\models\YesNo;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\GoodsSearch */
@@ -26,13 +29,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'category_id',
+            [
+                'attribute'=>'category_id',
+                'value'=>function ($model) {
+                    return $model->category->name;
+                },
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'category_id',
+                    ArrayHelper::map(Category::get(0, Category::find()->asArray()->all()), 'id', 'label'),
+                    ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
+                ),
+            ],
             'name',
             'sku',
             'stock',
             // 'weight',
-            // 'market_price',
-            // 'price',
+            'market_price',
+            'price',
             // 'brief',
             // 'content:ntext',
             // 'thumb',
@@ -40,9 +54,42 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'origin',
             // 'keywords',
             // 'description:ntext',
-            // 'is_gift',
-            // 'status',
-            // 'created_at',
+            [
+                'attribute' => 'is_gift',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return YesNo::labels($model->is_gift);
+                },
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'is_gift',
+                    YesNo::labels(),
+                    ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
+                )
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'html',
+                'value' => function ($model) {
+                    if ($model->status === Status::STATUS_ACTIVE) {
+                        $class = 'label-success';
+                    } elseif ($model->status === Status::STATUS_INACTIVE) {
+                        $class = 'label-warning';
+                    } else {
+                        $class = 'label-danger';
+                    }
+
+                    return '<span class="label ' . $class . '">' . Status::labels($model->status) . '</span>';
+                },
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'status',
+                    Status::labels(),
+                    ['class' => 'form-control', 'prompt' => Yii::t('app', 'PROMPT_STATUS')]
+                )
+            ],
+
+            'created_at:date',
             // 'updated_at',
             // 'created_by',
             // 'updated_by',
