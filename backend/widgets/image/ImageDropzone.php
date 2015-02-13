@@ -2,7 +2,7 @@
 
 namespace backend\widgets\image;
 
-use common\models\GoodsImage;
+use common\models\ProductImage;
 use devgroup\dropzone\DropZone;
 use Imagine\Image\ManipulatorInterface;
 use Yii;

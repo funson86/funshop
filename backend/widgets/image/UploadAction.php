@@ -3,7 +3,7 @@
 namespace backend\widgets\image;
 
 use Yii;
-use common\models\GoodsImage;
+use common\models\ProductImage;
 use yii\helpers\FileHelper;
 
 class UploadAction extends \devgroup\dropzone\UploadAction
@@ -32,8 +32,8 @@ class UploadAction extends \devgroup\dropzone\UploadAction
     {
         ImageDropzone::saveThumbnail($this->uploadDir . '/', $data['filename'], $this->thumbnail_width, $this->thumbnail_height);
 
-        $image = new GoodsImage([
-            'goods_id' => $data['params']['goodsId'],
+        $image = new ProductImage([
+            'product_id' => $data['params']['productId'],
             'filename' => $data['filename'],
             'src' => $data['src'] . $data['filename'],
             'thumb_src' => $data['src'] . 'small-' . $data['filename'],

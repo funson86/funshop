@@ -20,7 +20,7 @@ $menuItemsMain = [
                 'url' => ['/order'],
             ],
             [
-                'label' => Yii::t('app', 'Goods'),
+                'label' => Yii::t('app', 'Product'),
                 'url' => ['/goods'],
             ],
         ],
@@ -36,8 +36,8 @@ $menuItemsMain = [
                 'url' => ['/category'],
             ],
             [
-                'label' => Yii::t('app', 'Goods'),
-                'url' => ['/goods'],
+                'label' => Yii::t('app', 'Product'),
+                'url' => ['/product'],
             ],
         ],
         //'visible' => Yii::$app->user->can('readPost'),

@@ -92,9 +92,9 @@ class Category extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGoods()
+    public function getProducts()
     {
-        return $this->hasMany(Goods::className(), ['category_id' => 'id']);
+        return $this->hasMany(Product::className(), ['category_id' => 'id']);
     }
 
     /**
@@ -172,7 +172,7 @@ class Category extends \yii\db\ActiveRecord
     /**
      * Get all children id as a array
      * Usage:
-     * $ids = Catalog::getCatalogIdStr($id, CmsCatalog::find()->all());
+     * $ids = Catalog::getCatalogIdStr($id, CmsCatalog::find()->asArray()->all());
      * $shows = CmsShow::find()->where(['catalog_id' => $ids,])->all();
      * @param int $parentId  parent catalog id
      * @param array $array  catalog array list
@@ -213,6 +213,70 @@ class Category extends \yii\db\ActiveRecord
                     return self::getRootCatalogId($parentId, $array);
             }
         }
+    }
+
+    /**
+     * Get all children id as a array
+     * Usage:
+     * $ids = Catalog::getCatalogIdStr($id, CmsCatalog::find()->asArray()->all());
+     * $shows = CmsShow::find()->where(['catalog_id' => $ids,])->all();
+     * @param int $parentId  parent catalog id
+     * @param array $array  catalog array list
+     * @return array  catalog Id collections. eg: [2, 3, 7, 8]
+     */
+    static public function getCatalogPath($id = 0, $array = [])
+    {
+        if (0 == $id)
+            return [];
+
+        $result = [];
+        $tmpId = $id;
+        while ($tmpId > 0) {
+            array_push($result, $tmpId);
+            $tmpId = self::getCatalogParentId($tmpId, $array);
+        }
+
+        return array_reverse($result);
+
+        /*foreach ((array)$array as $v) {
+            if ($v['id'] == $id) {
+                if ($v['parent_id'] == 0) {
+                    array_push($result, $id);
+                } else {
+                    $result = self::getCatalogPath($v['parent_id'], $array);
+                }
+            }
+            if ($v['parent_id'] == $id) {
+                $tempResult = self::getArraySubCatalogId($v['id'], $array);
+                if ($tempResult) {
+                    $result = array_merge($result, $tempResult);
+                }
+            }
+        }
+        return $result;*/
+    }
+
+    /**
+     * Get all children id as a array
+     * Usage:
+     * $ids = Catalog::getCatalogIdStr($id, CmsCatalog::find()->asArray()->all());
+     * $shows = CmsShow::find()->where(['catalog_id' => $ids,])->all();
+     * @param int $parentId  parent catalog id
+     * @param array $array  catalog array list
+     * @return array  catalog Id collections. eg: [2, 3, 7, 8]
+     */
+    static public function getCatalogParentId($id = 0, $array = [])
+    {
+        if (0 == $id)
+            return 0;
+
+        foreach ((array)$array as $v) {
+            if ($v['id'] == $id) {
+                return (int)$v['parent_id'];
+            }
+        }
+
+        return false;
     }
 
     /**

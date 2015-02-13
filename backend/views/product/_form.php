@@ -4,14 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\models\Category;
-//use backend\widgets\image\ImageDropzone;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Goods */
+/* @var $model common\models\Product */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="goods-form">
+<div class="product-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -44,12 +43,12 @@ use common\models\Category;
     <?php if (!$model->isNewRecord) { ?>
         <div class="form-group">
             <?php
-            foreach ($model->goodsImages as $image) {
+            foreach ($model->productImages as $image) {
                 $file = Yii::getAlias('@frontend/web' . $image->thumb_src);
                 $fileType = \yii\helpers\FileHelper::getMimeType($file);
                 $data = base64_encode(file_get_contents($file));
                 echo '<div style="width:150px; float: left; text-align: center">';
-                echo '<a href="'. \Yii::$app->getUrlManager()->createUrl(['goods/remove', 'id' => $image->id]) .'" title="' . Yii::t('app', 'Delete') . '" data-confirm="' . Yii::t('app', 'Are you sure you want to delete this item?') . '" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a> ';
+                echo '<a href="'. \Yii::$app->getUrlManager()->createUrl(['product/remove', 'id' => $image->id]) .'" title="' . Yii::t('app', 'Delete') . '" data-confirm="' . Yii::t('app', 'Are you sure you want to delete this item?') . '" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a> ';
                 echo '<br>' . "<img src='data:" . $fileType .";base64," . $data . "' width=100>";
                 echo '</div>';
             } ?>
@@ -72,7 +71,7 @@ use common\models\Category;
                 ],
                 'options' => [
                     //'clickable' => ".fileinput-button",
-                    'params' => ['goodsId' => $model->id,],
+                    'params' => ['productId' => $model->id,],
                 ],
             ]); ?>
         </div>

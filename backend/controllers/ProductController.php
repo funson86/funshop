@@ -2,9 +2,12 @@
 
 namespace backend\controllers;
 
+use backend\widgets\image\RemoveAction;
+use backend\widgets\image\UploadAction;
+use common\models\ProductImage;
 use Yii;
-use common\models\GoodsImage;
-use common\models\GoodsImageSearch;
+use common\models\Product;
+use common\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -12,9 +15,9 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
- * GoodsImageController implements the CRUD actions for GoodsImage model.
+ * ProductController implements the CRUD actions for Product model.
  */
-class GoodsImageController extends Controller
+class ProductController extends Controller
 {
     public function behaviors()
     {
@@ -37,15 +40,30 @@ class GoodsImageController extends Controller
         ];
     }
 
+    public function actions()
+    {
+        return [
+            'upload' => [
+                'class' => UploadAction::className(),
+                'upload' => 'upload',
+            ],
+            'remove' => [
+                'class' => RemoveAction::className(),
+                'uploadDir' => '@frontend/web/upload',
+            ],
+        ];
+    }
+
+
     /**
-     * Lists all GoodsImage models.
+     * Lists all Product models.
      * @return mixed
      */
     public function actionIndex()
     {
         //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $searchModel = new GoodsImageSearch();
+        $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -55,7 +73,7 @@ class GoodsImageController extends Controller
     }
 
     /**
-     * Displays a single GoodsImage model.
+     * Displays a single Product model.
      * @param integer $id
      * @return mixed
      */
@@ -69,7 +87,7 @@ class GoodsImageController extends Controller
     }
 
     /**
-     * Creates a new GoodsImage model.
+     * Creates a new Product model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -77,11 +95,11 @@ class GoodsImageController extends Controller
     {
         //if(!Yii::$app->user->can('createYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $model = new GoodsImage();
+        $model = new Product();
         $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -90,7 +108,7 @@ class GoodsImageController extends Controller
     }
 
     /**
-     * Updates an existing GoodsImage model.
+     * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -102,6 +120,11 @@ class GoodsImageController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $productImage = ProductImage::find()->where(['product_id' => $id])->orderBy(['id' => SORT_DESC])->one();
+            $model->image = $productImage->src;
+            $model->thumb = $productImage->thumb_src;
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -111,7 +134,7 @@ class GoodsImageController extends Controller
     }
 
     /**
-     * Deletes an existing GoodsImage model.
+     * Deletes an existing Product model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -129,15 +152,15 @@ class GoodsImageController extends Controller
     }
 
     /**
-     * Finds the GoodsImage model based on its primary key value.
+     * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return GoodsImage the loaded model
+     * @return Product the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = GoodsImage::findOne($id)) !== null) {
+        if (($model = Product::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
