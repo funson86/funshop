@@ -3,9 +3,12 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
+use yii\db\Expression;
 
 /**
- * This is the model class for table "user_address".
+ * This is the model class for table "address".
  *
  * @property integer $id
  * @property integer $user_id
@@ -27,14 +30,27 @@ use Yii;
  *
  * @property User $user
  */
-class UserAddress extends \yii\db\ActiveRecord
+class Address extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'user_address';
+        return 'address';
+    }
+
+    /**
+     * create_time, update_time to now()
+     * crate_user_id, update_user_id to current login user id
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+            // BlameableBehavior::className(),
+        ];
     }
 
     /**
@@ -85,4 +101,30 @@ class UserAddress extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    /**
+     * Before save.
+     * 
+     */
+    /*public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert))
+        {
+            // add your code here
+            return true;
+        }
+        else
+            return false;
+    }*/
+
+    /**
+     * After save.
+     *
+     */
+    /*public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        // add your code here
+    }*/
+
 }
