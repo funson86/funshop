@@ -6,7 +6,7 @@ return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
         'user' => [
-            'class' => 'funson86\auth\User',
+            'class' => 'common\components\User',
             'enableAutoLogin' => true,
         ],
         'authManager' => [
