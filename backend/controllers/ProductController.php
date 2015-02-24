@@ -120,10 +120,18 @@ class ProductController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $productImage = ProductImage::find()->where(['product_id' => $id])->orderBy(['id' => SORT_DESC])->one();
-            $model->image = $productImage->src;
-            $model->thumb = $productImage->thumb_src;
-            $model->save();
+            if (Yii::$app->request->post()['imageSort']) {
+                foreach (Yii::$app->request->post()['imageSort'] as $key => $sortOrder) {
+                    ProductImage::updateAll(['sort_order' => $sortOrder], ['id' => $key]);
+                }
+            }
+
+            $productImage = ProductImage::find()->where(['product_id' => $id])->orderBy(['sort_order' => SORT_ASC])->one();
+            if ($productImage) {
+                $model->image = $productImage->image;
+                $model->thumb = $productImage->thumb;
+                $model->save();
+            }
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

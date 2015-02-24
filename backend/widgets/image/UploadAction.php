@@ -35,8 +35,8 @@ class UploadAction extends \devgroup\dropzone\UploadAction
         $image = new ProductImage([
             'product_id' => $data['params']['productId'],
             'filename' => $data['filename'],
-            'src' => $data['src'] . $data['filename'],
-            'thumb_src' => $data['src'] . 'small-' . $data['filename'],
+            'image' => $data['src'] . $data['filename'],
+            'thumb' => $data['src'] . 'small-' . $data['filename'],
             'description' => '',
             'sort_order' => 50,
         ]);

@@ -44,12 +44,13 @@ use common\models\Category;
         <div class="form-group">
             <?php
             foreach ($model->productImages as $image) {
-                $file = Yii::getAlias('@frontend/web' . $image->thumb_src);
+                $file = Yii::getAlias('@frontend/web' . $image->thumb);
                 $fileType = \yii\helpers\FileHelper::getMimeType($file);
                 $data = base64_encode(file_get_contents($file));
                 echo '<div style="width:150px; float: left; text-align: center">';
-                echo '<a href="'. \Yii::$app->getUrlManager()->createUrl(['product/remove', 'id' => $image->id]) .'" title="' . Yii::t('app', 'Delete') . '" data-confirm="' . Yii::t('app', 'Are you sure you want to delete this item?') . '" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a> ';
-                echo '<br>' . "<img src='data:" . $fileType .";base64," . $data . "' width=100>";
+                echo '<a href="'. \Yii::$app->getUrlManager()->createUrl(['product/remove', 'id' => $image->id]) .'" title="' . Yii::t('app', 'Delete') . '" data-confirm="' . Yii::t('app', 'Are you sure you want to delete this item?') . '" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a><br>';
+                echo "<img src='data:" . $fileType .";base64," . $data . "' width=100><br>";
+                echo Yii::t('app', 'Sort Order') . ' <input style="width:50px" name="imageSort[' . $image->id . ']" value="' . $image->sort_order . '">';
                 echo '</div>';
             } ?>
             <div style="clear:both"></div>

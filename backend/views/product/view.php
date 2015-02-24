@@ -9,7 +9,14 @@ use yii\widgets\DetailView;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$file = Yii::getAlias('@frontend/web' . $model->thumb);
+$fileType = \yii\helpers\FileHelper::getMimeType($file);
+$data = base64_encode(file_get_contents($file));
 ?>
+<style>
+td img{width:100px;}
+</style>
 <div class="product-view">
 
     <p>
@@ -39,7 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'price',
             'brief',
             'content:ntext',
-            'thumb',
+            [
+                'attribute' => 'thumb',
+                'format' => 'image',
+                'value' => "data:" . $fileType .";base64," . $data . "",
+                'options' => ['style' => 'width:100px' ],
+            ],
             'image',
             'keywords',
             'description:ntext',
@@ -65,3 +77,11 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+
+<?php
+foreach ($model->productImagesSort as $item) {
+    $file = Yii::getAlias('@frontend/web' . $item->thumb);
+    $fileType = \yii\helpers\FileHelper::getMimeType($file);
+    $data = base64_encode(file_get_contents($file));
+    echo "<img src='data:" . $fileType .";base64," . $data . "' width=100>";
+}

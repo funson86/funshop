@@ -20,6 +20,7 @@ return [
     'Please Filter' => '请筛选',
     'Please Select' => '请选择',
     'No Option' => '无',
+    'Sort Order' => '排序',
 
     'Create ' => '创建',
     'Create' => '创建',
