@@ -20,14 +20,14 @@ $menuItemsMain = [
                 'url' => ['/order'],
             ],
             [
-                'label' => Yii::t('app', 'Product'),
-                'url' => ['/goods'],
+                'label' => Yii::t('app', 'Cart'),
+                'url' => ['/cart'],
             ],
         ],
         //'visible' => Yii::$app->user->can('readPost'),
     ],
     [
-        'label' => Yii::t('app', 'Goods'),
+        'label' => Yii::t('app', 'Product'),
         'url' => ['#'],
         'active' => false,
         'items' => [
@@ -39,8 +39,40 @@ $menuItemsMain = [
                 'label' => Yii::t('app', 'Product'),
                 'url' => ['/product'],
             ],
+            [
+                'label' => Yii::t('app', 'Comment'),
+                'url' => ['/comment'],
+            ],
+            [
+                'label' => Yii::t('app', 'Consultation'),
+                'url' => ['/consultation'],
+            ],
         ],
         //'visible' => Yii::$app->user->can('readPost'),
+    ],
+    [
+        'label' => '<i class="fa fa-cog"></i> ' . Yii::t('app', 'User'),
+        'url' => ['#'],
+        'active' => false,
+        //'visible' => Yii::$app->user->can('haha'),
+        'items' => [
+            [
+                'label' => '<i class="fa fa-user"></i> ' . Yii::t('app', 'User'),
+                'url' => ['/user'],
+            ],
+            [
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Address'),
+                'url' => ['/address'],
+            ],
+            [
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Favorite'),
+                'url' => ['/favorite'],
+            ],
+            [
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Point Log'),
+                'url' => ['/point-log'],
+            ],
+        ],
     ],
     [
         'label' => '<i class="fa fa-cog"></i> ' . Yii::t('app', 'System'),
@@ -49,8 +81,12 @@ $menuItemsMain = [
         //'visible' => Yii::$app->user->can('haha'),
         'items' => [
             [
-                'label' => '<i class="fa fa-user"></i> ' . Yii::t('app', 'User'),
-                'url' => ['/user'],
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Payment'),
+                'url' => ['/payment'],
+            ],
+            [
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Shipment'),
+                'url' => ['/shipment'],
             ],
             [
                 'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Auth Role'),

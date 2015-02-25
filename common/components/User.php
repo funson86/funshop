@@ -38,7 +38,18 @@ class User extends \funson86\auth\User
      */
     protected function afterLogin($identity, $cookieBased, $duration)
     {
-        Cart::updateAll(['session_id' => Yii::$app->session->id, 'user_id' => $identity->id], ['session_id' => $this->oldSessionId]);
+        $carts = Cart::find()->where(['session_id' => $this->oldSessionId])->all();
+        foreach ($carts as $cart) {
+            $exist = Cart::find()->where(['user_id' => $identity->id, 'product_id' => $cart->product_id])->one();
+            if ($exist) {
+                Cart::updateAllCounters(['number' => $cart->number], ['user_id' => $identity->id]);
+                Cart::deleteAll(['session_id' => $this->oldSessionId, 'product_id' => $cart->product_id]);
+            } else {
+                Cart::updateAll(['session_id' => Yii::$app->session->id, 'user_id' => $identity->id], ['session_id' => $this->oldSessionId, 'product_id' => $cart->product_id]);
+            }
+        }
+        Cart::updateAll(['session_id' => Yii::$app->session->id], ['user_id' => $identity->id]);
+        //Cart::updateAll(['session_id' => Yii::$app->session->id, 'user_id' => $identity->id], ['session_id' => $this->oldSessionId]);
         return parent::afterLogin($identity, $cookieBased, $duration);
     }
 

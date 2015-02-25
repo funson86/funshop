@@ -77,7 +77,7 @@ class User extends \common\models\User
 
         if ($this->_authRoleLabel === null) {
             $roles = self::getArrayAuthRole();
-            $this->_authRoleLabel = $roles[$this->auth_role];
+            $this->_authRoleLabel = $this->auth_role ? $roles[$this->auth_role] : '-';
         }
         return $this->_authRoleLabel;
     }

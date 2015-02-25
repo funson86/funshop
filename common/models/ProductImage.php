@@ -8,21 +8,20 @@ use yii\behaviors\BlameableBehavior;
 use yii\db\Expression;
 
 /**
- * This is the model class for table "cart".
+ * This is the model class for table "product_image".
  *
  * @property integer $id
- * @property integer $user_id
- * @property string $session_id
  * @property integer $product_id
- * @property string $sku
- * @property string $name
- * @property integer $number
- * @property string $market_price
- * @property string $price
+ * @property string $filename
+ * @property string $description
+ * @property string $image
  * @property string $thumb
- * @property integer $is_gift
+ * @property string $origin
+ * @property integer $sort_order
+ *
+ * @property Product $product
  */
-class Cart extends \yii\db\ActiveRecord
+class ProductImage extends \yii\db\ActiveRecord
 {
 
     /**
@@ -30,7 +29,7 @@ class Cart extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'cart';
+        return 'product_image';
     }
 
     /**
@@ -40,7 +39,7 @@ class Cart extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            // TimestampBehavior::className(),
             // BlameableBehavior::className(),
         ];
     }
@@ -51,20 +50,11 @@ class Cart extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'product_id', 'number', 'is_gift', 'created_at', 'updated_at'], 'integer'],
-            [['product_id', 'sku', 'name'], 'required'],
-            [['market_price', 'price'], 'number'],
-            [['session_id', 'name', 'thumb'], 'string', 'max' => 255],
-            [['sku'], 'string', 'max' => 64]
+            [['product_id'], 'required'],
+            [['product_id', 'sort_order'], 'integer'],
+            [['filename'], 'string', 'max' => 128],
+            [['description', 'image', 'thumb', 'origin'], 'string', 'max' => 255]
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -74,19 +64,22 @@ class Cart extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'session_id' => Yii::t('app', 'Session ID'),
             'product_id' => Yii::t('app', 'Product ID'),
-            'sku' => Yii::t('app', 'Sku'),
-            'name' => Yii::t('app', 'Name'),
-            'number' => Yii::t('app', 'Number'),
-            'market_price' => Yii::t('app', 'Market Price'),
-            'price' => Yii::t('app', 'Price'),
+            'filename' => Yii::t('app', 'Filename'),
+            'description' => Yii::t('app', 'Description'),
+            'image' => Yii::t('app', 'Image'),
             'thumb' => Yii::t('app', 'Thumb'),
-            'is_gift' => Yii::t('app', 'Is Gift'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'origin' => Yii::t('app', 'Origin'),
+            'sort_order' => Yii::t('app', 'Sort Order'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 
     /**

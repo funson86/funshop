@@ -24,14 +24,16 @@ use yii\db\Expression;
  * @property string $mobile
  * @property string $email
  * @property string $remark
- * @property integer $pay_id
- * @property string $pay_name
- * @property integer $shipping_id
- * @property string $shipping_name
- * @property integer $pay_status
- * @property integer $shipping_status
- * @property string $pay_fee
- * @property string $shipping_fee
+ * @property integer $payment_method
+ * @property integer $payment_status
+ * @property integer $payment_id
+ * @property string $payment_name
+ * @property string $payment_fee
+ * @property integer $shipment_status
+ * @property integer $shipment_id
+ * @property string $shipment_name
+ * @property string $shipment_fee
+ * @property string $amount
  * @property string $tax
  * @property string $invoice
  * @property integer $status
@@ -43,10 +45,27 @@ use yii\db\Expression;
  * @property integer $updated_by
  *
  * @property User $user
- * @property OrderGoods[] $orderGoods
+ * @property OrderProduct[] $orderProducts
  */
 class Order extends \yii\db\ActiveRecord
 {
+    const STATUS_CANCEL = -1;
+    const STATUS_DELETED = -2;
+
+    const PAYMENT_METHOD_PAY = 1;
+    const PAYMENT_METHOD_COD = 2;
+
+    const PAYMENT_STATUS_COD = 2;
+    const PAYMENT_STATUS_UNPAID = 4;
+    const PAYMENT_STATUS_PAYING = 6;
+    const PAYMENT_STATUS_PAID = 8;
+
+    const SHIPMENT_STATUS_UNSHIPPED = 12;
+    const SHIPMENT_STATUS_PREPARING = 14;
+    const SHIPMENT_STATUS_SHIPPED = 16;
+    const SHIPMENT_STATUS_RECEIVED = 18;
+
+    public $address_id;
 
     /**
      * @inheritdoc
@@ -64,7 +83,7 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             TimestampBehavior::className(),
-            // BlameableBehavior::className(),
+            BlameableBehavior::className(),
         ];
     }
 
@@ -75,12 +94,13 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'sn'], 'required'],
-            [['user_id', 'country', 'province', 'city', 'district', 'pay_id', 'shipping_id', 'pay_status', 'shipping_status', 'status', 'paid_at', 'shipped_at', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['pay_fee', 'shipping_fee', 'tax'], 'number'],
+            [['user_id', 'country', 'province', 'city', 'district', 'payment_method', 'payment_status', 'payment_id', 'shipment_status', 'shipment_id', 'status', 'paid_at', 'shipped_at', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['payment_fee', 'shipment_fee', 'amount', 'tax'], 'number'],
             [['sn', 'phone', 'mobile', 'email'], 'string', 'max' => 32],
             [['consignee'], 'string', 'max' => 64],
-            [['address', 'remark', 'pay_name', 'shipping_name', 'invoice'], 'string', 'max' => 255],
-            [['zipcode'], 'string', 'max' => 16]
+            [['address', 'remark', 'shipment_name', 'invoice'], 'string', 'max' => 255],
+            [['zipcode'], 'string', 'max' => 16],
+            [['payment_name'], 'string', 'max' => 120]
         ];
     }
 
@@ -104,14 +124,16 @@ class Order extends \yii\db\ActiveRecord
             'mobile' => Yii::t('app', 'Mobile'),
             'email' => Yii::t('app', 'Email'),
             'remark' => Yii::t('app', 'Remark'),
-            'pay_id' => Yii::t('app', 'Pay ID'),
-            'pay_name' => Yii::t('app', 'Pay Name'),
-            'shipping_id' => Yii::t('app', 'Shipping ID'),
-            'shipping_name' => Yii::t('app', 'Shipping Name'),
-            'pay_status' => Yii::t('app', 'Pay Status'),
-            'shipping_status' => Yii::t('app', 'Shipping Status'),
-            'pay_fee' => Yii::t('app', 'Pay Fee'),
-            'shipping_fee' => Yii::t('app', 'Shipping Fee'),
+            'payment_method' => Yii::t('app', 'Payment Method'),
+            'payment_status' => Yii::t('app', 'Payment Status'),
+            'payment_id' => Yii::t('app', 'Payment ID'),
+            'payment_name' => Yii::t('app', 'Payment Name'),
+            'payment_fee' => Yii::t('app', 'Payment Fee'),
+            'shipment_status' => Yii::t('app', 'Shipment Status'),
+            'shipment_id' => Yii::t('app', 'Shipment ID'),
+            'shipment_name' => Yii::t('app', 'Shipment Name'),
+            'shipment_fee' => Yii::t('app', 'Shipment Fee'),
+            'amount' => Yii::t('app', 'Amount'),
             'tax' => Yii::t('app', 'Tax'),
             'invoice' => Yii::t('app', 'Invoice'),
             'status' => Yii::t('app', 'Status'),
@@ -135,9 +157,121 @@ class Order extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrderGoods()
+    public function getCreatedBy()
     {
-        return $this->hasMany(OrderGoods::className(), ['order_id' => 'id']);
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCountry0()
+    {
+        return $this->hasOne(Region::className(), ['id' => 'country']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProvince0()
+    {
+        return $this->hasOne(Region::className(), ['id' => 'province']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCity0()
+    {
+        return $this->hasOne(Region::className(), ['id' => 'city']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDistrict0()
+    {
+        return $this->hasOne(Region::className(), ['id' => 'district']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrderProducts()
+    {
+        return $this->hasMany(OrderProduct::className(), ['order_id' => 'id']);
+    }
+
+    public static function getPaymentMethodLabels($id = null)
+    {
+        $data = [
+            self::PAYMENT_METHOD_PAY => Yii::t('app', 'PAYMENT_METHOD_PAY'),
+            self::PAYMENT_METHOD_COD => Yii::t('app', 'PAYMENT_METHOD_COD'),
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
+    }
+
+    public static function getStatusLabels($id = null)
+    {
+        $data = [
+            self::STATUS_CANCEL => Yii::t('app', 'STATUS_CANCEL'),
+            self::STATUS_DELETED => Yii::t('app', 'STATUS_DELETED'),
+            self::PAYMENT_STATUS_COD => Yii::t('app', 'PAYMENT_STATUS_COD'),
+            self::PAYMENT_STATUS_UNPAID => Yii::t('app', 'PAYMENT_STATUS_UNPAID'),
+            self::PAYMENT_STATUS_PAYING => Yii::t('app', 'PAYMENT_STATUS_PAYING'),
+            self::PAYMENT_STATUS_PAID => Yii::t('app', 'PAYMENT_STATUS_PAID'),
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
+    }
+
+    public static function getPaymentStatusLabels($id = null)
+    {
+        $data = [
+            self::PAYMENT_STATUS_COD => Yii::t('app', 'PAYMENT_STATUS_COD'),
+            self::PAYMENT_STATUS_UNPAID => Yii::t('app', 'PAYMENT_STATUS_UNPAID'),
+            self::PAYMENT_STATUS_PAYING => Yii::t('app', 'PAYMENT_STATUS_PAYING'),
+            self::PAYMENT_STATUS_PAID => Yii::t('app', 'PAYMENT_STATUS_PAID'),
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
+    }
+
+    public static function getShipmentStatusLabels($id = null)
+    {
+        $data = [
+            self::SHIPMENT_STATUS_UNSHIPPED => Yii::t('app', 'SHIPMENT_STATUS_UNSHIPPED'),
+            self::SHIPMENT_STATUS_PREPARING => Yii::t('app', 'SHIPMENT_STATUS_PREPARING'),
+            self::SHIPMENT_STATUS_SHIPPED => Yii::t('app', 'SHIPMENT_STATUS_SHIPPED'),
+            self::SHIPMENT_STATUS_RECEIVED => Yii::t('app', 'SHIPMENT_STATUS_RECEIVED'),
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
     }
 
     /**

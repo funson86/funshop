@@ -87,4 +87,24 @@ return [
     'Category ID' => '分类',
 
 
+
+    'Category ID' => '分类',
+    'PAYMENT_METHOD_PAY' => '在线支付',
+    'PAYMENT_METHOD_COD' => '货到付款',
+
+    'STATUS_CANCEL' => '已取消',
+    'STATUS_DELETED' => '删除',
+    'PAYMENT_STATUS_COD' => '货到付款',
+    'PAYMENT_STATUS_UNPAID' => '未付款',
+    'PAYMENT_STATUS_PAYING' => '正在付款',
+    'PAYMENT_STATUS_PAID' => '已付款',
+    'SHIPMENT_STATUS_UNSHIPPED' => '未发货',
+    'SHIPMENT_STATUS_PREPARING' => '准备发货',
+    'SHIPMENT_STATUS_SHIPPED' => '已发货',
+    'SHIPMENT_STATUS_RECEIVED' => '已收货',
+
+    'POINT_TYPE_BOUGHT' => '购买商品',
+    'POINT_TYPE_COMMENT' => '评价商品',
+    'POINT_TYPE_BUYING' => '消费积分',
+
 ];

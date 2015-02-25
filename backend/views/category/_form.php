@@ -14,7 +14,14 @@ unset($parentCategory[$model->id]);
 
 <div class="category-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'mend-form',
+        'options' => ['class' => 'form-horizontal'],
+        'fieldConfig' => [
+            'template' => "{label}\n<div class=\"col-lg-3\">{input}{hint}</div>\n<div class=\"col-lg-5\">{error}</div>",
+            'labelOptions' => ['class' => 'col-lg-2 control-label'],
+        ],
+    ]); ?>
 
     <?= $form->field($model, 'parent_id')->dropDownList($parentCategory) ?>
 
@@ -36,27 +43,8 @@ unset($parentCategory[$model->id]);
 
     <?= $form->field($model, 'status')->dropDownList(\common\models\Status::labels()) ?>
 
-    <?= \backend\widgets\image\ImageDropzone::widget([
-        'name' => 'file',
-        'url' => ['/backend/product/upload'],
-        'removeUrl' => ['/backend/product/remove'],
-        'uploadDir' => '/theme/resources/product-images',
-        'sortable' => true,
-        'sortableOptions' => [
-            'items' => '.dz-image-preview',
-        ],
-        'goodsId' => 1,
-        //'modelId' => 1,
-        'htmlOptions' => [
-            'class' => 'table table-striped files',
-            'id' => 'previews',
-        ],
-        'options' => [
-            'clickable' => ".fileinput-button",
-        ],
-    ]); ?>
-
     <div class="form-group">
+        <label class="col-lg-2 control-label" for="">&nbsp;</label>
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

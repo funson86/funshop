@@ -8,11 +8,10 @@ use yii\behaviors\BlameableBehavior;
 use yii\db\Expression;
 
 /**
- * This is the model class for table "cart".
+ * This is the model class for table "order_product".
  *
  * @property integer $id
- * @property integer $user_id
- * @property string $session_id
+ * @property integer $order_id
  * @property integer $product_id
  * @property string $sku
  * @property string $name
@@ -21,8 +20,13 @@ use yii\db\Expression;
  * @property string $price
  * @property string $thumb
  * @property integer $is_gift
+ * @property integer $created_at
+ * @property integer $updated_at
+ *
+ * @property Order $order
+ * @property Product $product
  */
-class Cart extends \yii\db\ActiveRecord
+class OrderProduct extends \yii\db\ActiveRecord
 {
 
     /**
@@ -30,7 +34,7 @@ class Cart extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'cart';
+        return 'order_product';
     }
 
     /**
@@ -51,20 +55,12 @@ class Cart extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'product_id', 'number', 'is_gift', 'created_at', 'updated_at'], 'integer'],
-            [['product_id', 'sku', 'name'], 'required'],
+            [['order_id', 'product_id', 'sku', 'name'], 'required'],
+            [['order_id', 'product_id', 'number', 'is_gift', 'created_at', 'updated_at'], 'integer'],
             [['market_price', 'price'], 'number'],
-            [['session_id', 'name', 'thumb'], 'string', 'max' => 255],
-            [['sku'], 'string', 'max' => 64]
+            [['sku'], 'string', 'max' => 64],
+            [['name', 'thumb'], 'string', 'max' => 255]
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -74,8 +70,7 @@ class Cart extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'session_id' => Yii::t('app', 'Session ID'),
+            'order_id' => Yii::t('app', 'Order ID'),
             'product_id' => Yii::t('app', 'Product ID'),
             'sku' => Yii::t('app', 'Sku'),
             'name' => Yii::t('app', 'Name'),
@@ -87,6 +82,22 @@ class Cart extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrder()
+    {
+        return $this->hasOne(Order::className(), ['id' => 'order_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 
     /**

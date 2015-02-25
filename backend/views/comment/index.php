@@ -3,23 +3,21 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
-use common\models\Category;
 use common\models\Status;
-use common\models\YesNo;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\ProductSearch */
+/* @var $searchModel common\models\CommentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Products');
+$this->title = Yii::t('app', 'Comments');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-index">
+<div class="comment-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create ') . Yii::t('app', 'Product'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create ') . Yii::t('app', 'Comment'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -29,44 +27,25 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+            // 'user_id',
+            'username',
             [
-                'attribute' => 'category_id',
+                'attribute' => 'product_id',
                 'value'=>function ($model) {
-                    return $model->category->name;
+                    return $model->product ? $model->product->name : '-';
                 },
-                'filter' => Html::activeDropDownList(
-                    $searchModel,
-                    'category_id',
-                    ArrayHelper::map(Category::get(0, Category::find()->asArray()->all()), 'id', 'label'),
-                    ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
-                ),
             ],
-            'name',
-            'sku',
-            'stock',
-            // 'weight',
-            'market_price',
-            'price',
-            // 'brief',
-            // 'content:ntext',
-            // 'thumb',
-            // 'image',
-            // 'origin',
-            // 'keywords',
-            // 'description:ntext',
             [
-                'attribute' => 'is_gift',
-                'format' => 'html',
-                'value' => function ($model) {
-                    return YesNo::labels($model->is_gift);
+                'attribute' => 'order_id',
+                'value'=>function ($model) {
+                    return $model->order ? $model->order->sn : '-';
                 },
-                'filter' => Html::activeDropDownList(
-                    $searchModel,
-                    'is_gift',
-                    YesNo::labels(),
-                    ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
-                )
             ],
+            'star',
+            // 'content:ntext',
+            'point',
+            'up',
+            // 'status',
             [
                 'attribute' => 'status',
                 'format' => 'html',
@@ -79,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $class = 'label-danger';
                     }
 
-                    return '<span class="label ' . $class . '">' . Status::labels($model->status) . '</span>';
+                    return '<span class="label ' . $class . '">' .Status::labels($model->status) . '</span>';
                 },
                 'filter' => Html::activeDropDownList(
                     $searchModel,
@@ -88,7 +67,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'form-control', 'prompt' => Yii::t('app', 'PROMPT_STATUS')]
                 )
             ],
-
             'created_at:date',
             // 'updated_at',
             // 'created_by',

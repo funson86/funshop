@@ -8,21 +8,19 @@ use yii\behaviors\BlameableBehavior;
 use yii\db\Expression;
 
 /**
- * This is the model class for table "cart".
+ * This is the model class for table "favorite".
  *
  * @property integer $id
  * @property integer $user_id
- * @property string $session_id
  * @property integer $product_id
- * @property string $sku
- * @property string $name
- * @property integer $number
- * @property string $market_price
- * @property string $price
- * @property string $thumb
- * @property integer $is_gift
+ * @property integer $attention
+ * @property integer $created_at
+ * @property integer $updated_at
+ *
+ * @property User $user
+ * @property Product $product
  */
-class Cart extends \yii\db\ActiveRecord
+class Favorite extends \yii\db\ActiveRecord
 {
 
     /**
@@ -30,7 +28,7 @@ class Cart extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'cart';
+        return 'favorite';
     }
 
     /**
@@ -51,11 +49,23 @@ class Cart extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'product_id', 'number', 'is_gift', 'created_at', 'updated_at'], 'integer'],
-            [['product_id', 'sku', 'name'], 'required'],
-            [['market_price', 'price'], 'number'],
-            [['session_id', 'name', 'thumb'], 'string', 'max' => 255],
-            [['sku'], 'string', 'max' => 64]
+            [['user_id', 'product_id'], 'required'],
+            [['user_id', 'product_id', 'attention', 'created_at', 'updated_at'], 'integer']
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'user_id' => Yii::t('app', 'User ID'),
+            'product_id' => Yii::t('app', 'Product ID'),
+            'attention' => Yii::t('app', 'Attention'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
 
@@ -68,25 +78,11 @@ class Cart extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * @return \yii\db\ActiveQuery
      */
-    public function attributeLabels()
+    public function getProduct()
     {
-        return [
-            'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'session_id' => Yii::t('app', 'Session ID'),
-            'product_id' => Yii::t('app', 'Product ID'),
-            'sku' => Yii::t('app', 'Sku'),
-            'name' => Yii::t('app', 'Name'),
-            'number' => Yii::t('app', 'Number'),
-            'market_price' => Yii::t('app', 'Market Price'),
-            'price' => Yii::t('app', 'Price'),
-            'thumb' => Yii::t('app', 'Thumb'),
-            'is_gift' => Yii::t('app', 'Is Gift'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-        ];
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 
     /**

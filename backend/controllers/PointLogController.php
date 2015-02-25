@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Region;
-use common\models\RegionSearch;
+use common\models\PointLog;
+use common\models\PointLogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -12,9 +12,9 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
- * RegionController implements the CRUD actions for Region model.
+ * PointLogController implements the CRUD actions for PointLog model.
  */
-class RegionController extends Controller
+class PointLogController extends Controller
 {
     public function behaviors()
     {
@@ -38,14 +38,14 @@ class RegionController extends Controller
     }
 
     /**
-     * Lists all Region models.
+     * Lists all PointLog models.
      * @return mixed
      */
     public function actionIndex()
     {
         //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $searchModel = new RegionSearch();
+        $searchModel = new PointLogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -55,7 +55,7 @@ class RegionController extends Controller
     }
 
     /**
-     * Displays a single Region model.
+     * Displays a single PointLog model.
      * @param integer $id
      * @return mixed
      */
@@ -69,7 +69,7 @@ class RegionController extends Controller
     }
 
     /**
-     * Creates a new Region model.
+     * Creates a new PointLog model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -77,7 +77,7 @@ class RegionController extends Controller
     {
         //if(!Yii::$app->user->can('createYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $model = new Region();
+        $model = new PointLog();
         $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -90,7 +90,7 @@ class RegionController extends Controller
     }
 
     /**
-     * Updates an existing Region model.
+     * Updates an existing PointLog model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -111,7 +111,7 @@ class RegionController extends Controller
     }
 
     /**
-     * Deletes an existing Region model.
+     * Deletes an existing PointLog model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -129,40 +129,15 @@ class RegionController extends Controller
     }
 
     /**
-     * List Region Children for select
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionAjaxListChild($id)
-    {
-        //'visible' => Yii::$app->user->can('deleteYourAuth'),
-
-        $countChild = Region::find()->where(['parent_id' => $id])->count();
-        $children = Region::find()->where(['parent_id' => $id])->all();
-
-        if($countChild > 0)
-        {
-            echo "<option>" . Yii::t('app', 'Please Select') . "</option>";
-            foreach($children as $child)
-                echo "<option value='" . $child->id . "'>" . $child->name . "</option>";
-        }
-        else
-        {
-            echo "<option>" . Yii::t('app', 'No Option') . "</option>";
-        }
-    }
-
-    /**
-     * Finds the Region model based on its primary key value.
+     * Finds the PointLog model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Region the loaded model
+     * @return PointLog the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Region::findOne($id)) !== null) {
+        if (($model = PointLog::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

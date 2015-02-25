@@ -3,9 +3,12 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
+use yii\db\Expression;
 
 /**
- * This is the model class for table "shipping".
+ * This is the model class for table "shipment".
  *
  * @property integer $id
  * @property string $code
@@ -19,14 +22,27 @@ use Yii;
  * @property integer $created_by
  * @property integer $updated_by
  */
-class Shipping extends \yii\db\ActiveRecord
+class Shipment extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'shipping';
+        return 'shipment';
+    }
+
+    /**
+     * create_time, update_time to now()
+     * crate_user_id, update_user_id to current login user id
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+            // BlameableBehavior::className(),
+        ];
     }
 
     /**
@@ -35,7 +51,7 @@ class Shipping extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'name'], 'required'],
+            [['code', 'name', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
             [['description'], 'string'],
             [['sort_order', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['code'], 'string', 'max' => 32],
@@ -62,4 +78,30 @@ class Shipping extends \yii\db\ActiveRecord
             'updated_by' => Yii::t('app', 'Updated By'),
         ];
     }
+
+    /**
+     * Before save.
+     * 
+     */
+    /*public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert))
+        {
+            // add your code here
+            return true;
+        }
+        else
+            return false;
+    }*/
+
+    /**
+     * After save.
+     *
+     */
+    /*public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        // add your code here
+    }*/
+
 }

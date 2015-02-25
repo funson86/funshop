@@ -8,21 +8,14 @@ use yii\behaviors\BlameableBehavior;
 use yii\db\Expression;
 
 /**
- * This is the model class for table "address".
+ * This is the model class for table "point_log".
  *
  * @property integer $id
  * @property integer $user_id
- * @property string $name
- * @property string $consignee
- * @property integer $country
- * @property integer $province
- * @property integer $city
- * @property integer $district
- * @property string $address
- * @property string $zipcode
- * @property string $phone
- * @property string $mobile
- * @property string $email
+ * @property integer $type
+ * @property integer $point
+ * @property string $remark
+ * @property integer $balance
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $created_by
@@ -30,15 +23,18 @@ use yii\db\Expression;
  *
  * @property User $user
  */
-class Address extends \yii\db\ActiveRecord
+class PointLog extends \yii\db\ActiveRecord
 {
+    const POINT_TYPE_BOUGHT = 1;
+    const POINT_TYPE_COMMENT = 2;
+    const POINT_TYPE_BUYING = 11;
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'address';
+        return 'point_log';
     }
 
     /**
@@ -59,12 +55,9 @@ class Address extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'country', 'province', 'city', 'district', 'default', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['consignee'], 'required'],
-            [['name', 'consignee'], 'string', 'max' => 64],
-            [['address'], 'string', 'max' => 255],
-            [['zipcode'], 'string', 'max' => 16],
-            [['phone', 'mobile', 'email'], 'string', 'max' => 32]
+            [['user_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
+            [['user_id', 'type', 'point', 'balance', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['remark'], 'string', 'max' => 255]
         ];
     }
 
@@ -76,18 +69,10 @@ class Address extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
-            'name' => Yii::t('app', 'Name'),
-            'consignee' => Yii::t('app', 'Consignee'),
-            'country' => Yii::t('app', 'Country'),
-            'province' => Yii::t('app', 'Province'),
-            'city' => Yii::t('app', 'City'),
-            'district' => Yii::t('app', 'District'),
-            'address' => Yii::t('app', 'Address'),
-            'zipcode' => Yii::t('app', 'Zipcode'),
-            'phone' => Yii::t('app', 'Phone'),
-            'mobile' => Yii::t('app', 'Mobile'),
-            'email' => Yii::t('app', 'Email'),
-            'address' => Yii::t('app', 'Address'),
+            'type' => Yii::t('app', 'Type'),
+            'point' => Yii::t('app', 'Point'),
+            'remark' => Yii::t('app', 'Remark'),
+            'balance' => Yii::t('app', 'Balance'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
@@ -119,36 +104,20 @@ class Address extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCountry0()
-    {
-        return $this->hasOne(Region::className(), ['id' => 'country']);
-    }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProvince0()
+    public static function getTypeLabels($id = null)
     {
-        return $this->hasOne(Region::className(), ['id' => 'province']);
-    }
+        $data = [
+            self::POINT_TYPE_BOUGHT => Yii::t('app', 'POINT_TYPE_BOUGHT'),
+            self::POINT_TYPE_COMMENT => Yii::t('app', 'POINT_TYPE_COMMENT'),
+            self::POINT_TYPE_BUYING => Yii::t('app', 'POINT_TYPE_BUYING'),
+        ];
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCity0()
-    {
-        return $this->hasOne(Region::className(), ['id' => 'city']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDistrict0()
-    {
-        return $this->hasOne(Region::className(), ['id' => 'district']);
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
     }
 
     /**
