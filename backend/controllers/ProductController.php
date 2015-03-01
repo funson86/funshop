@@ -120,7 +120,7 @@ class ProductController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (Yii::$app->request->post()['imageSort']) {
+            if (isset(Yii::$app->request->post()['imageSort'])) {
                 foreach (Yii::$app->request->post()['imageSort'] as $key => $sortOrder) {
                     ProductImage::updateAll(['sort_order' => $sortOrder], ['id' => $key]);
                 }
