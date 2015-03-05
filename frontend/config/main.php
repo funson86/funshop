@@ -38,6 +38,19 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset' => [
+                    'css' => [],
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js' => []
+                ],
+                'yii\web\JqueryAsset' => [
+                    'js' => []
+                ],
+            ],
+        ],
     ],
     'params' => $params,
 ];
