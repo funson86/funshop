@@ -1,51 +1,104 @@
 <?php
 /* @var $this yii\web\View */
-$this->title = 'My Yii Application';
+$this->title = 'Funshop';
+$this->registerCssFile('@web/css/index.css', ['depends' => \frontend\assets\AppAsset::className()]);
+$this->registerJsFile('@web/js/switchable.js', ['depends' => \frontend\assets\AppAsset::className()]);
 ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+<div class="index-banner">
+    <div class="index-slide" id="index-slide">
+        <ul>
+            <li data-img="/images/banner1.jpg">
+                <a href="#" title=""></a>
+            </li>
+            <li data-img="/images/banner2.jpg">
+                <a href="#" title=""></a>
+            </li>
+            <li data-img="/images/banner3.jpg">
+                <a href="#" title=""></a>
+            </li>
+            <li data-img="/images/banner4.jpg">
+                <a href="#" title=""></a>
+            </li>
+            <li data-img="/images/banner1.jpg">
+                <a href="#" title=""></a>
+            </li>
+            <li data-img="/images/banner2.jpg">
+                <a href="#" title=""></a>
+            </li>
+            <li data-img="/images/banner3.jpg">
+                <a href="#" title=""></a>
+            </li>
+            <li data-img="/images/banner4.jpg">
+                <a href="#" title=""></a>
+            </li>
+        </ul>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
+        <div class="trigger-box">&nbsp;</div>
     </div>
 </div>
+
+<!-- 类目推荐 -->
+<div class="series_list">
+<div class="series_box cle">
+    <div class="series_info">
+        <div class="series_name name_product">
+            <h2>手机</h2>
+        </div>
+        <ul class="brand">
+            <li> <a href="#" target="_blank"> <img src="/upload/201502/small-iphone61.jpg"></a> </li>
+            <li> <a href="#" target="_blank"> <img src="/upload/201502/small-macbook.jpg"></a> </li>
+            <li> <a href="#" target="_blank"> <img src="/upload/201502/small-sumsung.jpg"></a> </li>
+        </ul>
+        <div class="brand_cata">
+            <a target="_blank" href="http://www.mayicun.com/item/0103/">苹果</a>
+            <a target="_blank" href="http://www.mayicun.com/item/0107/">三星</a>
+            <a target="_blank" href="http://www.mayicun.com/item/0116/">华为</a>
+        </div>
+    </div>
+    <div class="series_pic"> <a href="#" target="_blank"> <img src="/upload/201502/small-iphone6.jpg"></a> </div>
+    <div class="pro_list">
+        <ul class="cle">
+            <?php foreach ($products as $item) { ?>
+            <li>
+                <a href="<?= Yii::$app->urlManager->createUrl(['product/view', 'id' => $item->id]) ?>" target="_blank">
+                    <p class="pic"> <img src="<?= $item->thumb ?>"></p>
+                    <h3><?= $item->name ?></h3>
+                    <p class="price">￥<?= $item->price ?></p>
+                </a>
+            </li>
+            <?php } ?>
+        </ul>
+    </div>
+</div>
+
+</div>
+
+<?php
+$js = <<<JS
+if ($("#index-slide").find("li").length == 1) {
+    $("#index-slide").find(".trigger-box").hide();
+}
+a(0);
+$('#index-slide').switchable({
+    triggers: $('#index-slide').find(".trigger-box"),
+    panels: "li",
+    effect: "fade",
+    interval: 5,
+    autoplay: true,
+    beforeSwitch: function(f, d) {
+        a(d);
+    }
+});
+function a(e) {
+    var f = $('#index-slide').find("li").eq(e),
+            d = f.data("img");
+    if (d != "none" && d != undefined) {
+        f.css("background-image", "url(" + d + ")").data("img", "none");
+    }
+}
+JS;
+
+$this->registerJs($js);
+?>
