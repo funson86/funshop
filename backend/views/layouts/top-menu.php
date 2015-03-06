@@ -72,6 +72,14 @@ $menuItemsMain = [
                 'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Point Log'),
                 'url' => ['/point-log'],
             ],
+            [
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Bonus Type'),
+                'url' => ['/bonus-type'],
+            ],
+            [
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Bonus'),
+                'url' => ['/bonus'],
+            ],
         ],
     ],
     [
