@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{view} {update} {delete} {car-type}',
                 'buttons' => [
                     'car-type' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-subtitles"></span>', $url, [
+                        return Html::a('<span class="glyphicon glyphicon-usd"></span>', $url, [
                             'title' => Yii::t('app', 'Send Bonus'),
                         ]);
                     }
