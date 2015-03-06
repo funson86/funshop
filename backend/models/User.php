@@ -52,7 +52,7 @@ class User extends \common\models\User
         ];
     }
 
-    public static function getArrayRole()
+    /*public static function getArrayRole()
     {
         return ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description');
     }
@@ -65,7 +65,7 @@ class User extends \common\models\User
             $this->_roleLabel = $roles[$this->role];
         }
         return $this->_roleLabel;
-    }
+    }*/
 
     public static function getArrayAuthRole()
     {
@@ -106,7 +106,7 @@ class User extends \common\models\User
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
 
             // Status
-            ['role', 'in', 'range' => array_keys(self::getArrayRole())],
+            //['role', 'in', 'range' => array_keys(self::getArrayRole())],
         ];
     }
 

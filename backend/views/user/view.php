@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],*/
             [
                 'attribute' => 'auth_role',
-                'value' => $model->authRoleLabel,
+                'value' => $model->authRole ? $model->authRole->name : '-',
             ],
             [
                 'attribute' => 'status',

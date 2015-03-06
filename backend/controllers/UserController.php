@@ -48,13 +48,13 @@ class UserController extends Controller
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $arrayStatus = User::getArrayStatus();
-        $arrayRole = User::getArrayRole();
+        //$arrayRole = User::getArrayRole();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'arrayStatus' => $arrayStatus,
-            'arrayRole' => $arrayRole,
+            //'arrayRole' => $arrayRole,
         ]);
     }
 
@@ -107,8 +107,8 @@ class UserController extends Controller
         $model->setScenario('admin-update');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->authManager->revokeAll($id);
-            Yii::$app->authManager->assign(Yii::$app->authManager->getRole($model->role), $id);
+            //Yii::$app->authManager->revokeAll($id);
+            //Yii::$app->authManager->assign(Yii::$app->authManager->getRole($model->role), $id);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

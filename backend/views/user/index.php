@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'auth_role',
                 'value' => function ($model) {
-                            return $model->authRoleLabel;
+                            return $model->authRole ? $model->authRole->name : '-';
                         },
                 'filter' => Html::activeDropDownList(
                         $searchModel,
