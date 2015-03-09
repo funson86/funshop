@@ -501,6 +501,11 @@
     padding:15px;
     border-bottom:1px solid #ccc
 }
+.my_nala_detail h1 span{
+    font-size:12px;
+    font-weight: normal;
+    padding:15px;
+}
 .my_nala_detail .detail_r {
     padding:20px 15px
 }
