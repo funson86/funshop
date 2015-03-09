@@ -242,5 +242,13 @@ return [
     'Surname' => '昵称',
     'Avatar Url' => '头像',
 
+    'My' => '我的',
+    'User Center' => '用户中心',
+    'Order Center' => '订单中心',
+    'Product Center' => '商品中心',
+    'My Shop' => '我的商城',
+    'Product Comment' => '商品评价',
+    'My Profile' => '个人资料',
+    'Security' => '安全设置',
 
 ];
