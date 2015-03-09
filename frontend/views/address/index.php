@@ -1,12 +1,14 @@
 <?php
 use common\models\Region;
+$this->title = Yii::t('app', 'My') . Yii::t('app', 'Address');
+$this->params['breadcrumbs'][] = $this->title;
 
 $this->title = 'Addresses';
 $this->registerCssFile('@web/css/user.css', ['depends' => \frontend\assets\AppAsset::className()]);
 ?>
 
     <div class="my_nala_detail my_address">
-        <h1>收货地址</h1>
+        <h1><?= $this->title ?></h1>
         <div class="detail_r">
             <h2><a class="fr" id="add_newaddr" href="<?= Yii::$app->urlManager->createUrl('address/create') ?>"><i>+</i>新增收货地址</a>我的收货地址簿</h2>
             <table id="address_list" class="admin_table">

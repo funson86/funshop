@@ -1,4 +1,7 @@
 <?php
+$this->title = Yii::t('app', 'Consultation');
+$this->params['breadcrumbs'][] = $this->title;
+
 /* @var $this yii\web\View */
 $this->registerCssFile('@web/css/user.css', ['depends' => \frontend\assets\AppAsset::className()]);
 ?>
@@ -11,7 +14,7 @@ td img{
 </style>
 
     <div class="my_nala_detail">
-        <h1>购买咨询</h1>
+        <h1><?= $this->title ?></h1>
         <div class="detail_r">
             <table id="address_list" class="admin_table">
                 <tbody>

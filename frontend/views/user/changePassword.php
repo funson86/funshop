@@ -8,8 +8,9 @@ use yii\bootstrap\ActiveForm;
 
 $this->registerCssFile('@web/css/user.css', ['depends' => \frontend\assets\AppAsset::className()]);
 
-$this->title =  Yii::t('app', 'Change Password');
+$this->title = Yii::t('app', 'Security');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 <style>
@@ -20,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </style>
 
 <div class="my_nala_detail my_address">
-    <h1>账户安全</h1>
+    <h1><?= $this->title ?></h1>
     <div class="detail_r">
         <div class="detail_r">
             <?php $form = ActiveForm::begin(['id' => '']); ?>

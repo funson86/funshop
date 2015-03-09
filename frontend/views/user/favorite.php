@@ -1,4 +1,7 @@
 <?php
+$this->title = Yii::t('app', 'My') . Yii::t('app', 'Favorite');
+$this->params['breadcrumbs'][] = $this->title;
+
 /* @var $this yii\web\View */
 $this->registerCssFile('@web/css/user.css', ['depends' => \frontend\assets\AppAsset::className()]);
 $this->registerCssFile('@web/css/favorite.css', ['depends' => \frontend\assets\AppAsset::className()]);
@@ -7,7 +10,7 @@ $this->registerCssFile('@web/css/favorite.css', ['depends' => \frontend\assets\A
 
     <div class="trade_mod">
         <div class="my_point">
-            <h3 class="h301"><strong>我的收藏</strong></h3>
+            <h1><?= $this->title ?></h1>
             <div class="fav-list">
                 <ul class="cle" id="fav-list">
                     <?php foreach ($products as $product) { ?>

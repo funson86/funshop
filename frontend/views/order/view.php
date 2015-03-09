@@ -1,6 +1,9 @@
 <?php
 use common\models\Region;
 
+$this->title = Yii::t('app', 'My') . Yii::t('app', 'Order');
+$this->params['breadcrumbs'][] = $this->title;
+
 /* @var $this yii\web\View */
 $this->registerCssFile('@web/css/order-view.css', ['depends' => \frontend\assets\AppAsset::className()]);
 $totalNumber = $totalPrice = 0;

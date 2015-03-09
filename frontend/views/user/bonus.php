@@ -1,4 +1,7 @@
 <?php
+$this->title = Yii::t('app', 'My') . Yii::t('app', 'Bonus');
+$this->params['breadcrumbs'][] = $this->title;
+
 /* @var $this yii\web\View */
 $this->registerCssFile('@web/css/user.css', ['depends' => \frontend\assets\AppAsset::className()]);
 ?>
@@ -11,7 +14,7 @@ td img {
 </style>
 
     <div class="my_nala_detail">
-        <h1>我的优惠券 <span><a href="<?= Yii::$app->urlManager->createUrl(['user/bonus', 'type' => 1]) ?>">未使用</a></span> <span><a href="<?= Yii::$app->urlManager->createUrl(['user/bonus', 'type' => 2]) ?>">已使用</a></span> <span><a href="<?= Yii::$app->urlManager->createUrl(['user/bonus', 'type' => 3]) ?>">已过期</a></span></h1>
+        <h1><?= $this->title ?> <span><a href="<?= Yii::$app->urlManager->createUrl(['user/bonus', 'type' => 1]) ?>">未使用</a></span> <span><a href="<?= Yii::$app->urlManager->createUrl(['user/bonus', 'type' => 2]) ?>">已使用</a></span> <span><a href="<?= Yii::$app->urlManager->createUrl(['user/bonus', 'type' => 3]) ?>">已过期</a></span></h1>
         <div class="detail_r">
             <table id="address_list" class="admin_table">
                 <tbody>

@@ -1,4 +1,7 @@
 <?php
+$this->title = Yii::t('app', 'My') . Yii::t('app', 'Point Log');
+$this->params['breadcrumbs'][] = $this->title;
+
 /* @var $this yii\web\View */
 $this->registerCssFile('@web/css/user.css', ['depends' => \frontend\assets\AppAsset::className()]);
 $this->registerCssFile('@web/css/comment.css', ['depends' => \frontend\assets\AppAsset::className()]);
@@ -12,7 +15,7 @@ td img {
 </style>
 
     <div class="my_nala_detail">
-        <h1>我的积分</h1>
+        <h1><?= $this->title ?></h1>
         <div class="detail_r">
             <p style="height: 30px;">当前积分为： <span> <?= Yii::$app->user->identity->id ?> </span> 分，  100积分可抵现金1元， <a href="#">点击查看详情</a> </p>
             <table id="address_list" class="admin_table">

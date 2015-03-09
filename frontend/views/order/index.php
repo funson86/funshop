@@ -1,13 +1,13 @@
 <?php
 /* @var $this yii\web\View */
-$this->title = Yii::t('app', 'My Order');
+$this->title = Yii::t('app', 'My') . Yii::t('app', 'Order');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
     <div class="trade_mod">
         <div class="my_point">
-            <h3 class="h301">我最近交易的订单</h3>
+            <h1><?= $this->title ?></h1>
             <div class="trade_sort">
                 <ul class="cle_float">
                     <li><a href="<?= Yii::$app->urlManager->createUrl(['order/index', 'status' => \common\models\Order::PAYMENT_STATUS_UNPAID]) ?>" class="">待付款订单( 2 )</a></li>

@@ -5,7 +5,9 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\models\Region;
 
-$this->title = 'Addresses';
+$this->title = Yii::t('app', 'My') . Yii::t('app', 'Address');
+$this->params['breadcrumbs'][] = $this->title;
+
 $this->registerCssFile('@web/css/user.css', ['depends' => \frontend\assets\AppAsset::className()]);
 ?>
 <style>
@@ -16,7 +18,7 @@ $this->registerCssFile('@web/css/user.css', ['depends' => \frontend\assets\AppAs
 </style>
 
 <div class="my_nala_detail my_address">
-    <h1>收货地址</h1>
+    <h1><?= $this->title ?></h1>
     <div class="detail_r">
         <?php $form = ActiveForm::begin(['id' => '']); ?>
         <?= Html::activeHiddenInput($model, 'user_id', ['value' => Yii::$app->user->id]) ?>
