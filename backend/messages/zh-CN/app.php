@@ -63,8 +63,8 @@ return [
     'Status' => '状态',
     'Created At' => '创建时间',
     'Updated At' => '更新时间',
-    'Create User Id' => '创建用户',
-    'Update User Id' => '更新用户',
+    'Created By' => '创建用户',
+    'Updated By' => '更新用户',
 
     'Directly Input Time' => '可直接输入日期，格式：2015-01-01',
 
@@ -77,6 +77,7 @@ return [
     'GRADE_PROVINCE' => '省',
     'GRADE_CITY' => '市',
     'GRADE_DISTRICT' => '区',
+    'Content' => '内容',
 
     'Blog' => '博客',
     'Catalog' => '分类',
@@ -84,11 +85,21 @@ return [
     'Comment' => '评论',
     'Tag' => '标签',
 
+    'Category' => '分类',
+    'Categories' => '分类',
+    'Category ID' => '分类',
+    'Title' => '名称',
+    'Surname' => '优化名称',
+    'Brief' => '简述',
+    'Keywords' => '关键字',
+    'Banner' => 'Banner图片',
+    'Is Nav' => '导航是否显示',
+    'Redirect Url' => '外部链接',
+    'Sort Order' => '排序',
+    'Page Size' => '每页显示数量',
+    'Actions' => '操作',
     'Category ID' => '分类',
 
-
-
-    'Category ID' => '分类',
     'PAYMENT_METHOD_PAY' => '在线支付',
     'PAYMENT_METHOD_COD' => '货到付款',
 
@@ -106,5 +117,99 @@ return [
     'POINT_TYPE_BOUGHT' => '购买商品',
     'POINT_TYPE_COMMENT' => '评价商品',
     'POINT_TYPE_BUYING' => '消费积分',
+
+    'Product' => '商品',
+    'Products' => '商品',
+    'Stock' => '库存',
+    'Weight' => '重量',
+    'Market Price' => '市场价',
+    'Price' => '商城价',
+    'Thumb' => '缩略图',
+    'Image' => '图片',
+    'Is Gift' => '是否礼品',
+
+    'Comment' => '评价',
+    'Comments' => '评价',
+    'Product ID' => '商品',
+    'Order ID' => '订单',
+    'Star' => '评分',
+    'Point' => '积分',
+    'Up' => '认同',
+    'Down' => '反对',
+
+
+    'Consultation' => '购买咨询',
+    'Consultations' => '购买咨询',
+    'Question' => '提问',
+    'Answer' => '回答',
+
+
+    'Search Log' => '搜索记录',
+    'Search Logs' => '搜索记录',
+    'User ID' => '用户',
+    'Keyword' => '关键字',
+
+
+    'Order' => '订单',
+    'Orders' => '订单',
+    'Consignee' => '联系人',
+    'Address' => '地址',
+    'Zipcode' => '邮编',
+    'Phone' => '电话',
+    'Mobile' => '手机',
+    'Remark' => '备注',
+    'Payment Method' => '支付方式',
+    'Payment Status' => '支付状态',
+    'Payment ID' => '支付ID',
+    'Payment Name' => '支付名称',
+    'Payment Fee' => '支付费用',
+    'Shipment Status' => '配送状态',
+    'Shipment ID' => '配送ID',
+    'Shipment Name' => '配送名称',
+    'Shipment Fee' => '配送费用',
+    'Amount' => '总额',
+    'Tax' => '税费',
+    'Invoice' => '发票',
+    'Paid At' => '支付时间',
+    'Shipped At' => '配送时间',
+    'Number' => '数量',
+    'Total' => '总额',
+
+
+    'Cart' => '购物车',
+    'Carts' => '购物车',
+
+    'Addresses' => '地址',
+
+
+    'Favorite' => '收藏',
+    'Favorites' => '收藏',
+
+
+    'Point Log' => '积分',
+    'Point Logs' => '积分',
+    'Type' => '类型',
+    'Balance' => '余额',
+
+
+    'Bonus Type' => '优惠券类型',
+    'Bonus Types' => '优惠券类型',
+    'Money' => '余额',
+    'Min Amount' => '余额',
+    'Min Goods Amount' => '余额',
+    'Started At' => '余额',
+    'Ended At' => '余额',
+
+
+    'Bonus' => '优惠券',
+    'Bonuses' => '优惠券',
+    'Bonus Type ID' => '优惠券',
+    'Used At' => '优惠券',
+
+
+    'Payment' => '支付',
+
+
+    'Shipment' => '配送',
 
 ];

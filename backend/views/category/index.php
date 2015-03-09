@@ -22,11 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <thead>
         <tr>
             <th>ID</th>
-            <th><?= Yii::t('cms', 'Title') ?> </th>
-            <th><?= Yii::t('cms', 'Sort Order') ?></th>
-            <th><?= Yii::t('cms', 'Is Nav') ?></th>
-            <th><?= Yii::t('cms', 'Status') ?></th>
-            <th><?= Yii::t('cms', 'Actions') ?></th>
+            <th><?= Yii::t('app', 'Title') ?> </th>
+            <th><?= Yii::t('app', 'Sort Order') ?></th>
+            <th><?= Yii::t('app', 'Is Nav') ?></th>
+            <th><?= Yii::t('app', 'Status') ?></th>
+            <th><?= Yii::t('app', 'Actions') ?></th>
 
         </tr>
         </thead>
