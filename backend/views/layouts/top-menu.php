@@ -47,6 +47,10 @@ $menuItemsMain = [
                 'label' => Yii::t('app', 'Consultation'),
                 'url' => ['/consultation'],
             ],
+            [
+                'label' => Yii::t('app', 'Search Log'),
+                'url' => ['/search-log'],
+            ],
         ],
         //'visible' => Yii::$app->user->can('readPost'),
     ],

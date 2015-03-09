@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Favorite;
+use common\models\SearchLog;
 use Yii;
 use common\models\Category;
 use common\models\Product;
@@ -49,7 +50,16 @@ class ProductController extends \frontend\components\Controller
             throw new BadRequestHttpException('Type is not supported.');
         }
 
-        if ($keyword) {
+        if (trim($keyword)) {
+            $keyword = trim($keyword);
+            $searchLog = new SearchLog([
+                'session_id' => Yii::$app->session->id,
+                'user_id' => Yii::$app->user->id,
+                'keyword' => $keyword,
+                'ip' => Yii::$app->request->userIP,
+            ]);
+            $searchLog->save();
+
             $query = Product::find()->where('name like "%' . $keyword . '%"');
         } else {
             $query = Product::find();
