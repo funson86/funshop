@@ -88,18 +88,28 @@ class BonusTypeController extends Controller
                 foreach ($arrayUser as $user) {
                     $user = User::find()->where(['username' => $user])->one();
                     $userId = isset($user) ? $user->id : null;
+                    $bonusType = BonusType::findOne($id);
                     if ($userId) {
                         $bonus = new Bonus();
                         $bonus->user_id = $userId;
                         $bonus->bonus_type_id = $id;
+                        $bonus->money = $bonusType->money;
+                        $bonus->min_amount = $bonusType->min_amount;
+                        $bonus->started_at = $bonusType->started_at;
+                        $bonus->ended_at = $bonusType->ended_at;
                         $bonus->user_id = $userId;
                         $bonus->save();
                     }
                 }
             } elseif (isset(Yii::$app->request->post('BonusType')['numbers']) && Yii::$app->request->post('BonusType')['numbers'] > 0) {
                 for ($i = 0; $i < Yii::$app->request->post('BonusType')['numbers']; $i++) {
+                    $bonusType = BonusType::findOne($id);
                     $bonus = new Bonus();
                     $bonus->bonus_type_id = $id;
+                    $bonus->money = $bonusType->money;
+                    $bonus->min_amount = $bonusType->min_amount;
+                    $bonus->started_at = $bonusType->started_at;
+                    $bonus->ended_at = $bonusType->ended_at;
                     $bonus->sn = Yii::$app->security->generateRandomString(8);
                     $bonus->save();
                 }

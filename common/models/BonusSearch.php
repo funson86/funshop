@@ -18,7 +18,8 @@ class BonusSearch extends Bonus
     public function rules()
     {
         return [
-            [['id', 'user_id', 'bonus_type_id', 'order_id', 'used_at', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'user_id', 'bonus_type_id', 'started_at', 'ended_at', 'order_id', 'used_at', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['money', 'min_amount'], 'number'],
             [['sn'], 'safe'],
         ];
     }
@@ -57,6 +58,10 @@ class BonusSearch extends Bonus
             'id' => $this->id,
             'user_id' => $this->user_id,
             'bonus_type_id' => $this->bonus_type_id,
+            'money' => $this->money,
+            'min_amount' => $this->min_amount,
+            'started_at' => $this->started_at,
+            'ended_at' => $this->ended_at,
             'order_id' => $this->order_id,
             'used_at' => $this->used_at,
             'created_at' => $this->created_at,

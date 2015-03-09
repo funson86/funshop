@@ -13,6 +13,10 @@ use yii\db\Expression;
  * @property integer $id
  * @property integer $user_id
  * @property integer $bonus_type_id
+ * @property string $money
+ * @property string $min_amount
+ * @property integer $started_at
+ * @property integer $ended_at
  * @property string $sn
  * @property integer $order_id
  * @property integer $used_at
@@ -53,8 +57,9 @@ class Bonus extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['bonus_type_id'], 'required'],
-            [['user_id', 'bonus_type_id', 'order_id', 'used_at', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['bonus_type_id', 'money', 'started_at', 'ended_at'], 'required'],
+            [['user_id', 'bonus_type_id', 'started_at', 'ended_at', 'order_id', 'used_at', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['money', 'min_amount'], 'number'],
             [['sn'], 'string', 'max' => 255]
         ];
     }
@@ -68,6 +73,10 @@ class Bonus extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'bonus_type_id' => Yii::t('app', 'Bonus Type ID'),
+            'money' => Yii::t('app', 'Money'),
+            'min_amount' => Yii::t('app', 'Min Amount'),
+            'started_at' => Yii::t('app', 'Started At'),
+            'ended_at' => Yii::t('app', 'Ended At'),
             'sn' => Yii::t('app', 'Sn'),
             'order_id' => Yii::t('app', 'Order ID'),
             'used_at' => Yii::t('app', 'Used At'),

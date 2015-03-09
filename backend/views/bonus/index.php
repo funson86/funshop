@@ -45,6 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
                 )
             ],
+            'money',
+            'min_amount',
+            'started_at:date',
+            'ended_at:date',
             'sn',
             [
                 'attribute' => 'order_id',
