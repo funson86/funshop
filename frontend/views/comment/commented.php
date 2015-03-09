@@ -19,7 +19,6 @@ td img{
                     <th>商品预览</th>
                     <th>商品名称</th>
                     <th>购买时间</th>
-                    <th width="120">评价状态</th>
                 </tr>
                 <?php
                 foreach ($models as $item) {
@@ -29,20 +28,19 @@ td img{
                         <td><img src="<?= $product->thumb ?>"></td>
                         <td><a target="_blank" href="<?= Yii::$app->urlManager->createUrl(['product/view', 'id' => $product->id]) ?>"><?= $product->name ?> </a></td>
                         <td><?= Yii::$app->formatter->asDate($item->created_at) ?></td>
-                        <td><a title="发评价拿积分" href="javascript:;" class="addComment">发表评价<b class="icon-show"></b></a></td>
                     </tr>
-                    <tr style="display:none">
+                    <tr>
                         <td colspan="4">
                             <form class="form">
                                 <div style="width: 100%" class="form comment-box">
                                     <div class="item"><span class="label"><em>*</em>评分：</span>
                                         <div class="fl">
                                                 <span class="commstar">
-                                                    <a data-value="1" class="star1" href="javascript:;"></a>
-                                                    <a data-value="2" class="star2" href="javascript:;"></a>
-                                                    <a data-value="3" class="star3" href="javascript:;"></a>
-                                                    <a data-value="4" class="star4" href="javascript:;"></a>
-                                                    <a data-value="5" class="star5" href="javascript:;"></a>
+                                                    <a data-value="1" class="star1 <?php if ($item->star == 1) echo 'active' ?>" href="javascript:;"></a>
+                                                    <a data-value="2" class="star2 <?php if ($item->star == 2) echo 'active' ?>" href="javascript:;"></a>
+                                                    <a data-value="3" class="star3 <?php if ($item->star == 3) echo 'active' ?>" href="javascript:;"></a>
+                                                    <a data-value="4" class="star4 <?php if ($item->star == 4) echo 'active' ?>" href="javascript:;"></a>
+                                                    <a data-value="5" class="star5 <?php if ($item->star == 5) echo 'active' ?>" href="javascript:;"></a>
                                                 </span>
                                             <input type="hidden" class="commentStar">
                                             <div class="clr"></div>
@@ -52,24 +50,7 @@ td img{
                                     <div class="item item01 xindeEl">
                                         <span class="label"><em>*</em>心得：</span>
                                         <div class="cont">
-                                            <textarea class="area area01 commentContent" rows="" cols="" name="">商品是否给力？快分享你的购买心得吧~</textarea>
-                                            <div class="clr"></div>
-                                            <span class="msg-error-01 hide">麻烦填写10-500个字呦</span>
-                                            <div class="msg-text ftx-03">10-500字</div>
-                                        </div>
-                                        <div class="clr"></div>
-                                    </div>
-                                    <div class="item item02">
-                                        <span class="label">&nbsp;</span>
-                                        <div class="fl">
-                                            <a class="btn btn-5 mr20 createComment" href="javascript:;" data-link="<?= Yii::$app->urlManager->createUrl(['comment/ajax-add', 'product_id' => $product->id, 'order_id' => $item->order_id]) ?>">
-                                                <s></s>
-                                                <span class="pingjiaEl">评价并继续</span>
-                                            </a>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <input type="checkbox" name="thirdShare" id="anonymousFlag" checked="checked" class="jdcheckbox">
-                                            <label title="匿名评价不会展示您的用户昵称，该评价也不会被第三方网站应用" class="anon-l" for="anonymousFlag">匿名评价<span class="sign-icon"></span></label>
-                                            <div class="msg-text"></div>
+                                            <?= $item->content ?>
                                         </div>
                                         <div class="clr"></div>
                                     </div>

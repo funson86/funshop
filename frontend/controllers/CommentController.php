@@ -48,10 +48,6 @@ class CommentController extends Controller
         $productIds = ArrayHelper::map($commentedOrders, 'order_id', 'product_id');
 
         if (count($orderIds) && count($productIds)) {
-            // not in orders +  ((in orders) and (not in products))
-            //$query = OrderProduct::find()->where(['and', 'user_id = ' . Yii::$app->user->id, ['not in', 'order_id', $orderIds]]);
-            //$query2 = OrderProduct::find()->where(['and', 'user_id = ' . Yii::$app->user->id, ['in', 'order_id', $orderIds], ['not in', 'product_id', $productIds]]);
-            //$query->union($query2);
             $ids = [];
             foreach ($productIds as $orderId => $productId) {
                 $orderProduct = OrderProduct::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'order_id = ' . $orderId, 'product_id = ' . $productId])->one();
@@ -71,6 +67,26 @@ class CommentController extends Controller
         ]);
 
         return $this->render('index', [
+            'models' => $dataProvider->getModels(),
+            'pagination' => $dataProvider->pagination,
+        ]);
+    }
+
+    /**
+     * Lists all Comment models.
+     * @return mixed
+     */
+    public function actionCommented()
+    {
+        $query = Comment::find()->where(['user_id' => Yii::$app->user->id])->orderBy(['created_at' => SORT_DESC]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => ['defaultPageSize' => Yii::$app->params['defaultPageSizeOrder']],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+
+        return $this->render('commented', [
             'models' => $dataProvider->getModels(),
             'pagination' => $dataProvider->pagination,
         ]);
