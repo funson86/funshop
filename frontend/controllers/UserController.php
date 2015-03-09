@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Bonus;
 use common\models\PointLog;
 use common\models\Product;
 use frontend\models\ChangePasswordForm;
@@ -89,6 +90,28 @@ class UserController extends \frontend\components\Controller
         ]);
 
         return $this->render('point-log', [
+            'models' => $dataProvider->getModels(),
+            'pagination' => $dataProvider->pagination,
+        ]);
+    }
+
+    public function actionBonus($type = 1)
+    {
+        $now = time();
+        if ($type == 1) {
+            $query = Bonus::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'used_at = 0', 'ended_at >= ' . $now]);
+        } elseif ($type == 2) {
+            $query = Bonus::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'used_at > 0']);
+        } elseif ($type == 3) {
+            $query = Bonus::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'ended_at < ' . $now]);
+        }
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => ['defaultPageSize' => Yii::$app->params['defaultPageSizeOrder']],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+
+        return $this->render('bonus', [
             'models' => $dataProvider->getModels(),
             'pagination' => $dataProvider->pagination,
         ]);
