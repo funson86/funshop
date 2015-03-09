@@ -45,7 +45,8 @@ class ChangePasswordForm extends Model
     public function changePassword()
     {
         $user = User::findOne(Yii::$app->user->identity->id);
-        $user->password = $this->password;
+        $user->setPassword($this->password);
+        $user->generateAuthKey();
 
         return $user->save();
     }
