@@ -1,0 +1,265 @@
+.Detail_inf {
+    background-color:#fff;
+    border:1px solid #E4E4E4
+}
+.Detail_inf h2 {
+    font-size:18px;
+    padding:16px 0 0 20px;
+    color:#000
+}
+.Detail_inf_shang {
+    margin-right:20px;
+    margin-left:20px;
+    border-bottom-width:1px;
+    border-bottom-style:solid;
+    border-bottom-color:#E4E4E4;
+    padding-left:10px;
+    margin-top:10px;
+    height:50px
+}
+.Detail_inf_shang li {
+    float:left;
+    line-height:50px;
+    margin-right:30px;
+    font-size:14px;
+    font-weight:bold
+}
+.Detail_inf_shang span {
+    color:#093
+}
+.Detail_inf_shang em {
+    color:#DF0B53
+}
+.Detail_inf_shang img {
+    margin-top:10px
+}
+.Detail_inf .Word {
+    height:50px;
+    padding-left:10px;
+    margin-right:20px;
+    margin-left:20px
+}
+.Detail_inf .Word p {
+    width:610px;
+    margin-top:10px
+}
+.Order_information {
+    margin-top:10px;
+    border:1px solid #E4E4E4;
+    background-color:#fff
+}
+.Order_information h2 {
+    font-size:14px;
+    font-weight:bold;
+    padding-left:20px;
+    border-bottom:2px solid #333;
+    line-height:30px;
+    height:30px
+}
+.Order_information .User_name {
+    padding:20px 0 0 30px
+}
+.User_name h3 {
+    font-size:12px;
+    font-weight:bold;
+    height:20px
+}
+.User_name h3 span {
+    margin-left:13px;
+    font-weight:normal
+}
+.User_name h3 p {
+    float:right;
+    padding-right:20px;
+    font-weight:normal
+}
+.User_name h3 p a {
+    margin-left:3px;
+    font-weight:800
+}
+.User_name ul {
+    padding:5px 0 12px 20px
+}
+.User_name li {
+    line-height:25px
+}
+.User_name li i {
+    color:#c03;
+    font-style:normal;
+    margin:0 4px
+}
+.User_name input {
+    margin-right:5px
+}
+.User_name span {
+    color:#999
+}
+.User_name strong {
+    color:#f60;
+    margin-left:10px
+}
+.User_name .New_ads {
+    border:1px solid #E4E4E4;
+    background-color:#F6F6F6;
+    margin:10px 20px 0
+}
+.User_name .New_ads input {
+    width:100px;
+    padding:3px
+}
+.User_name .New_ads input.saveconfirmbutton, #loginbox-link {
+    background:url(/lizi/cart/images/login_button_bj.png) repeat-x left top;
+    width:70px;
+    height:30px;
+    line-height:20px;
+    border:none;
+    color:#FFF;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer
+}
+#loginbox-link {
+    height:20px;
+    width:64px;
+    line-height:20px;
+    font-weight:normal;
+    font-size:12px
+}
+.User_name .New_ads li {
+    height:40px;
+    line-height:40px
+}
+.User_name .New_ads li.intro {
+    height:20px;
+    margin-top:-5px;
+    margin-bottom:5px;
+    line-height:20px
+}
+.User_name .Choose_way_box {
+    height:35px;
+    width:550px;
+    border:1px solid #E4E4E4;
+    background-color:#F6F6F6;
+    margin:5px 0 10px 30px
+}
+.goods-list {
+    border:1px solid #eee;
+    margin:10px 20px 0 50px
+}
+.goods-list .hd {
+    padding-left:600px;
+    background-color:#f4f4f4;
+    padding:5px;
+    border-bottom:1px solid #ddd
+}
+.goods-list .hd .td {
+    float:right;
+    width:125px
+}
+.goods-list .hd .td-num {
+    width:80px
+}
+.goods-list ul {
+    padding:5px 5px 0 5px
+}
+.goods-list li {
+    color:#666;
+    margin-bottom:5px
+}
+.goods-list li .pic {
+    height:40px;
+    width:40px;
+    float:left
+}
+.goods-list li .pic img {
+    height:40px;
+    width:40px;
+    vertical-align:top
+}
+.goods-list li .name {
+    width:470px;
+    height:30px;
+    line-height:16px;
+    float:left;
+    padding:10px 72px 0 10px;
+    overflow:hidden
+}
+.goods-list li .name strong {
+    font-weight:400
+}
+.goods-list li .name span {
+    margin:0 5px
+}
+.goods-list li .name i {
+    background-color:#fff2f2;
+    color:#f37;
+    display:inline-block;
+    padding:0 2px;
+    border-radius:2px
+}
+.goods-list li .name .isfree {
+    background-color:#298808;
+    color:#fff
+}
+.goods-list li .price-one, .goods-list li .nums, .goods-list li .price-xj {
+    padding-top:5px;
+    float:left
+}
+.goods-list li .price-xj {
+    float:right;
+    width:125px
+}
+.goods-list li .price-one {
+    width:134px
+}
+.goods-list li .nums {
+    width:60px
+}
+.goods-list li .item-list {
+    float:left;
+    width:592px;
+    margin-bottom:-5px
+}
+.goods-list li .item-list div {
+    margin-bottom:5px
+}
+.list-total {
+    text-align:right;
+    padding:10px 20px 0 0
+}
+.list-total em {
+    font-size:14px
+}
+.total-count {
+    text-align:right;
+    margin:20px 22px 50px 0
+}
+.total-count .tobe-pay {
+    font-size:18px;
+    font-weight:bold
+}
+.total-count .tobe-pay span {
+    position:relative;
+    top:2px
+}
+.total-count .tobe-pay em {
+    font-size:30px
+}
+.total-count .btn {
+    padding:10px 20px;
+    font-size:14px;
+    margin-top:10px
+}
+.kuaidi-genzhong {
+    width:600px
+}
+.kuaidi-genzhong th, .kuaidi-genzhong td {
+    padding:5px 10px;
+    border:1px solid #eee
+}
+.kuaidi-genzhong th {
+    background-color:#f8f8f8
+}
+.kuaidi-genzhong th.time {
+    width:130px
+}

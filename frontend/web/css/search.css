@@ -1,0 +1,614 @@
+#main {
+    width:1196px;
+    margin:10px auto;
+    padding-bottom:50px
+}
+.p-left {
+    float:left;
+    width:214px;
+    overflow:hidden
+}
+.p-right {
+    float:right;
+    width:970px
+}
+.cate-box a, a.more-btn, .rmb, .brand-intro .name a i, .search-selected a.item, .sort .bd a span {
+    background:url(../images/search-page-bg.png) 0 -9999px no-repeat
+}
+.search-selected .search-min-nav a {
+    padding:0;
+    color:#333;
+    margin:0 5px
+}
+a.more-btn {
+    color:#e4393c
+}
+.no-search {
+    padding:15px;
+    border:5px solid #e4e4e4;
+    margin-bottom:10px;
+    background:#fff;
+    font-size:14px
+}
+.no-search b {
+    color:#e4393c
+}
+.cate-box {
+    border:1px solid #eaeaea;
+    border-bottom-color:#c8c8c8;
+    background-color:#fff
+}
+.cate-box a {
+    display:block;
+    padding:10px 0 10px 27px
+}
+.cate-box a:hover {
+    background-color:#fafafa;
+    text-decoration:none
+}
+.cate-box a i {
+    color:#999;
+    font-weight:400
+}
+.cate-box h3 a {
+    padding:18px 0 18px 15px;
+    font-weight:bold
+}
+.cate-box dt {
+    border-top:1px solid #fff
+}
+.cate-box dt a {
+    font-size:14px;
+    padding-left:15px;
+    border-top:1px solid #eaeaea;
+    background-position:right -70px
+}
+.cate-box dd {
+    display:none
+}
+.cate-box .current dt {
+    border-top-color:#c7c7c7
+}
+.cate-box .current dt a {
+    border-bottom:1px solid #eaeaea;
+    background-position:right -46px
+}
+.cate-box .current dd {
+    display:block
+}
+.cate-box .current dt.on {
+    border-top:none
+}
+.cate-box .current .on a, .cate-box .current .on a:hover {
+    color:#fff;
+    background-color:#c33;
+    background-position:right 15px
+}
+.cate-box .current .on a i {
+    color:#fff
+}
+.brand-intro {
+    border:1px solid #eaeaea;
+    border-bottom-color:#c7c7c7;
+    margin-bottom:10px
+}
+.brand-intro table {
+    width:100%
+}
+.brand-intro td {
+    padding:10px 15px;
+    color:#999
+}
+.brand-intro td.pic {
+    width:80px
+}
+.brand-intro td img {
+    height:40px;
+    display:block
+}
+.brand-intro .name {
+    font-size:14px;
+    border-right:1px solid #eaeaea;
+    background-color:#f8f8f8;
+    background-image:-moz-linear-gradient(#fefefe, #f1f1f1);
+    background-image:-webkit-linear-gradient(#fefefe, #f1f1f1);
+    background-image:linear-gradient(#fefefe, #f1f1f1);
+    text-align:center;
+    width:20%
+}
+.brand-intro .name a {
+    white-space:nowrap
+}
+.brand-intro .name a:hover {
+    text-decoration:none
+}
+.brand-intro .name a i {
+    padding:0 16px 0 10px;
+    background-position:58px -26px
+}
+.brand-intro {
+    border:1px solid #eaeaea;
+    border-bottom-color:#c7c7c7;
+    margin-bottom:10px
+}
+.brand-intro table {
+    width:100%
+}
+.brand-intro td {
+    padding:10px 15px;
+    color:#999
+}
+.brand-intro td.pic {
+    width:80px
+}
+.brand-intro td img {
+    height:40px;
+    display:block
+}
+.brand-intro .name {
+    font-size:14px;
+    border-right:1px solid #eaeaea;
+    background-color:#f8f8f8;
+    background-image:-moz-linear-gradient(#fefefe, #f1f1f1);
+    background-image:-webkit-linear-gradient(#fefefe, #f1f1f1);
+    background-image:linear-gradient(#fefefe, #f1f1f1);
+    text-align:center;
+    width:20%
+}
+.brand-intro .name a {
+    white-space:nowrap
+}
+.brand-intro .name a:hover {
+    text-decoration:none
+}
+.brand-intro .name a i {
+    padding:0 16px 0 10px;
+    background-position:58px -26px
+}
+.search-selected {
+    background-color:#fff;
+    border:1px solid #eee;
+    border-bottom:1px solid #ccc;
+    padding:9px 10px
+}
+.search-selected span {
+    display:inline-block;
+    padding:4px 0 4px 0
+}
+.search-selected a {
+    display:inline-block;
+    padding:4px 24px 4px 8px;
+    color:#999
+}
+.search-selected a.item {
+    border:1px solid #ddd;
+    background-color:#fff;
+    margin-right:8px;
+    background-position:right -245px;
+    box-shadow:0px 1px 1px #eee;
+    color:#e4393c
+}
+.search-selected a.item:hover {
+    background-color:#f2f2f2;
+    background-position:right -217px;
+    text-decoration:none
+}
+.search-options {
+    margin-bottom:20px;
+    background-color:#fff
+}
+.search-options .bd {
+    border:1px solid #eee;
+    border-bottom:none;
++zoom: 1
+}
+.search-options dl {
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+    width:100%;
+    position:relative
+}
+.search-options dt {
+    position:absolute;
+    top:10px;
+    left:10px;
+    font-size:14px
+}
+.search-options dd {
+    position:relative;
+    padding:0 50px 0 63px;
+    height:24px;
+    overflow:hidden;
+    -webkit-transition:height .5s;
+    -moz-transition:height .5s;
+    -ms-transition:height .5s;
+    -o-transition:height .5s;
+    transition:height .5s
+}
+.search-options dd .items {
+    padding-top:2px
+}
+.search-options dd .items a {
+    color:#666
+}
+.search-options dd .items a:hover {
+    color:#e4393c
+}
+.search-options dd .link {
+    float:left;
+    display:inline;
+    width:202px;
+    height:18px;
+    margin:0 10px 8px 0;
+    overflow:hidden
+}
+.search-options dd.dd-price .link {
+    width:150px
+}
+.search-options dd a.more-btn {
+    position:absolute;
+    top:3px;
+    right:5px;
+    margin-right:0;
+    padding:0 20px 0 0;
+    background-position:30px -381px;
+    display:none
+}
+.search-options dd a.more-btn.clicked {
+    background-position:30px -359px
+}
+.search-options dd a.more-btn:hover {
+    background-color:#fff;
+    text-decoration:underline
+}
+.search-options dd.dd-price {
+    overflow:visible;
+    z-index:20
+}
+.priceform {
+    position:absolute;
+    top:-11px;
+    left:680px;
+    z-index:10
+}
+.priceform .form-bg {
+    width:270px;
+    border:1px solid #fff;
+    border-top-color:#eee;
+    padding:8px 15px;
++padding-bottom: 7px;
+    font-size:0
+}
+.priceform input {
+    font-size:12px;
+    border:1px solid #eaeaea;
+    padding:3px;
+    height:18px;
+    width:60px;
+    line-height:18px
+}
+.priceform input.submit {
+    height:26px;
+    padding:0;
+    line-height:16px;
+    cursor:pointer;
+    background-color:#eaeaea;
+    width:68px;
+    border-color:#e1e1e1;
+    background-color:#eaeaea;
+    background-image:-moz-linear-gradient(#fefefe, #eaeaea);
+    background-image:-webkit-linear-gradient(#fefefe, #eaeaea);
+    background-image:linear-gradient(#fefefe, #eaeaea)
+}
+.priceform input.submit:hover {
+    background-color:#e4e4e4
+}
+.priceform span {
+    height:26px;
+    width:12px;
+    display:inline-block;
+    vertical-align:-9px;
++vertical-align: -1px;
+    font-size:12px
+}
+.priceform span.rmb {
+    background-position:-10px -272px
+}
+.priceform span.rmb2 {
+    padding-left:20px;
+    background-position:8px -272px
+}
+.priceform form p {
+    display:none;
+    text-align:center
+}
+#priceform.focus .form-bg {
+    background-color:#f6f6f6;
+    border-color:#e4e4e4;
+    height:28px;
+    box-shadow:0px 1px 3px rgba(100, 100, 100, 0.1)
+}
+#priceform.focus form p {
+    display:inline;
+    padding-left:15px
+}
+.sort {
+    margin-bottom:10px;
+    height:30px;
+    border:1px solid #eee;
+    border-bottom:2px solid #ccc;
+    padding:5px 0;
+    background:#fff
+}
+.sort .bd {
+    float:left;
+    font-size:0;
+    padding-right:12px
+}
+.sort .bd a {
+    display:inline-block;
+    font-size:12px;
+    margin-right:-1px;
++margin-right: -2px;
+    position:relative;
+    z-index:1
+}
+.sort .bd a span {
+    display:block;
+    padding:5px 26px 5px 15px;
+    background-position:right -128px;
++background-position: right -127px
+}
+.sort .sort1 a.default span, .sort .sort2 a.no2 span, .sort .sort3 a.no3 span, .sort .sort4 a.no4 span, .sort .sort5 a.no4 span {
+    border:1px solid #fff;
+    padding:4px 26px 4px 15px;
+    background-position:right -104px;
++background-position: right -102px;
+    color:#e4393c;
+    text-shadow:1px 1px 1px #fff
+}
+.sort .sort4 a.no4 span {
+    background-position:right -330px;
++background-position: right -328px
+}
+.sort .bd a:hover {
+    z-index:2;
+    text-decoration:none
+}
+.sort .bd a.default span {
+    background-image:none;
+    padding-right:15px
+}
+.sort .bd a.promotion {
+    display:none
+}
+.sort .bd a.promotion span {
+    padding-right:15px;
+    padding-left:30px;
+    background-position:10px -153px
+}
+.sort .bd a.clicked span {
+    background-position:10px -184px
+}
+.search_num {
+    width:400px;
+    float:right;
+    text-align:right;
+    line-height:30px;
+    padding:0 15px
+}
+.search_num b {
+    color:#e4393c
+}
+.search_num span.search_btn {
+    margin-left:10px;
+    font-size:13px
+}
+.search_num span.search_btn a {
+    display:inline-block;
+    width:26px;
+    height:26px;
+    line-height:28px;
+    text-align:center;
+    border:1px solid #e4e4e4;
+    background-color:#fff;
+    margin:0 5px;
+    color:#999
+}
+.search_num span.search_btn a:hover {
+    border-color:#ccc;
+    box-shadow:0px 1px 1px #eee;
+    text-decoration:none;
+    color:#e4393c
+}
+.search_num span.search_btn span {
+    color:#333
+}
+.search_num span.search_btn span em {
+    color:#e4393c
+}
+.productlist {
+    margin-top: 10px;
+    margin-bottom:40px;
+    width:1196px;
+    overflow:hidden
+}
+.productlist ul {
+    margin-right:-20px
+}
+.productlist li {
+    width:232px;
+    height:342px;
+    position:relative;
+    float:left;
+    margin:0 9px 14px 0;
+    overflow:hidden;
+    _display:inline
+}
+.productlist li a.productitem span.productimg img {
+    width:230px;
+    height:230px
+}
+.productlist li a.productitem span.productname b {
+    color:#f00
+}
+.taocan-list {
+    margin-bottom:20px
+}
+.taocan-list dl {
+    border-bottom:1px solid #e9e9e9;
+    padding:10px 0
+}
+.taocan-list dt {
+    font-size:16px;
+    margin-bottom:10px
+}
+.taocan-list .goods {
+    float:left;
+    width:650px
+}
+.taocan-list .price-bd {
+    float:left;
+    width:200px;
+    padding-top:40px
+}
+.taocan-list .price-bd strong {
+    font-size:18px
+}
+.taocan-list .buy-bd {
+    float:left;
+    width:100px;
+    padding-top:55px
+}
+.taocan-list .goods a {
+    float:left;
+    display:block;
+    width:180px;
+    margin-right:12px
+}
+.taocan-list .goods a:hover {
+    text-decoration:none
+}
+.taocan-list .goods img {
+    display:block;
+    width:180px;
+    height:180px;
+    border:1px solid #eee;
+    background-color:#fff;
+    vertical-align:top
+}
+.taocan-list .goods span {
+    display:block
+}
+.taocan-list .goods .name {
+    padding-top:4px;
+    height:36px;
+    overflow:hidden;
+    line-height:18px
+}
+.taocan-list .goods .price {
+    color:#bbb;
+    margin-top:5px
+}
+.pagenav {
+    padding-right:15px
+}
+.search-none {
+    background-color:#eee;
+    padding:5px;
+    margin-bottom:10px;
+    position:relative
+}
+.search-none .bd {
+    background:#fff url(../images/searchnone.png) 56px 45px no-repeat;
+    border:1px solid #e1e1e1;
+    padding:45px 50px 45px 200px
+}
+.search-none h4 {
+    font-size:14px;
+    padding-bottom:10px
+}
+.search-none p {
+    color:#666;
+    margin-bottom:5px
+}
+.search-none .search-arrow {
+    display:none
+}
+.search-none .btn-gray {
+    display:inline-block;
+    background:url(../images/btn-bg.png) 0 0 repeat-x;
+    height:24px;
+    line-height:24px;
+    border:1px solid #d3d3d3;
+    border-radius:2px;
+    box-shadow:0px 1px 2px rgba(100, 100, 100, 0.2);
+    padding:0 10px;
+    margin-right:20px
+}
+.search-none .btn-gray:hover {
+    color:#111;
+    border-color:#bbb;
+    text-decoration:none
+}
+.search-none a.ud {
+    text-decoration:underline
+}
+.sc-box {
+    margin:20px 0
+}
+.sc-box h3 {
+    margin-bottom:10px;
+    font-size:14px;
+    color:#111
+}
+.sc-box .glist {
+    margin-right:-20px
+}
+.sc-box .glist li {
+    width:231px;
+    position:relative;
+    float:left;
+    margin:0 10px 10px 0;
+    overflow:hidden;
+    display:inline
+}
+.sc-box .glist li a.productitem span.productimg img {
+    width:229px;
+    height:229px
+}
+.sc-box .blist {
+    height:100px;
+    overflow:hidden;
+    padding-top:8px;
+    margin-top:-8px
+}
+.sc-box .blist li {
+    float:left;
+    width:144px;
+    padding-right:20px
+}
+.sc-box .blist li a {
+    display:block;
+    width:124px;
+    padding:10px;
+    background-color:#fff;
+    text-align:center;
+    -webkit-transition:all .3s;
+    -moz-transition:all .3s;
+    -ms-transition:all .3s;
+    transition:all .3s
+}
+.sc-box .blist li a:hover {
+    text-decoration:none;
+    -webkit-transform:translate(0, -8px);
+    -moz-transform:translate(0, -8px);
+    -ms-transform:translate(0, -8px);
+    transform:translate(0, -8px)
+}
+.sc-box .blist li img {
+    width:124px;
+    height:62px;
+    vertical-align:top;
+    margin-bottom:3px
+}
