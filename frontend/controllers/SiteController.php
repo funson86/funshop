@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Product;
 use common\models\Profile;
 use frontend\models\ChangePasswordForm;
 use Yii;
@@ -11,15 +12,15 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends \frontend\components\Controller
 {
+    public $layout = 'site';
     /**
      * @inheritdoc
      */
@@ -42,12 +43,12 @@ class SiteController extends Controller
                     ],
                 ],
             ],
-            'verbs' => [
+            /*'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
                 ],
-            ],
+            ],*/
         ];
     }
 
@@ -69,13 +70,21 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $this->layout = 'main';
+        $products = Product::find()->orderBy(['created_at' => SORT_DESC])->limit(6)->all();
+        return $this->render('index', [
+            'products' => $products,
+        ]);
     }
 
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
+        }
+
+        if (Yii::$app->request->get('returnUrl')) {
+            Yii::$app->user->setReturnUrl(Yii::$app->request->get('returnUrl'));
         }
 
         $model = new LoginForm();
@@ -141,7 +150,7 @@ class SiteController extends Controller
             if ($model->sendEmail()) {
                 Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Check your email for further instructions.'));
 
-                return $this->goHome();
+                //return $this->goHome();
             } else {
                 Yii::$app->getSession()->setFlash('error', Yii::t('app', 'Sorry, we are unable to reset password for email provided.'));
             }
@@ -207,5 +216,17 @@ class SiteController extends Controller
         return $this->render('profile', [
             'model' => $model,
         ]);
+    }
+
+    public function actionLoginInfo()
+    {
+        if (Yii::$app->user->isGuest) {
+            return json_encode(['login' => 0]);
+        } else {
+            return json_encode([
+                "login" => 1,
+                'name' => Yii::$app->user->identity->username,
+            ]);
+        }
     }
 }
