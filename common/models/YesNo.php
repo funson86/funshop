@@ -8,7 +8,7 @@
 
 namespace common\models;
 
-use funson86\cms\Module;
+use Yii;
 
 class YesNo
 {
@@ -29,8 +29,8 @@ class YesNo
     public static function labels($id = null)
     {
         $data = [
-            self::YES => Module::t('cms', 'YES'),
-            self::NO => Module::t('cms', 'NO'),
+            self::YES => Yii::t('app', 'YES'),
+            self::NO => Yii::t('app', 'NO'),
         ];
 
         if ($id !== null && isset($data[$id])) {
