@@ -37,9 +37,12 @@ return [
         'formatter' => [
             'dateFormat' => 'yyyy-MM-dd',
             'datetimeFormat' => 'yyyy-MM-dd HH:mm:ss',
-            'decimalSeparator' => ',',
+            'decimalSeparator' => '.',
             'thousandSeparator' => ' ',
             'currencyCode' => 'CNY',
+        ],
+        'setting' => [
+            'class' => 'funson86\setting\Setting',
         ],
     ],
 ];

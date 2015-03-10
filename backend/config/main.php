@@ -16,6 +16,14 @@ return [
             'class' => 'funson86\auth\Module',
             'controllerNamespace' => 'funson86\auth\controllers'
         ],
+        'setting' => [
+            'class' => 'funson86\setting\Module',
+            'controllerNamespace' => 'funson86\setting\controllers'
+        ],
+        'cms' => [
+            'class' => 'funson86\cms\Module',
+            'controllerNamespace' => 'funson86\cms\controllers\backend'
+        ],
     ],
     'components' => [
         'user' => [

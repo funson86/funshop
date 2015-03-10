@@ -46,7 +46,7 @@
     font-size: 12px;
 }
 
-.sidebar li a:hover, .sidebar li.active {
+.sidebar li a:hover, .sidebar li.active, .sidebar li.active a {
     background-color:#f1f1f1;
     color:#e4393c;
     text-decoration:none

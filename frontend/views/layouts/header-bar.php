@@ -13,7 +13,7 @@
         <ul id="userinfo-bar">
             <li><a href="<?= Yii::$app->urlManager->createUrl(['/order']) ?>">我的订单</a></li>
             <li><a href="<?= Yii::$app->urlManager->createUrl(['user/favorite']) ?>">我的收藏</a></li>
-            <li><a class="menu-link" href="#">帮助中心</a></li>
+            <li><a class="menu-link" href="<?= Yii::$app->urlManager->createUrl(['/cms/default/page?id=6']) ?>">帮助中心</a></li>
         </ul>
     </div>
 </div>

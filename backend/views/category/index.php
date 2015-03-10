@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?= \common\models\YesNo::labels()[$item['is_nav']]; ?></td>
                 <td><?= \common\models\Status::labels()[$item['status']]; ?></td>
                 <td>
-                    <!--a href="<?= \Yii::$app->getUrlManager()->createUrl(['category/create','parent_id'=>$item['id']]); ?>" title="<?= Yii::t('cms', 'Add Sub Catelog');?>" data-pjax="0"><span class="glyphicon glyphicon-plus-sign"></span></a-->
+                    <!--a href="<?= \Yii::$app->getUrlManager()->createUrl(['category/create','parent_id'=>$item['id']]); ?>" title="<?= Yii::t('cms', 'Add Sub Catalog');?>" data-pjax="0"><span class="glyphicon glyphicon-plus-sign"></span></a-->
                     <a href="<?= \Yii::$app->getUrlManager()->createUrl(['category/view','id'=>$item['id']]); ?>"" title="<?= Yii::t('cms', 'View');?>" data-pjax="0"><span class="glyphicon glyphicon-eye-open"></span></a>
                     <a href="<?= \Yii::$app->getUrlManager()->createUrl(['category/update','id'=>$item['id']]); ?>"" title="<?= Yii::t('cms', 'Update');?>" data-pjax="0"><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="<?= \Yii::$app->getUrlManager()->createUrl(['category/delete','id'=>$item['id']]); ?>"" title="<?= Yii::t('cms', 'Delete');?>" data-confirm="<?= Yii::t('cms', 'Are you sure you want to delete this item?');?>" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a>

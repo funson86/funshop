@@ -87,6 +87,21 @@ $menuItemsMain = [
         ],
     ],
     [
+        'label' => '<i class="fa fa-cog"></i> ' . Yii::t('app', 'Operation'),
+        'url' => ['#'],
+        'active' => false,
+        'items' => [
+            [
+                'label' => '<i class="fa fa-user"></i> ' . Yii::t('app', 'Cms Catalog'),
+                'url' => ['/cms/cms-catalog'],
+            ],
+            [
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Cms Show'),
+                'url' => ['/cms/cms-show'],
+            ],
+        ],
+    ],
+    [
         'label' => '<i class="fa fa-cog"></i> ' . Yii::t('app', 'System'),
         'url' => ['#'],
         'active' => false,

@@ -34,6 +34,7 @@ return [
     'Logout' => '注销',
     'Online' => '在线',
     'Dashboard' => '控制面板',
+    'Submit' => '提交',
     'The file "{file}" is not an image.' => '文件 "{file}" 不是一个图像文件。',
     'Hello, {name}' => '你好,{name}',
 
