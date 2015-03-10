@@ -39,6 +39,10 @@ return [
 
     'System' => '系统',
     'Settings' => '设置',
+    'Setting' => '设置',
+    'Operation' => '运营',
+    'Cms Catalog' => 'CMS分类',
+    'Cms Show' => 'CMS列表页',
     'User' => '用户',
     'Users' => '用户',
     'Role' => '角色',

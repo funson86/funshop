@@ -27,6 +27,7 @@
         "yiisoft/yii2-debug": "*",
         "yiisoft/yii2-gii": "*",
         "yiisoft/yii2-faker": "*",
+        "mihaildev/yii2-ckeditor": "*",
         "funson86/yii2-setting": "*",
         "funson86/yii2-cms": "*",
         "funson86/yii2-blog": "*",

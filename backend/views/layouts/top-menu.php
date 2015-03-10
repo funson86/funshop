@@ -120,6 +120,10 @@ $menuItemsMain = [
                 'url' => ['/auth'],
             ],
             [
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Setting'),
+                'url' => ['/setting'],
+            ],
+            [
                 'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Region'),
                 'url' => ['/region'],
             ],
