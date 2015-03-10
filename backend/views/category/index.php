@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?= $item['label']; ?></td>
                 <td><?= $item['sort_order']; ?></td>
                 <td><?= \common\models\YesNo::labels()[$item['is_nav']]; ?></td>
-                <td><?= \funson86\cms\models\Status::labels()[$item['status']]; ?></td>
+                <td><?= \common\models\Status::labels()[$item['status']]; ?></td>
                 <td>
                     <!--a href="<?= \Yii::$app->getUrlManager()->createUrl(['category/create','parent_id'=>$item['id']]); ?>" title="<?= Yii::t('cms', 'Add Sub Catelog');?>" data-pjax="0"><span class="glyphicon glyphicon-plus-sign"></span></a-->
                     <a href="<?= \Yii::$app->getUrlManager()->createUrl(['category/view','id'=>$item['id']]); ?>"" title="<?= Yii::t('cms', 'View');?>" data-pjax="0"><span class="glyphicon glyphicon-eye-open"></span></a>
