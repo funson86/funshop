@@ -327,14 +327,14 @@ thumb.find('li').mouseenter(function(){
 });
 
 if (product.stock > 0) {
-    $("li.add_cart_li").html('<a href="javascript:;" class="btn" id="buy_btn"><i class="iconfont">$</i>加入购物车</a>')
+    $("li.add_cart_li").html('<a href="javascript:;" class="btn" id="buy_btn"><i class="glyphicon glyphicon-shopping-cart"></i> 加入购物车</a>')
 } else {
     $("li.add_cart_li").html('<span>暂时无货</span>')
 }
 if (user.favorite > 0) {
-    $("li.add_cart_li").append('<a href="javascript:;" class="graybtn" id="has_fav_btn"><i class="iconfont">@</i>已收藏</a>');
+    $("li.add_cart_li").append('<a href="javascript:;" class="graybtn" id="has_fav_btn"><i class="glyphicon glyphicon-heart"></i> 已收藏</a>');
 } else {
-    $("li.add_cart_li").append('<a href="javascript:;" class="graybtn" id="fav_btn"><i class="iconfont">@</i>收藏</a>');
+    $("li.add_cart_li").append('<a href="javascript:;" class="graybtn" id="fav_btn"><i class="glyphicon glyphicon-heart-empty"></i> 收藏</a>');
 }
 
 $("#pjxqitem").hide();
