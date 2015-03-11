@@ -8,7 +8,7 @@ return [
     'mainMenu2' => '1',
     'cmsTitle' => 'HikeCms',
     'cmsTitleSeo' => 'Simple Cms based on Yii2',
-    'cmsFooter' => 'Copyright &copy; ' . date('Y') . ' by funshop on Yii2. All Rights Reserved.',
+    'cmsFooter' => 'Copyright &copy; 2015 by funshop on Yii2. All Rights Reserved.',
     'cmsPostPageCount' => '2',
     'cmsLinks' => [
         'Google' => 'http://www.google.com',
