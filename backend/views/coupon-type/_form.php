@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\BonusType */
+/* @var $model common\models\CouponType */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="bonus-type-form">
+<div class="coupon-type-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'min_amount')->textInput(['maxlength' => 10]) ?>
 
-    <?= $form->field($model, 'type')->dropDownList(\common\models\BonusType::labels()) ?>
+    <?= $form->field($model, 'type')->dropDownList(\common\models\CouponType::labels()) ?>
 
     <?= $form->field($model, 'min_goods_amount')->textInput(['maxlength' => 10]) ?>
 

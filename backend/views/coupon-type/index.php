@@ -5,18 +5,18 @@ use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\BonusTypeSearch */
+/* @var $searchModel common\models\CouponTypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Bonus Types');
+$this->title = Yii::t('app', 'Coupon Types');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="bonus-type-index">
+<div class="coupon-type-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create ') . Yii::t('app', 'Bonus Type'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create ') . Yii::t('app', 'Coupon Type'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -33,12 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'type',
                 'format' => 'html',
                 'value' => function ($model) {
-                    return \common\models\BonusType::labels($model->type);
+                    return \common\models\CouponType::labels($model->type);
                 },
                 'filter' => Html::activeDropDownList(
                     $searchModel,
                     'type',
-                    \common\models\BonusType::labels(),
+                    \common\models\CouponType::labels(),
                     ['class' => 'form-control', 'prompt' => Yii::t('app', 'PROMPT_STATUS')]
                 )
             ],
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'car-type' => function ($url, $model) {
                         return Html::a('<span class="glyphicon glyphicon-usd"></span>', $url, [
-                            'title' => Yii::t('app', 'Send Bonus'),
+                            'title' => Yii::t('app', 'Send Coupon'),
                         ]);
                     }
                 ],

@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Bonus */
+/* @var $model common\models\CouponType */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Bonuses'), 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Coupon Types'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="bonus-view">
+<div class="coupon-type-view">
 
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -27,20 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'name',
+            'money',
+            'min_amount',
             [
-                'attribute' => 'user_id',
-                'value' => $model->user ? $model->user->username : '-',
+                'attribute' => 'type',
+                'value' => \common\models\CouponType::labels($model->type),
             ],
-            [
-                'attribute' => 'bonus_type_id',
-                'value' => $model->bonusType ? $model->bonusType->name : '-',
-            ],
-            'sn',
-            [
-                'attribute' => 'order_id',
-                'value' => $model->order_id ? $model->order_id : '-',
-            ],
-            'used_at:date',
+            'min_goods_amount',
+            'started_at:datetime',
+            'ended_at:datetime',
             'created_at:datetime',
             'updated_at:datetime',
             [

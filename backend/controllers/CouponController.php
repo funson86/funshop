@@ -2,13 +2,9 @@
 
 namespace backend\controllers;
 
-use common\models\Bonus;
-use common\models\Order;
-use common\models\User;
 use Yii;
-use common\models\BonusType;
-use common\models\BonusTypeSearch;
-use yii\helpers\ArrayHelper;
+use common\models\Coupon;
+use common\models\CouponSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -16,9 +12,9 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
- * BonusTypeController implements the CRUD actions for BonusType model.
+ * CouponController implements the CRUD actions for Coupon model.
  */
-class BonusTypeController extends Controller
+class CouponController extends Controller
 {
     public function behaviors()
     {
@@ -42,14 +38,14 @@ class BonusTypeController extends Controller
     }
 
     /**
-     * Lists all BonusType models.
+     * Lists all Coupon models.
      * @return mixed
      */
     public function actionIndex()
     {
         //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $searchModel = new BonusTypeSearch();
+        $searchModel = new CouponSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -59,7 +55,7 @@ class BonusTypeController extends Controller
     }
 
     /**
-     * Displays a single BonusType model.
+     * Displays a single Coupon model.
      * @param integer $id
      * @return mixed
      */
@@ -73,66 +69,7 @@ class BonusTypeController extends Controller
     }
 
     /**
-     * Displays a single BonusType model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionSend($id)
-    {
-        //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
-        if (Yii::$app->request->post()) {
-            if (isset(Yii::$app->request->post('BonusType')['users'])) {
-                $strUser = Yii::$app->request->post('BonusType')['users'];
-                $arrayUser = explode(',', $strUser);
-
-                foreach ($arrayUser as $user) {
-                    $user = User::find()->where(['username' => $user])->one();
-                    $userId = isset($user) ? $user->id : null;
-                    $bonusType = BonusType::findOne($id);
-                    if ($userId) {
-                        $bonus = new Bonus();
-                        $bonus->user_id = $userId;
-                        $bonus->bonus_type_id = $id;
-                        $bonus->money = $bonusType->money;
-                        $bonus->min_amount = $bonusType->min_amount;
-                        $bonus->started_at = $bonusType->started_at;
-                        $bonus->ended_at = $bonusType->ended_at;
-                        $bonus->user_id = $userId;
-                        $bonus->save();
-                    }
-                }
-            } elseif (isset(Yii::$app->request->post('BonusType')['numbers']) && Yii::$app->request->post('BonusType')['numbers'] > 0) {
-                for ($i = 0; $i < Yii::$app->request->post('BonusType')['numbers']; $i++) {
-                    $bonusType = BonusType::findOne($id);
-                    $bonus = new Bonus();
-                    $bonus->bonus_type_id = $id;
-                    $bonus->money = $bonusType->money;
-                    $bonus->min_amount = $bonusType->min_amount;
-                    $bonus->started_at = $bonusType->started_at;
-                    $bonus->ended_at = $bonusType->ended_at;
-                    $bonus->sn = Yii::$app->security->generateRandomString(8);
-                    $bonus->save();
-                }
-            }
-            return $this->redirect(['bonus/index']);
-        } else {
-            $model = $this->findModel($id);
-
-            if ($model->type == BonusType::BONUS_TYPE_AMOUNT) {
-                $arrayUserId = ArrayHelper::map(Order::find()->where('amount > :amount', [':amount' => $model->min_goods_amount])->all(), 'user_id', 'user_id');
-                $arrayUserName = ArrayHelper::map(User::find()->where(['id' => $arrayUserId])->all(), 'id', 'username');
-
-                $model->users = implode(',', $arrayUserName);
-            }
-
-            return $this->render('sendForm', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Creates a new BonusType model.
+     * Creates a new Coupon model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -140,7 +77,7 @@ class BonusTypeController extends Controller
     {
         //if(!Yii::$app->user->can('createYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $model = new BonusType();
+        $model = new Coupon();
         $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -153,7 +90,7 @@ class BonusTypeController extends Controller
     }
 
     /**
-     * Updates an existing BonusType model.
+     * Updates an existing Coupon model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -174,7 +111,7 @@ class BonusTypeController extends Controller
     }
 
     /**
-     * Deletes an existing BonusType model.
+     * Deletes an existing Coupon model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -192,15 +129,15 @@ class BonusTypeController extends Controller
     }
 
     /**
-     * Finds the BonusType model based on its primary key value.
+     * Finds the Coupon model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return BonusType the loaded model
+     * @return Coupon the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BonusType::findOne($id)) !== null) {
+        if (($model = Coupon::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\BonusType;
+use common\models\CouponType;
 
 /**
- * BonusTypeSearch represents the model behind the search form about `common\models\BonusType`.
+ * CouponTypeSearch represents the model behind the search form about `common\models\CouponType`.
  */
-class BonusTypeSearch extends BonusType
+class CouponTypeSearch extends CouponType
 {
     /**
      * @inheritdoc
@@ -42,7 +42,7 @@ class BonusTypeSearch extends BonusType
      */
     public function search($params)
     {
-        $query = BonusType::find();
+        $query = CouponType::find();
         
         $query->orderBy(['created_at' => SORT_DESC]);
 

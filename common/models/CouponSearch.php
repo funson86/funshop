@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Bonus;
+use common\models\Coupon;
 
 /**
- * BonusSearch represents the model behind the search form about `common\models\Bonus`.
+ * CouponSearch represents the model behind the search form about `common\models\Coupon`.
  */
-class BonusSearch extends Bonus
+class CouponSearch extends Coupon
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class BonusSearch extends Bonus
     public function rules()
     {
         return [
-            [['id', 'user_id', 'bonus_type_id', 'started_at', 'ended_at', 'order_id', 'used_at', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'user_id', 'coupon_type_id', 'started_at', 'ended_at', 'order_id', 'used_at', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['money', 'min_amount'], 'number'],
             [['sn'], 'safe'],
         ];
@@ -42,7 +42,7 @@ class BonusSearch extends Bonus
      */
     public function search($params)
     {
-        $query = Bonus::find();
+        $query = Coupon::find();
         
         $query->orderBy(['created_at' => SORT_DESC]);
 
@@ -57,7 +57,7 @@ class BonusSearch extends Bonus
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'bonus_type_id' => $this->bonus_type_id,
+            'coupon_type_id' => $this->coupon_type_id,
             'money' => $this->money,
             'min_amount' => $this->min_amount,
             'started_at' => $this->started_at,

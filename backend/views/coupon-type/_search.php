@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\BonusTypeSearch */
+/* @var $model common\models\CouponTypeSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="bonus-type-search">
+<div class="coupon-type-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],

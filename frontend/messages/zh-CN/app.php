@@ -193,8 +193,8 @@ return [
     'Balance' => '余额',
 
 
-    'Bonus Type' => '优惠券类型',
-    'Bonus Types' => '优惠券类型',
+    'Coupon Type' => '优惠券类型',
+    'Coupon Types' => '优惠券类型',
     'Money' => '余额',
     'Min Amount' => '余额',
     'Min Goods Amount' => '余额',
@@ -202,9 +202,9 @@ return [
     'Ended At' => '余额',
 
 
-    'Bonus' => '优惠券',
-    'Bonuses' => '优惠券',
-    'Bonus Type ID' => '优惠券',
+    'Coupon' => '优惠券',
+    'Coupons' => '优惠券',
+    'Coupon Type ID' => '优惠券',
     'Used At' => '优惠券',
 
 

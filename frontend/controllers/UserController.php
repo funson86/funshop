@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\Bonus;
+use common\models\Coupon;
 use common\models\PointLog;
 use common\models\Product;
 use frontend\models\ChangePasswordForm;
@@ -95,15 +95,15 @@ class UserController extends \frontend\components\Controller
         ]);
     }
 
-    public function actionBonus($type = 1)
+    public function actionCoupon($type = 1)
     {
         $now = time();
         if ($type == 1) {
-            $query = Bonus::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'used_at = 0', 'ended_at >= ' . $now]);
+            $query = Coupon::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'used_at = 0', 'ended_at >= ' . $now]);
         } elseif ($type == 2) {
-            $query = Bonus::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'used_at > 0']);
+            $query = Coupon::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'used_at > 0']);
         } elseif ($type == 3) {
-            $query = Bonus::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'ended_at < ' . $now]);
+            $query = Coupon::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'ended_at < ' . $now]);
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -111,7 +111,7 @@ class UserController extends \frontend\components\Controller
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
-        return $this->render('bonus', [
+        return $this->render('coupon', [
             'models' => $dataProvider->getModels(),
             'pagination' => $dataProvider->pagination,
         ]);

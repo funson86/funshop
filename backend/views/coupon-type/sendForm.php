@@ -4,15 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\BonusType */
+/* @var $model common\models\CouponType */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="bonus-type-form">
+<div class="coupon-type-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php if ($model->type == \common\models\BonusType::BONUS_TYPE_OFFLINE) { ?>
+    <?php if ($model->type == \common\models\CouponType::COUPON_TYPE_OFFLINE) { ?>
         <?= $form->field($model, 'numbers')->textInput()->hint(Yii::t('app', 'Users separated by ,')) ?>
     <?php } else { ?>
         <?= $form->field($model, 'users')->textarea(['rows' => 6])->hint(Yii::t('app', 'Users separated by ,')) ?>

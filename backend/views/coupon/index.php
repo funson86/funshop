@@ -5,18 +5,18 @@ use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\BonusSearch */
+/* @var $searchModel common\models\CouponSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Bonuses');
+$this->title = Yii::t('app', 'Coupons');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="bonus-index">
+<div class="coupon-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <!--p>
-        <?= Html::a(Yii::t('app', 'Create ') . Yii::t('app', 'Bonus'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create ') . Yii::t('app', 'Coupon'), ['create'], ['class' => 'btn btn-success']) ?>
     </p-->
 
     <?= GridView::widget([
@@ -33,15 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'attribute' => 'bonus_type_id',
+                'attribute' => 'coupon_type_id',
                 'format' => 'html',
                 'value' => function ($model) {
-                    return $model->bonusType ? $model->bonusType->name : '-';
+                    return $model->couponType ? $model->couponType->name : '-';
                 },
                 'filter' => Html::activeDropDownList(
                     $searchModel,
-                    'bonus_type_id',
-                    ArrayHelper::map(\common\models\BonusType::find()->all(), 'id', 'name'),
+                    'coupon_type_id',
+                    ArrayHelper::map(\common\models\CouponType::find()->all(), 'id', 'name'),
                     ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
                 )
             ],

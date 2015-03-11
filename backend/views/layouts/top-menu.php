@@ -77,12 +77,12 @@ $menuItemsMain = [
                 'url' => ['/point-log'],
             ],
             [
-                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Bonus Type'),
-                'url' => ['/bonus-type'],
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Coupon Type'),
+                'url' => ['/coupon-type'],
             ],
             [
-                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Bonus'),
-                'url' => ['/bonus'],
+                'label' => '<i class="fa fa-lock"></i> ' . Yii::t('app', 'Coupon'),
+                'url' => ['/coupon'],
             ],
         ],
     ],

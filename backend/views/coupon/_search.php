@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\BonusSearch */
+/* @var $model common\models\CouponSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="bonus-search">
+<div class="coupon-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'bonus_type_id') ?>
+    <?= $form->field($model, 'coupon_type_id') ?>
 
     <?= $form->field($model, 'sn') ?>
 

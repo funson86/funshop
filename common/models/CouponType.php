@@ -8,35 +8,39 @@ use yii\behaviors\BlameableBehavior;
 use yii\db\Expression;
 
 /**
- * This is the model class for table "bonus".
+ * This is the model class for table "coupon_type".
  *
  * @property integer $id
- * @property integer $user_id
- * @property integer $bonus_type_id
+ * @property string $name
  * @property string $money
  * @property string $min_amount
+ * @property integer $type
  * @property integer $started_at
  * @property integer $ended_at
- * @property string $sn
- * @property integer $order_id
- * @property integer $used_at
+ * @property string $min_goods_amount
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $created_by
  * @property integer $updated_by
  *
- * @property User $user
- * @property BonusType $bonusType
+ * @property Coupon[] $coupons
  */
-class Bonus extends \yii\db\ActiveRecord
+class CouponType extends \yii\db\ActiveRecord
 {
+    const COUPON_TYPE_USER = 1;
+    const COUPON_TYPE_ORDER = 2;
+    const COUPON_TYPE_AMOUNT = 3;
+    const COUPON_TYPE_OFFLINE = 4;
+
+    public $users;
+    public $numbers;
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'bonus';
+        return 'coupon_type';
     }
 
     /**
@@ -57,10 +61,10 @@ class Bonus extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['bonus_type_id', 'money', 'started_at', 'ended_at'], 'required'],
-            [['user_id', 'bonus_type_id', 'started_at', 'ended_at', 'order_id', 'used_at', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['money', 'min_amount'], 'number'],
-            [['sn'], 'string', 'max' => 255]
+            [['name', 'money', 'started_at', 'ended_at'], 'required'],
+            [['money', 'min_amount', 'min_goods_amount'], 'number'],
+            [['type', 'started_at', 'ended_at', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['name'], 'string', 'max' => 64]
         ];
     }
 
@@ -71,15 +75,13 @@ class Bonus extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'bonus_type_id' => Yii::t('app', 'Bonus Type ID'),
+            'name' => Yii::t('app', 'Name'),
             'money' => Yii::t('app', 'Money'),
             'min_amount' => Yii::t('app', 'Min Amount'),
+            'type' => Yii::t('app', 'Type'),
             'started_at' => Yii::t('app', 'Started At'),
             'ended_at' => Yii::t('app', 'Ended At'),
-            'sn' => Yii::t('app', 'Sn'),
-            'order_id' => Yii::t('app', 'Order ID'),
-            'used_at' => Yii::t('app', 'Used At'),
+            'min_goods_amount' => Yii::t('app', 'Min Goods Amount'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
@@ -90,17 +92,9 @@ class Bonus extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getCoupons()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBonusType()
-    {
-        return $this->hasOne(BonusType::className(), ['id' => 'bonus_type_id']);
+        return $this->hasMany(Coupon::className(), ['coupon_type_id' => 'id']);
     }
 
     /**
@@ -117,6 +111,22 @@ class Bonus extends \yii\db\ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    public static function labels($id = null)
+    {
+        $data = [
+            self::COUPON_TYPE_USER => Yii::t('app', 'COUPON_TYPE_USER'),
+            self::COUPON_TYPE_ORDER => Yii::t('app', 'COUPON_TYPE_ORDER'),
+            self::COUPON_TYPE_AMOUNT => Yii::t('app', 'COUPON_TYPE_AMOUNT'),
+            self::COUPON_TYPE_OFFLINE => Yii::t('app', 'COUPON_TYPE_OFFLINE'),
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
     }
 
     /**

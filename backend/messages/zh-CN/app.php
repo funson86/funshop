@@ -122,6 +122,11 @@ return [
     'POINT_TYPE_COMMENT' => '评价商品',
     'POINT_TYPE_BUYING' => '消费积分',
 
+    'COUPON_TYPE_USER' => '按用户发送',
+    'COUPON_TYPE_ORDER' => '按订单发送',
+    'COUPON_TYPE_AMOUNT' => '按金额发送',
+    'COUPON_TYPE_OFFLINE' => '生成优惠码',
+
     'Product' => '商品',
     'Products' => '商品',
     'Stock' => '库存',
@@ -196,19 +201,19 @@ return [
     'Balance' => '余额',
 
 
-    'Bonus Type' => '优惠券类型',
-    'Bonus Types' => '优惠券类型',
-    'Money' => '余额',
-    'Min Amount' => '余额',
-    'Min Goods Amount' => '余额',
-    'Started At' => '余额',
-    'Ended At' => '余额',
+    'Coupon Type' => '优惠券类型',
+    'Coupon Types' => '优惠券类型',
+    'Money' => '金额',
+    'Min Amount' => '最低消费额',
+    'Min Goods Amount' => '用户最小金额',
+    'Started At' => '开始时间',
+    'Ended At' => '到期时间',
 
 
-    'Bonus' => '优惠券',
-    'Bonuses' => '优惠券',
-    'Bonus Type ID' => '优惠券',
-    'Used At' => '优惠券',
+    'Coupon' => '优惠券',
+    'Coupons' => '优惠券',
+    'Coupon Type ID' => '优惠券类型',
+    'Used At' => '使用时间',
 
 
     'Payment' => '支付',
