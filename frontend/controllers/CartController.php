@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Address;
 use common\models\Cart;
+use common\models\Coupon;
 use common\models\Order;
 use common\models\OrderProduct;
 use common\models\Product;
@@ -21,13 +22,10 @@ class CartController extends \frontend\components\Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => ['checkout', 'address', 'pay', 'cod', 'json-coupon'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'add-to-cart', 'delete', 'destroy', 'json-list', 'ajax-add'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['checkout', 'address', 'pay', 'cod'],
+                        'actions' => ['checkout', 'address', 'pay', 'cod', 'json-coupon'],
                         'allow' => true,
                         'roles' => ['@']
                     ]
@@ -78,7 +76,7 @@ class CartController extends \frontend\components\Controller
         $model = new Order();
 
         if ($model->load(Yii::$app->request->post())) {
-            //var_dump(Yii::$app->request->post(), $model);die();
+            var_dump(Yii::$app->request->post(), $model);die();
             $address = Address::find()->where(['id' => $userId, 'user_id' => $userId])->one();
             $model->user_id = $userId;
             $model->sn = date('YmdHis') . rand(1000, 9999);
@@ -244,6 +242,44 @@ class CartController extends \frontend\components\Controller
             'totalNumber' => $totalNumber,
             'totalPrice' => $totalPrice,
             'data' => $products,
+        ];
+    }
+
+    public function actionJsonCoupon()
+    {
+        $coupons = Coupon::find()->where(['user_id' => Yii::$app->user->id])->asArray()->all();
+        foreach ($coupons as $k => $item) {
+            $coupons[$k]['ended_time'] = date('Y-m-d', $item['ended_at']);
+        }
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'status' => 1,
+            'count' => count($coupons),
+            'data' => $coupons,
+        ];
+    }
+
+    public function actionAjaxCouponCode($sn)
+    {
+        $sn = trim($sn);
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (!$sn) {
+            return ['status' => -1];
+        }
+
+        $coupon = Coupon::find()->where(['sn' => $sn])->one();
+        if ($coupon->used_at > 0) {
+            return ['status' => -2];
+        } elseif ($coupon->ended_at < time()) {
+            return ['status' => -3];
+        }
+
+        return [
+            'status' => 1,
+            'sn' => $coupon->sn,
+            'money' => $coupon->money,
         ];
     }
 

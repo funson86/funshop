@@ -75,7 +75,7 @@ $this->registerCssFile('@web/css/user.css', ['depends' => \frontend\assets\AppAs
                     <label>联系电话:</label>
                     <?= Html::activeTextInput($model, 'mobile', ['class' => 'txt']) ?>
                     <span class="info">推荐手机，座机需加区号和“-”符号</span></li>
-                <li class="last"><?= Html::submitButton( Yii::t('app', '确认提交'), ['class' => 'btn',]) ?><a href="<?= Yii::$app->request->referrer ?>" hidefocus="true" class="btn">返 回</a></li>
+                <li class="last"><?= Html::submitButton( Yii::t('app', '提交'), ['class' => 'btn',]) ?><a href="<?= Yii::$app->request->referrer ?>" hidefocus="true" class="btn">返 回</a></li>
             </ul>
         </div>
         <?php ActiveForm::end(); ?>

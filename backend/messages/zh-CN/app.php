@@ -27,6 +27,7 @@ return [
     'Update ' => '更新',
     'Update' => '更新',
     'Delete' => '删除',
+    'Send' => '发送',
     'Are you sure you want to delete this item?' => '您确定要删除此项吗？',
     'Login' => '登录',
     'Incorrect username or password.' => '帐号或密码不正确',

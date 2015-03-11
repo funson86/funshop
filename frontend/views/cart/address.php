@@ -71,7 +71,7 @@ $this->registerCssFile('@web/css/checkout.css', ['depends' => \frontend\assets\A
                     <label>联系电话:</label>
                     <?= Html::activeTextInput($model, 'mobile', ['class' => 'txt']) ?>
                     <span class="info">推荐手机，座机需加区号和“-”符号</span></li>
-                <li class="last"><?= Html::submitButton( Yii::t('app', '确认提交'), ['class' => 'btn',]) ?><a href="javascript:;" hidefocus="true" class="btn">取 消</a></li>
+                <li class="last"><?= Html::submitButton( Yii::t('app', '提交'), ['class' => 'btn',]) ?><a href="javascript:;" hidefocus="true" class="btn">取 消</a></li>
             </ul>
         </div>
         <?php ActiveForm::end(); ?>
