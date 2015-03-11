@@ -44,7 +44,7 @@ $this->beginContent('@frontend/views/layouts/main.php');
                     'items' => [
                         ['label' => Yii::t('app', 'My') . Yii::t('app', 'Address'), 'url' => ['/address/index']],
                         ['label' => Yii::t('app', 'My') . Yii::t('app', 'Point'), 'url' => ['/user/point-log']],
-                        ['label' => Yii::t('app', 'My') . Yii::t('app', 'Bonus'), 'url' => ['/user/bonus']],
+                        ['label' => Yii::t('app', 'My') . Yii::t('app', 'Coupon'), 'url' => ['/user/coupon']],
                         ['label' => Yii::t('app', 'My Profile'), 'url' => ['/user/profile']],
                         ['label' => Yii::t('app', 'Security'), 'url' => ['/user/change-password']],
                     ],
