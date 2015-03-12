@@ -107,18 +107,18 @@ $i = 0;
                             <a class="btn" id="coupon-code-submit" href="javascript:;">确定</a> </div>
                     </div>
                 </div>
-                <div id="use-integral" class="use-dixiao cle">
-                    <span class="tit"><input type="checkbox"> 使用积分</span>
-                    <input type="hidden" value="" name="integral">
+                <div id="use-integral" class="use-dixiao cle" <?php if (Yii::$app->user->identity->point > 0) { ?>style="display: block;"<?php } ?>>
+                    <span class="tit"><input type="checkbox" name="checkbox-point" id="checkbox-point"> 使用积分</span>
+                    <input type="hidden" value="<?= Yii::$app->user->identity->point ?>" name="user-point" id="user-point">
                     <span class="used"></span> <span class="gray cancel">【<a href="javascript:;">取消</a>】</span>
                     <div class="dixiao-tip"></div>
                 </div>
-                <div id="integral_box" class="use_box">
-                    <div class="arw"><i class="iconfont"></i></div>
-                    <h3>该订单可用积分：<span id="integral-total" class="red">0</span>，抵<span class="red">￥0.00</span><a target="_blank" href="/help/member_integration.html">【如何获得积分？】</a></h3>
-                    <div class="use_box_form">
+                <div id="point_box" class="use_box">
+                    <div class="arw"></div>
+                    <h3>该订单可用积分：<span id="point-total" class="red"><?= Yii::$app->user->identity->point ?></span>，抵<span class="red">￥<?= Yii::$app->user->identity->point / 100 ?></span><a target="_blank" href="/help/member_integration.html">【如何获得积分？】</a></h3>
+                    <div id="point-form" class="use_box_form">
                         <input type="text" value="">
-                        <a class="btn" href="javascript:;">确定</a> </div>
+                        <a class="btn" id="point-submit" href="javascript:;">确定</a> </div>
                 </div>
                 <!--div id="use-balance" class="use-dixiao cle">
                     <span class="tit"><input type="checkbox"> 使用账户余额</span>
@@ -189,14 +189,14 @@ jQuery("a.graybtn").click(function(){
 });
 jQuery("input[name='checkbox-coupon']").click(function(){
     if ($("#checkbox-coupon").is(":checked")) {
-        $.get("{$urlCoupon}, function(data, status) {
+        $.get("{$urlCoupon}", function(data, status) {
             if (status == "success") {
                 var count = 0;
                 var str = '<h3>该订单可用优惠券（<em class="red">' + data.count +'</em>）<a target="_blank" href="/help/coupon.html">【优惠券如何使用】</a></h3>';
                 $.each(data.data, function(k, v) {
                     if (v.min_amount < parseInt($('#total-price').html())) {
                         count ++;
-                        str += '<p style="margin-top:10px"><input type="checkbox" name="coupon" value="'+ v.id +'"> <span title="购物满' + parseInt(v.min_amount) + '减' + parseInt(v.money) + '购物券">' + parseInt(v.min_amount) + '-' + parseInt(v.money) + '优惠券</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;有效期至' + v.ended_time +'</p>';
+                        str += '<p style="margin-top:10px"><input type="checkbox" name="coupon" value="'+ v.id +'" data-money="' + parseInt(v.money) + '"> <span title="购物满' + parseInt(v.min_amount) + '减' + parseInt(v.money) + '购物券">' + parseInt(v.min_amount) + '-' + parseInt(v.money) + '优惠券</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;有效期至' + v.ended_time +'</p>';
                     }
 
                 });
@@ -212,6 +212,10 @@ jQuery("input[name='checkbox-coupon']").click(function(){
 jQuery(".coupon_list").on("click", 'input[name^=coupon]', function(){
     $("input[name='coupon']").removeAttr("checked");
     $(this).prop('checked', 'checked');
+    money = parseInt($(this).data('money'));
+    $("#total-price").html(parseFloat($("#total-price").html()) - money);
+    $(".dixiao-tip").html("优惠券：<em>-￥" + money + ".00</em>");
+    $(".dixiao-tip").css('display', 'block');
 });
 
 jQuery("#coupon_code_trg").click(function(){
@@ -221,19 +225,38 @@ jQuery("#coupon_code_trg").click(function(){
 jQuery("#coupon-code-submit").click(function(){
     var couponCode = $(this).prev().val();
     $.get("{$urlCouponCode}?sn=" + couponCode, function(data, status) {
-    if (status == "success") {
-        if (parseInt(data.status) == -1) {
-            alert('优惠码不存在');
-        } elseif (parseInt(data.status) == -2) {
-            alert('优惠码已使用');
-        } elseif (parseInt(data.status) == -3) {
-            alert('优惠码已过期');
-        } elseif (parseInt(data.status) == 1) {
-            $("#coupon_code").html("优惠" + data.money + "元" + '<input type="hidden" name="sn" value="' + data.sn +'" />');
+        if (status == "success") {
+            if (parseInt(data.status) == -1) {
+                alert('优惠码不存在');
+            } else if (parseInt(data.status) == -2) {
+                alert('优惠码已使用');
+            } else if (parseInt(data.status) == -3) {
+                alert('优惠码已过期');
+            } else if (parseInt(data.status) == 1) {
+                $("#coupon_code").html("优惠" + data.money + "元" + '<input type="hidden" name="sn" value="' + data.sn +'" />');
+                $("#total-price").html(parseFloat($("#total-price").html()) - parseInt(data.money));
+            }
         }
-    }
+    });
 });
 
+jQuery("input[name='checkbox-point']").click(function(){
+    if ($("#checkbox-point").is(":checked")) {
+        $('#point_box').css('display', 'block');
+    } else {
+        $('#point_box').css('display', 'none');
+    }
+});
+jQuery("#point-submit").click(function(){
+    var usePoint = parseInt($(this).prev().val());
+    var ownPoint = parseInt($("#user-point").val());
+    if (usePoint > ownPoint) {
+        alert('您本次最多可以使用' + ownPoint + '个积分');
+    } else {
+        var usePointYuan = usePoint / 100;
+        $("#point-form").html("优惠" + usePointYuan + "元" + '<input type="hidden" name="point" value="' + usePoint +'" />');
+        $("#total-price").html(parseFloat($("#total-price").html()) - usePointYuan);
+    }
 });
 
 JS;

@@ -7,7 +7,9 @@ use common\models\Cart;
 use common\models\Coupon;
 use common\models\Order;
 use common\models\OrderProduct;
+use common\models\PointLog;
 use common\models\Product;
+use common\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -76,8 +78,41 @@ class CartController extends \frontend\components\Controller
         $model = new Order();
 
         if ($model->load(Yii::$app->request->post())) {
-            var_dump(Yii::$app->request->post(), $model);die();
-            $address = Address::find()->where(['id' => $userId, 'user_id' => $userId])->one();
+            if (!Yii::$app->request->post('Order')['address_id']) {
+                return $this->goBack();
+            }
+
+            // 使用优惠券
+            $feeCouponUser = $feeCouponCode = $feePoint = 0.00;
+            $couponId = Yii::$app->request->post('coupon');
+            if ($couponId && Yii::$app->request->post('checkbox-coupon')) {
+                $couponUser = Coupon::findOne($couponId);
+                if (!$couponUser || $couponUser->used_at > 0 || $couponUser->ended_at < time() || $couponUser->user_id != Yii::$app->user->id) {
+                    return $this->goBack();
+                }
+                $feeCouponUser = $couponUser->money;
+            }
+
+            // 使用优惠码
+            $sn = Yii::$app->request->post('sn');
+            if ($sn) {
+                $couponCode = Coupon::find()->where(['sn' => $sn])->one();
+                if (!$couponCode || $couponCode->used_at > 0 || $couponCode->ended_at < time()) {
+                    return $this->goBack();
+                }
+                $feeCouponCode = $couponCode->money;
+            }
+
+            // 使用积分
+            $point = Yii::$app->request->post('point');
+            if ($point && Yii::$app->request->post('checkbox-point')) {
+                if ($point > Yii::$app->user->identity->point) {
+                    return $this->goBack();
+                }
+                $feePoint = intval($point) / 100;
+            }
+
+            $address = Address::find()->where(['id' => Yii::$app->request->post('Order')['address_id'], 'user_id' => $userId])->one();
             $model->user_id = $userId;
             $model->sn = date('YmdHis') . rand(1000, 9999);
             $model->consignee = $address->consignee;
@@ -105,7 +140,7 @@ class CartController extends \frontend\components\Controller
             } else {
                 $this->redirect('/cart');
             }
-            $model->amount += floatval($model->shipment_fee);
+            $model->amount += floatval($model->shipment_fee) - $feeCouponUser - $feeCouponCode - $feePoint;
 
             if ($model->save()) {
                 // insert order_product and clear cart
@@ -124,7 +159,30 @@ class CartController extends \frontend\components\Controller
                     $orderProduct->save();
                 }
 
+                // 生成订单后，清空购物车，设置优惠码，更新积分和积分记录
                 Cart::deleteAll(['session_id' => Yii::$app->session->id]);
+                if ($couponUser && Yii::$app->request->post('checkbox-coupon')) {
+                    $couponUser->used_at = time();
+                    $couponUser->order_id = $model->id;
+                    $couponUser->save();
+                }
+                if ($couponCode && Yii::$app->request->post('checkbox-coupon')) {
+                    $couponCode->user_id = Yii::$app->user->id;
+                    $couponCode->used_at = time();
+                    $couponCode->order_id = $model->id;
+                    $couponCode->save();
+                }
+                if ($point && Yii::$app->request->post('checkbox-point')) {
+                    $balance = Yii::$app->user->identity->point - $point;
+                    User::updateAllCounters(['point' => - $point], ['id' => Yii::$app->user->id]);
+                    $pointLog = new PointLog([
+                        'user_id' => Yii::$app->user->id,
+                        'type' => PointLog::POINT_TYPE_BUYING,
+                        'point' => - $point,
+                        'balance' => $balance,
+                    ]);
+                    $pointLog->save();
+                }
 
                 if ($model->payment_method == Order::PAYMENT_METHOD_COD) {
                     return $this->redirect(['cart/cod',
@@ -247,7 +305,14 @@ class CartController extends \frontend\components\Controller
 
     public function actionJsonCoupon()
     {
-        $coupons = Coupon::find()->where(['user_id' => Yii::$app->user->id])->asArray()->all();
+        $products = Cart::find()->where(['user_id' => Yii::$app->user->id])->all();
+        $totalProduct = $totalPrice = 0;
+        foreach($products as $product) {
+            $totalProduct += $product->number;
+            $totalPrice += $product->number * $product->price;
+        }
+
+        $coupons = Coupon::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'min_amount < ' . $totalPrice])->asArray()->all();
         foreach ($coupons as $k => $item) {
             $coupons[$k]['ended_time'] = date('Y-m-d', $item['ended_at']);
         }
@@ -270,6 +335,10 @@ class CartController extends \frontend\components\Controller
         }
 
         $coupon = Coupon::find()->where(['sn' => $sn])->one();
+        if (!$coupon) {
+            return ['status' => -1];
+        }
+
         if ($coupon->used_at > 0) {
             return ['status' => -2];
         } elseif ($coupon->ended_at < time()) {
