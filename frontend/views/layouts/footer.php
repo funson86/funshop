@@ -5,15 +5,15 @@
 
             <div  class="ft_links">
                 <div class="ft_nav">
-                    <a href="#" target="_blank" class="noborder" rel="nofollow">关于商城</a>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/cms/default/page', 'id' => 51, 'surname' => 'about_us']) ?>" target="_blank" class="noborder" rel="nofollow">关于商城</a>
                     <a href="#" target="_blank">商城资讯</a>
-                    <a href="#" target="_blank" rel="nofollow">商务合作</a>
-                    <a href="#" target="_blank" rel="nofollow">加入我们</a>
-                    <a href="#" target="_blank" rel="nofollow">配送政策</a>
-                    <a href="#" target="_blank" rel="nofollow">售后保障</a>
-                    <a href="#" target="_blank" rel="nofollow">帮助中心</a>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/cms/default/page', 'id' => 53, 'surname' => 'about_cooperation']) ?>" target="_blank" rel="nofollow">商务合作</a>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/cms/default/page', 'id' => 54, 'surname' => 'about_hr']) ?>" target="_blank" rel="nofollow">加入我们</a>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/cms/default/page', 'id' => 23, 'surname' => 'shipment_fee']) ?>" target="_blank" rel="nofollow">配送政策</a>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/cms/default/page', 'id' => 42, 'surname' => 'sales_return_policy']) ?>" target="_blank" rel="nofollow">售后政策</a>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/cms/default/page', 'id' => 11, 'surname' => 'register']) ?>" target="_blank" rel="nofollow">帮助中心</a>
                     <a href="#" target="_blank">友情链接</a>
-                    <a href="#" target="_blank" rel="nofollow">联系我们</a>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/cms/default/page', 'id' => 52, 'surname' => 'about_contact']) ?>" target="_blank" rel="nofollow">联系我们</a>
                 </div>
                 <div class="img_links">
                 </div>

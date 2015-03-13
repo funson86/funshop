@@ -35,6 +35,98 @@ $totalNumber = $result['number'];
             </div>
         </div>
     </div>
+    <form id="payform" target="_blank" name="payform" method="post" action="/trade/doPay">
+        <input type="hidden" id="org.codehaus.groovy.grails.SYNCHRONIZER_TOKEN" value="190410e2-616a-4d45-af9a-3e26bc883095" name="org.codehaus.groovy.grails.SYNCHRONIZER_TOKEN">
+        <input type="hidden" id="org.codehaus.groovy.grails.SYNCHRONIZER_URI" value="/trade/checkout" name="org.codehaus.groovy.grails.SYNCHRONIZER_URI">
+        <input type="hidden" id="org.codehaus.groovy.grails.SYNCHRONIZER_TOKEN" value="73fe148e-9d89-448c-9b81-426127a2467c" name="org.codehaus.groovy.grails.SYNCHRONIZER_TOKEN">
+        <input type="hidden" id="org.codehaus.groovy.grails.SYNCHRONIZER_URI" value="/trade/checkout" name="org.codehaus.groovy.grails.SYNCHRONIZER_URI">
+        <input type="hidden" id="trade-id" value="15021661000005523738" name="id">
+        <input type="hidden" id="fenqi_num" value="" name="fenqi_num">
+        <!-- 余额支付 -->
+        <div id="pay-box" class="pay-box cle">
+            <dl class="platform">
+                <dt><b>平台支付</b>支持所有银行卡或信用卡，更迅速、安全</dt>
+                <dd>
+                    <ul class="methods_info">
+                        <li>
+                            <div class="banks-bd selected">
+                                <input type="radio" onclick="ga('send','event','付款方式','click','支付宝');" value="ALIPAY" checked="checked" name="channel">
+                                <label class="zhifu"></label>
+                            </div>
+                            <p class="info">支持国内外160多家银行<br>
+                                以及VISA、MasterCard</p>
+                        </li>
+                        <li>
+                            <div class="banks-bd">
+                                <input type="radio" value="ALIPAY_SM" name="channel">
+                                <label class="alipay_sm"></label>
+                            </div>
+                            <p class="info">手机扫一扫，支付快捷又方便<br>
+                                今天你扫了吗</p>
+                        </li>
+                        <li>
+                            <div class="banks-bd">
+                                <input type="radio" onclick="ga('send','event','付款方式','click','财付通');" value="TENPAY" name="channel">
+                                <label class="cft"></label>
+                            </div>
+                            <p class="info vmid">支持60多家银行</p>
+                        </li>
+                        <li>
+                            <div class="banks-bd">
+                                <input type="radio" onclick="ga('send','event','付款方式','click','手机支付');" value="CMPAY" name="channel">
+                                <label class="shouji"></label>
+                            </div>
+                            <p class="info vmid">中国移动旗下支付平台</p>
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl class="banks">
+                <dt><b>网银支付</b>银行卡或信用卡</dt>
+                <dd>
+                    <ul class="methods_info">
+                        <li>
+                            <div class="banks-bd">
+                                <input type="radio" value="PSBC0" name="channel">
+                                <label class="youzheng"></label>
+                                <i class="ka-type">储蓄卡</i> </div>
+                        </li>
+                        <li>
+                            <div class="banks-bd">
+                                <input type="radio" value="CMB" name="channel">
+                                <label class="zhaoshang"></label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="banks-bd">
+                                <input type="radio" value="ICBC" name="channel">
+                                <label class="gongshang"></label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="banks-bd">
+                                <input type="radio" value="CFT_CCB" name="channel">
+                                <label class="jianshe"></label>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- 其他银行 -->
+                    <ul id="other-banks" class="methods_info">
+                        <li style="display:none;"></li>
+                        <li style="display:none;"></li>
+                        <li> <a class="other-bank-btn" href="javascript:;">选择其他银行<i class="glyphicon glyphicon-chevron-right"></i></a> </li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl class="other">
+                <dt><b>其他支付方式</b></dt>
+                <dd>
+                    <p><a class="graybtn" href="/trade/pay4me/15021661000005523738">他人代付</a></p>
+                    <p><a id="huikuan-btn" class="graybtn" href="javascript:;">银行汇款</a></p>
+                </dd>
+            </dl>
+        </div>
+    </form>
     <div class="pay_line"> <span class="methods_info" id="pay-intro" style="display: inline-block;">使用
     <label class="zhifu"></label>
     支付<span class="red">￥<em><?= $model->amount ?></em></span></span> <a href="javascript:;" id="pay-btn" class="btn">去付款<i class="glyphicon glyphicon-chevron-right"></i></a> </div>

@@ -116,3 +116,7 @@ label {
     background-color: #286090;
     border-color: #204d74;
 }
+
+#header .bd_bar_bd {
+    width: 1008px;
+}

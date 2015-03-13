@@ -993,3 +993,7 @@ form button.btn {
 .first-addr .gray {
     margin:8px 0
 }
+
+#header .bd_bar_bd {
+    width: 1008px;
+}

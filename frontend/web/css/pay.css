@@ -267,10 +267,10 @@
     display:block;
     width:62px;
     height:37px;
-    background:url(/lizi/cart/images/fenqipay-ico.png) 0 0 no-repeat
+    background:url(../images/fenqipay-ico.png) 0 0 no-repeat
 }
 .methods_info label.zhifu, .methods_info label.alipay_sm, .methods_info label.shouji {
-    background:url(/lizi/cart/images/pay-platform.png) 0 0 no-repeat;
+    background:url(../images/pay-platform.png) 0 0 no-repeat;
     width:143px
 }
 .methods_info label.zhifu {
@@ -489,4 +489,7 @@
     font-size:22px;
     color:#f60;
     margin-right:20px
+}
+#header .bd_bar_bd {
+    width: 1008px;
 }
