@@ -161,18 +161,18 @@ class CartController extends \frontend\components\Controller
 
                 // 生成订单后，清空购物车，设置优惠码，更新积分和积分记录
                 Cart::deleteAll(['session_id' => Yii::$app->session->id]);
-                if ($couponUser && Yii::$app->request->post('checkbox-coupon')) {
+                if (isset($couponUser) && Yii::$app->request->post('checkbox-coupon')) {
                     $couponUser->used_at = time();
                     $couponUser->order_id = $model->id;
                     $couponUser->save();
                 }
-                if ($couponCode && Yii::$app->request->post('checkbox-coupon')) {
+                if (isset($couponCode) && Yii::$app->request->post('checkbox-coupon')) {
                     $couponCode->user_id = Yii::$app->user->id;
                     $couponCode->used_at = time();
                     $couponCode->order_id = $model->id;
                     $couponCode->save();
                 }
-                if ($point && Yii::$app->request->post('checkbox-point')) {
+                if (isset($point) && Yii::$app->request->post('checkbox-point')) {
                     $balance = Yii::$app->user->identity->point - $point;
                     User::updateAllCounters(['point' => - $point], ['id' => Yii::$app->user->id]);
                     $pointLog = new PointLog([
@@ -312,7 +312,7 @@ class CartController extends \frontend\components\Controller
             $totalPrice += $product->number * $product->price;
         }
 
-        $coupons = Coupon::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'min_amount < ' . $totalPrice])->asArray()->all();
+        $coupons = Coupon::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'min_amount < ' . $totalPrice, 'used_at = 0'])->asArray()->all();
         foreach ($coupons as $k => $item) {
             $coupons[$k]['ended_time'] = date('Y-m-d', $item['ended_at']);
         }
