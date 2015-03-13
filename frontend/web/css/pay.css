@@ -1,0 +1,492 @@
+.trade-info {
+    padding:8px;
+    position:relative
+}
+.trade-info h4 {
+    color:#239700;
+    font-size:14px
+}
+.trade-info h4 span {
+    margin-left:20px;
+    font-size:12px
+}
+.trade-info .trade-total {
+    font-size:16px;
+    color:#e4393c;
+    padding-top:5px
+}
+.trade-info .trade-total b {
+    font-size:18px;
+    color:#333
+}
+.trade-info .trade-total strong {
+    font-size:28px;
+    font-family:arial;
+    color:#e4393c
+}
+.trade-info .trade-total span {
+    font-size:12px;
+    margin:8px
+}
+.trade-intro {
+    position:absolute;
+    right:8px;
+    top:45px;
+    text-align:right;
+    padding-bottom:2px
+}
+.trade-intro a.trade-showbtn {
+    position:relative;
+    padding-left:26px;
+    display:inline-block
+}
+.trade-intro a.trade-showbtn i {
+    position:absolute;
+    top:6px;
+    left:10px;
+    display:block;
+    color:#fff;
+    width:0;
+    height:0;
+    overflow:hidden;
+    border-width:6px;
+    border-style:solid;
+    border-color:#999 #f8f8f8 #f8f8f8 #f8f8f8
+}
+.trade-detail {
+    text-align:left;
+    position:absolute;
+    right:0;
+    top:22px;
+    width:304px;
+    box-shadow:0px 1px 3px rgba(100, 100, 100, 0.5);
+    border:1px solid #ccc;
+    background-color:#fff;
+    padding:10px 10px 0;
+    display:none;
+    z-index:100
+}
+.trade-detail table {
+    width:100%
+}
+.trade-detail td {
+    padding-bottom:8px
+}
+.trade-detail td.tl {
+    width:65px;
+    vertical-align:top;
+    color:#999
+}
+.trade-detail td p {
+    margin-top:10px;
+    text-align:right
+}
+.balance {
+    background-color:#e5e5e5;
+    border-top:1px solid #ccc;
+    padding:18px 20px;
+    color:#555
+}
+.balance input {
+    vertical-align:-2px;
+    margin-right:2px
+}
+.balance span em {
+    margin-right:12px;
+    font-size:16px;
+    font-family:Arial
+}
+.balance span em i {
+    font-size:12px;
+    _vertical-align:-2px
+}
+.bal-disabled {
+    background-color:#efefef;
+    border-top-color:#e1e1e1;
+    color:#bbb
+}
+.bal-disabled span em {
+    color:#bbb
+}
+.payment_methods {
+    border:6px solid #ddd;
+    padding:15px;
+    background-color:#fff;
+    margin-top:10px
+}
+.payment_methods h2 {
+    border-left:6px solid #C52E01;
+    font-size:14px;
+    line-height:14px;
+    padding-left:6px
+}
+.payment_methods .methods_info {
+    padding-left:10px
+}
+.payment_methods .methods_info dt {
+    margin:16px 0
+}
+.payment_methods .methods_info dt span {
+    margin-left:16px
+}
+.payment_methods .methods_info dd li {
+    float:left;
+    margin-bottom:20px;
+    width:220px
+}
+.methods_info li .banks-bd {
+    position:relative;
+    padding:6px 0 0 25px;
+    height:44px;
+    width:133px;
+    border:1px solid #e5e5e5;
+    overflow:hidden;
+    cursor:pointer;
+    background-color:#fff
+}
+.methods_info li .banks-bd, .methods_info li .banks-bd input, .methods_info li .banks-bd label {
+    cursor:pointer
+}
+.methods_info li .banks-bd cite {
+    color:#e4393c;
+    position:absolute;
+    top:33px;
+    left:50px
+}
+.methods_info li .selected {
+    border-color:#e4393c
+}
+.methods_info li .banks-bd input {
+    position:absolute;
+    top:17px;
+    left:8px
+}
+.methods_info label {
+    background:url(../images/banks-bg.png) no-repeat;
+    display:inline-block;
+    width:131px;
+    height:44px;
+    vertical-align:middle
+}
+.methods_info label.jiaotong {
+    background-position:0 -300px
+}
+.methods_info label.gongshang {
+    background-position:0 4px
+}
+.methods_info label.zhaoshang {
+    background-position:0 -549px
+}
+.methods_info label.nongye {
+    background-position:0 -498px
+}
+.methods_info label.jianshe {
+    background-position:0 -249px
+}
+.methods_info label.zhongguo {
+    background-position:0 -96px
+}
+.methods_info label.guangda {
+    background-position:0 -347px
+}
+.methods_info label.zhongxin {
+    background-position:0 -600px
+}
+.methods_info label.xingye {
+    background-position:0 -196px
+}
+.methods_info label.minsheng {
+    background-position:0 -649px
+}
+.methods_info label.guangfa {
+    background-position:0 -700px
+}
+.methods_info label.youzheng {
+    background-position:0 -45px
+}
+.methods_info label.pufa {
+    background-position:0 -400px
+}
+.methods_info label.shanghai {
+    background-position:0 -841px
+}
+.methods_info label.shnong {
+    background-position:0 -742px
+}
+.methods_info label.nanjing {
+    background-position:0 -1240px
+}
+.methods_info label.hangzhou {
+    background-position:0 -790px
+}
+.methods_info label.ningbo {
+    background-position:0 -1149px
+}
+.methods_info label.shenzhenfz {
+    background-position:0 -145px
+}
+.methods_info label.beijing {
+    background-position:0 -892px
+}
+.methods_info label.huaxia {
+    background-position:0 -1286px
+}
+.methods_info label.huarun {
+    background-position:0 -1194px
+}
+.methods_info label.bohai {
+    background-position:0 -450px
+}
+.methods_info label.zhifu {
+    background-position:-2px -992px
+}
+.methods_info label.cft {
+    background-position:-2px -1100px
+}
+.methods_info label.wyzx {
+    background-position:6px -940px
+}
+.methods_info .banks-bd .ka-type {
+    position:absolute;
+    right:0;
+    top:0;
+    display:block;
+    width:20px;
+    height:48px;
+    padding-top:2px;
+    background-color:#136f40;
+    overflow:hidden;
+    color:#fff;
+    text-align:center;
+    line-height:16px
+}
+.methods_info .banks-bd .fenqi-ico {
+    position:absolute;
+    right:0;
+    top:0;
+    display:block;
+    width:62px;
+    height:37px;
+    background:url(/lizi/cart/images/fenqipay-ico.png) 0 0 no-repeat
+}
+.methods_info label.zhifu, .methods_info label.alipay_sm, .methods_info label.shouji {
+    background:url(/lizi/cart/images/pay-platform.png) 0 0 no-repeat;
+    width:143px
+}
+.methods_info label.zhifu {
+    background-position:0 -2px;
+    width:80px
+}
+.methods_info label.alipay_sm {
+    background-position:right -61px;
+    position:absolute;
+    top:0;
+    right:0;
+    height:50px
+}
+.methods_info label.shouji {
+    background-position:0 -135px
+}
+.pay-box {
+    border:1px solid #ccc;
+    background-color:#fff
+}
+.pay-box dl {
+    float:left;
+    width:180px;
+    height:300px;
+    padding:20px;
+    border-left:1px solid #ccc
+}
+.pay-box dl dt {
+    color:#999
+}
+.pay-box dl dt b {
+    font-size:18px;
+    font-weight:400;
+    color:#333;
+    margin-right:10px
+}
+.pay-box dl dd {
+    padding-top:6px
+}
+.pay-box dd li {
+    margin-top:15px;
+    height:52px;
+    overflow:hidden;
+    position:relative
+}
+.pay-box dd li.fenqi-bank {
+    display:none
+}
+.pay-box .platform {
+    width:350px;
+    overflow:hidden;
+    border-left:none
+}
+.pay-box .platform .methods_info li .banks-bd {
+    width:143px;
+    padding-left:30px
+}
+.pay-box .platform li .info {
+    position:absolute;
+    right:0;
+    top:6px;
+    width:158px;
+    overflow:hidden;
+    color:#bbb
+}
+.pay-box .platform li .vmid {
+    top:14px
+}
+.pay-box .banks {
+    width:350px;
+    padding-right:0
+}
+.pay-box .banks ul {
+    float:left;
+    width:160px;
+    margin-right:15px
+}
+#other-bank {
+    margin-right:0
+}
+.other-bank-btn {
+    padding:10px;
+    margin:5px 0 5px 25px;
+    display:inline-block;
+    font-size:14px
+}
+.other-bank-btn:hover {
+    text-decoration:none
+}
+.other-bank-btn i {
+    font-size:12px;
+    margin-left:5px;
+    vertical-align:2px
+}
+.pay-box .other dd p {
+    margin-top:15px
+}
+.pay-box .other dd p a.graybtn {
+    padding:5px 20px
+}
+.pay-box .inline-banks {
+    float:none;
+    width:900px;
+    height:120px;
+    border-left:none
+}
+.pay-box .inline-banks ul {
+    float:none;
+    width:100%;
+    margin-right:0
+}
+.pay-box .inline-banks li {
+    float:left;
+    width:160px;
+    margin-right:40px
+}
+.pay_line {
+    padding:20px 10px;
+    height:86px;
+    text-align:right
+}
+.pay_line .btn {
+    padding:14px 25px;
+    font-size:16px
+}
+.pay_line .methods_info {
+    padding:7px 20px 3px;
+    height:36px;
+    display:none;
+    overflow:hidden;
+    background-color:#fff;
+    margin-right:8px;
+    vertical-align:middle
+}
+.pay_line .methods_info em {
+    font-size:16px;
+    font-family:Arial;
+    margin:0 2px
+}
+.pay_line .methods_info label {
+    margin-left:8px;
+    height:36px;
+    position:relative;
+    top:-2px
+}
+.pay-tipwin {
+    padding:20px 50px
+}
+.pay-tipwin h3 {
+    font-weight:bold;
+    margin-bottom:10px
+}
+.pay-tipwin .btn-p {
+    padding:10px 0 20px
+}
+.pay-tipwin .btn-p a {
+    margin-right:20px;
+    font-size:14px;
+    padding:10px 15px
+}
+.pay-tipwin a.ud {
+    text-decoration:underline
+}
+.dialog_huikuan {
+    margin:-140px 0 0 -17px;
+    _margin-left:-32px
+}
+.huikuan-intro {
+    padding-bottom:25px;
+    width:350px
+}
+.huikuan-intro h4 {
+    font-size:14px;
+    font-weight:bold;
+    margin-top:10px
+}
+.huikuan-intro h4 b {
+    margin-right:5px
+}
+.huikuan-intro p {
+    line-height:22px;
+    padding-left:15px
+}
+.dialog_otherBanks .methods_info {
+    width:530px
+}
+.dialog_otherBanks .methods_info li {
+    float:left;
+    padding:0 5px 10px
+}
+.fenqi-qishu {
+    width:420px
+}
+.fenqi-qishu h4 {
+    padding-bottom:10px
+}
+.fenqi-qishu .methods_info label.zhaoshang {
+    height:30px;
+    width:96px;
+    background-position:0 -552px
+}
+.fenqi-qishu p {
+    margin-top:10px;
+    padding-left:35px
+}
+.fenqi-qishu p input {
+    margin-right:4px
+}
+#iframe-twocode {
+    width:600px
+}
+.toPay-tip {
+    padding-bottom:25px
+}
+.toPay-tip strong {
+    font-size:22px;
+    color:#f60;
+    margin-right:20px
+}
