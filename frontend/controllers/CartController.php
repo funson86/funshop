@@ -78,7 +78,7 @@ class CartController extends \frontend\components\Controller
         $model = new Order();
 
         if ($model->load(Yii::$app->request->post())) {
-            if (!Yii::$app->request->post('Order')['address_id']) {
+            if (!Yii::$app->request->post('address_id')) {
                 return $this->goBack();
             }
 
@@ -112,7 +112,7 @@ class CartController extends \frontend\components\Controller
                 $feePoint = intval($point) / 100;
             }
 
-            $address = Address::find()->where(['id' => Yii::$app->request->post('Order')['address_id'], 'user_id' => $userId])->one();
+            $address = Address::find()->where(['id' => Yii::$app->request->post('address_id'), 'user_id' => $userId])->one();
             $model->user_id = $userId;
             $model->sn = date('YmdHis') . rand(1000, 9999);
             $model->consignee = $address->consignee;

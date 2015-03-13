@@ -31,7 +31,7 @@ $i = 0;
                     <ul id="addr-list">
                         <?php foreach ($addresses as $address) { ?>
                         <li class='<?php if (!$i) echo 'selected'; ?>'>
-                            <?= Html::activeRadio($model, 'address_id', [
+                            <?= Html::radio('address_id', [
                                 'value' => $address->id,
                                 'label' => null,
                                 'id' => null,
