@@ -103,7 +103,7 @@ $i = 0;
                     <div class="coupon_code_box">
                         <h5><a id="coupon_code_trg" href="javascript:;">点击输入优惠券号码</a></h5>
                         <div id="coupon_code" class="use_box_form">
-                            <input type="text" value="输入优惠券号码">
+                            <input type="text" id="coupon-code-input" value="输入优惠券号码">
                             <a class="btn" id="coupon-code-submit" href="javascript:;">确定</a> </div>
                     </div>
                 </div>
@@ -220,6 +220,10 @@ jQuery(".coupon_list").on("click", 'input[name^=coupon]', function(){
 
 jQuery("#coupon_code_trg").click(function(){
     $("#coupon_code").css('display', 'block');
+});
+
+jQuery("#coupon-code-input").click(function(){
+    this.value = '';
 });
 
 jQuery("#coupon-code-submit").click(function(){
