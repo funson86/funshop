@@ -3,7 +3,7 @@
 $this->registerCssFile('@web/css/user.css', ['depends' => \frontend\assets\AppAsset::className()]);
 $this->registerCssFile('@web/css/favorite.css', ['depends' => \frontend\assets\AppAsset::className()]);
 
-$this->title = 'User Center';
+$this->title = Yii::t('app', 'User Center');
 $this->params['breadcrumbs'][] = $this->title;
 $i = 0;
 ?>
