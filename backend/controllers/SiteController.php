@@ -60,6 +60,12 @@ class SiteController extends Controller
         $todayEnd = mktime(0, 0, 0, date('m'), date('d') + 1, date('Y')) - 1;
         $yesterdayStart = mktime(0, 0, 0, date('m'), date('d') - 1, date('Y'));
         $yesterdayEnd = mktime(0, 0, 0, date('m'), date('d'), date('Y')) - 1;
+        $lastWeekStart = mktime(0, 0, 0, date('m'), date('d') - date('w') + 1 - 7, date('Y'));
+        $lastWeekEnd = mktime(23, 59, 59, date('m'), date('d') - date('w') + 7 - 7, date('Y'));
+        $thisWeekStart = mktime(0, 0, 0, date('m'), date('d') - date('w') + 1, date('Y'));
+        $thisWeekEnd = mktime(23, 59, 59, date('m'), date('d') - date('w') + 7, date('Y'));
+        $lastMonthStart = mktime(0, 0, 0, date('m') -1, 1, date('Y'));
+        $lastMonthEnd = mktime(0, 0, 0, date('m'), 1, date('Y')) - 1;
         $thisMonthStart = mktime(0, 0, 0, date('m'), 1, date('Y'));
         $thisMonthEnd = mktime(0, 0, 0, date('m') + 1, 1, date('Y')) - 1;
 
@@ -69,6 +75,22 @@ class SiteController extends Controller
         $dataOrder['todayCount'] = $result['count'];
         $dataOrder['todayAmount'] = floatval($result['amount']);
 
+        $result = $query->select('count(*) as count, sum(amount) as amount')->from('order')->where(['and', 'created_at > ' . $yesterdayStart . '', 'created_at <= ' . $yesterdayEnd])->createCommand()->queryOne();
+        $dataOrder['yesterdayCount'] = $result['count'];
+        $dataOrder['yesterdayAmount'] = floatval($result['amount']);
+
+        $result = $query->select('count(*) as count, sum(amount) as amount')->from('order')->where(['and', 'created_at > ' . $lastWeekStart . '', 'created_at <= ' . $lastWeekEnd])->createCommand()->queryOne();
+        $dataOrder['lastWeekCount'] = $result['count'];
+        $dataOrder['lastWeekAmount'] = floatval($result['amount']);
+
+        $result = $query->select('count(*) as count, sum(amount) as amount')->from('order')->where(['and', 'created_at > ' . $thisWeekStart . '', 'created_at <= ' . $thisWeekEnd])->createCommand()->queryOne();
+        $dataOrder['thisWeekCount'] = $result['count'];
+        $dataOrder['thisWeekAmount'] = floatval($result['amount']);
+
+        $result = $query->select('count(*) as count, sum(amount) as amount')->from('order')->where(['and', 'created_at > ' . $lastMonthStart . '', 'created_at <= ' . $lastMonthEnd])->createCommand()->queryOne();
+        $dataOrder['lastMonthCount'] = $result['count'];
+        $dataOrder['lastMonthAmount'] = floatval($result['amount']);
+
         $result = $query->select('count(*) as count, sum(amount) as amount')->from('order')->where(['and', 'created_at > ' . $thisMonthStart . '', 'created_at <= ' . $thisMonthEnd])->createCommand()->queryOne();
         $dataOrder['thisMonthCount'] = $result['count'];
         $dataOrder['thisMonthAmount'] = floatval($result['amount']);
@@ -76,6 +98,18 @@ class SiteController extends Controller
         // User Stat
         $result = $query->select('count(*) as count')->from('user')->where(['and', 'created_at > ' . $todayStart . '', 'created_at <= ' . $todayEnd])->createCommand()->queryOne();
         $dataUser['todayCount'] = $result['count'];
+
+        $result = $query->select('count(*) as count, sum(amount) as amount')->from('order')->where(['and', 'created_at > ' . $yesterdayStart . '', 'created_at <= ' . $yesterdayEnd])->createCommand()->queryOne();
+        $dataUser['yesterdayCount'] = $result['count'];
+
+        $result = $query->select('count(*) as count, sum(amount) as amount')->from('order')->where(['and', 'created_at > ' . $lastWeekStart . '', 'created_at <= ' . $lastWeekEnd])->createCommand()->queryOne();
+        $dataUser['lastWeekCount'] = $result['count'];
+
+        $result = $query->select('count(*) as count, sum(amount) as amount')->from('order')->where(['and', 'created_at > ' . $thisWeekStart . '', 'created_at <= ' . $thisWeekEnd])->createCommand()->queryOne();
+        $dataUser['thisWeekCount'] = $result['count'];
+
+        $result = $query->select('count(*) as count, sum(amount) as amount')->from('order')->where(['and', 'created_at > ' . $lastMonthStart . '', 'created_at <= ' . $lastMonthEnd])->createCommand()->queryOne();
+        $dataUser['lastMonthCount'] = $result['count'];
 
         $result = $query->select('count(*) as count')->from('user')->where(['and', 'created_at > ' . $thisMonthStart . '', 'created_at <= ' . $thisMonthEnd])->createCommand()->queryOne();
         $dataUser['thisMonthCount'] = $result['count'];

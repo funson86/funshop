@@ -37,6 +37,9 @@ return [
     'Dashboard' => '控制面板',
     'The file "{file}" is not an image.' => '文件 "{file}" 不是一个图像文件。',
     'Hello, {name}' => '你好,{name}',
+    'Clean' => '清理',
+    'Clean ' => '清理',
+    'Are you sure you want to clean?' => '您确定要清理吗？',
 
     'System' => '系统',
     'Settings' => '设置',
@@ -94,6 +97,9 @@ return [
     'User Stat' => '用户注册统计',
     'Today' => '今天',
     'Yesterday' => '昨天',
+    'Last Week' => '上周',
+    'This Week' => '本周',
+    'Last Month' => '上月',
     'This Month' => '本月',
     'Count' => '数量',
 
