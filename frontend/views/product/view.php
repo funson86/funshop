@@ -378,7 +378,7 @@ $("#fav_btn").click(function(){
         $.get("{$urlFavorite}?id=" + product.productId, function(data, status) {
             if (status == "success") {
                 if (data.status) {
-                    $("#fav_btn").html('<i class="iconfont">@</i>已收藏</a>');
+                    $("#fav_btn").html('<i class="glyphicon glyphicon-heart"></i>已收藏</a>');
                 }
             }
         }, "json");
