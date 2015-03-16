@@ -90,6 +90,13 @@ return [
     'Comment' => '评论',
     'Tag' => '标签',
 
+    'Order Stat' => '订单统计',
+    'User Stat' => '用户注册统计',
+    'Today' => '今天',
+    'Yesterday' => '昨天',
+    'This Month' => '本月',
+    'Count' => '数量',
+
     'Category' => '分类',
     'Categories' => '分类',
     'Category ID' => '分类',
