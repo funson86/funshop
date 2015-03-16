@@ -23,7 +23,7 @@ $this->registerCssFile('@web/css/user.css', ['depends' => \frontend\assets\AppAs
                 </tr>
                 <?php foreach ($models as $item) { ?>
                     <tr>
-                        <td><a class="default <?php if ($item->default) { ?>current <?php } ?>" href="javascript:;" data-link="<?= Yii::$app->urlManager->createUrl(['address/default', 'id' => $item->id]) ?>"><i class="iconfont">@</i></a></td>
+                        <td><a class="default <?php if ($item->default) { ?>current <?php } ?>" href="javascript:;" data-link="<?= Yii::$app->urlManager->createUrl(['address/default', 'id' => $item->id]) ?>"><i class="glyphicon glyphicon-map-marker"></i></a></td>
                         <td><?= $item->consignee ?></td>
                         <td><?= $item->country ? Region::findOne($item->country)->name : '' ?> <?= $item->province ? Region::findOne($item->province)->name : '' ?> <?= $item->city ? Region::findOne($item->city)->name : '' ?> <?= $item->district ? Region::findOne($item->district)->name : '' ?></td>
                         <td><?= $item->address ?></td>

@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Coupon;
+use common\models\Order;
 use common\models\PointLog;
 use common\models\Product;
 use frontend\models\ChangePasswordForm;
@@ -36,7 +37,20 @@ class UserController extends \frontend\components\Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $orders = Order::find()->where(['user_id' => Yii::$app->user->id])->limit(2)->all();
+
+        $productIds = ArrayHelper::map(Favorite::find()->where(['user_id' => Yii::$app->user->id])->orderBy(['id' => SORT_DESC])->asArray()->all(), 'product_id', 'product_id');
+        if (count($productIds)) {
+            $favorites = Product::find()->where(['id' => $productIds])->limit(5)->all();
+        }
+
+        $coupons = Coupon::find()->where(['and', 'user_id = ' . Yii::$app->user->id, 'used_at = 0', 'ended_at >= ' . time()])->all();
+
+        return $this->render('index', [
+            'orders' => $orders,
+            'favorites' => isset($favorites) ? $favorites : null,
+            'coupons' => $coupons,
+        ]);
     }
 
     public function actionFavorite()

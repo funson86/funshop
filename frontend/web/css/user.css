@@ -143,6 +143,11 @@
     float:right;
     height:100px
 }
+.ilizi p {
+    height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+}
 .ilizi_info ul {
     margin-top:-2px
 }

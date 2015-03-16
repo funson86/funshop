@@ -17,7 +17,7 @@ td img {
     <div class="my_nala_detail">
         <h1><?= $this->title ?></h1>
         <div class="detail_r">
-            <p style="height: 30px;">当前积分为： <span> <?= Yii::$app->user->identity->id ?> </span> 分，  100积分可抵现金1元， <a href="#">点击查看详情</a> </p>
+            <p style="height: 30px;">当前积分为： <span> <?= Yii::$app->user->identity->point ?> </span> 分，  100积分可抵现金1元， <a href="#">点击查看详情</a> </p>
             <table id="address_list" class="admin_table">
                 <tbody>
                 <tr>

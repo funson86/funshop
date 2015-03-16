@@ -9,7 +9,7 @@ $this->registerCssFile('@web/css/favorite.css', ['depends' => \frontend\assets\A
 ?>
 
     <div class="trade_mod">
-        <div class="my_point">
+        <div class="my_nala_detail my_point">
             <h1><?= $this->title ?></h1>
             <div class="fav-list">
                 <ul class="cle" id="fav-list">
