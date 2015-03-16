@@ -23,6 +23,7 @@ class CartController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'clean' => ['post'],
                 ],
             ],
             'access' => [
@@ -124,6 +125,22 @@ class CartController extends Controller
         /*$model = $this->findModel($id);
         $model->status = Status::STATUS_DELETED;
         $model->save();*/
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Deletes an existing Cart model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionClean()
+    {
+        //if(!Yii::$app->user->can('deleteYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+
+        $time = mktime(0, 0, 0, date('m'), date('d') - date('w') + 1 - 7, date('Y'));
+        Cart::deleteAll(['and', 'user_id = 0', 'created_at < ' . $time]);
 
         return $this->redirect(['index']);
     }
