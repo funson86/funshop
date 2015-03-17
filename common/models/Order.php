@@ -55,15 +55,15 @@ class Order extends \yii\db\ActiveRecord
     const PAYMENT_METHOD_PAY = 1;
     const PAYMENT_METHOD_COD = 2;
 
-    const PAYMENT_STATUS_COD = 2;
-    const PAYMENT_STATUS_UNPAID = 4;
-    const PAYMENT_STATUS_PAYING = 6;
-    const PAYMENT_STATUS_PAID = 8;
+    const PAYMENT_STATUS_COD = 10;
+    const PAYMENT_STATUS_UNPAID = 20;
+    const PAYMENT_STATUS_PAYING = 30;
+    const PAYMENT_STATUS_PAID = 40;
 
-    const SHIPMENT_STATUS_UNSHIPPED = 12;
-    const SHIPMENT_STATUS_PREPARING = 14;
-    const SHIPMENT_STATUS_SHIPPED = 16;
-    const SHIPMENT_STATUS_RECEIVED = 18;
+    const SHIPMENT_STATUS_UNSHIPPED = 60;
+    const SHIPMENT_STATUS_PREPARING = 70;
+    const SHIPMENT_STATUS_SHIPPED = 80;
+    const SHIPMENT_STATUS_RECEIVED = 90;
 
     public $address_id;
 

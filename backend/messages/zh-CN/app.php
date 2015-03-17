@@ -219,7 +219,7 @@ return [
     'Coupon Types' => '优惠券类型',
     'Money' => '金额',
     'Min Amount' => '最低消费额',
-    'Min Goods Amount' => '用户最小金额',
+    'Min Goods Amount' => '订单最小金额',
     'Started At' => '开始时间',
     'Ended At' => '到期时间',
 

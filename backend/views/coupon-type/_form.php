@@ -10,7 +10,14 @@ use yii\widgets\ActiveForm;
 
 <div class="coupon-type-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'mend-form',
+        'options' => ['class' => 'form-horizontal'],
+        'fieldConfig' => [
+            'template' => "{label}\n<div class=\"col-lg-6\">{input}{hint}</div>\n<div class=\"col-lg-5\">{error}</div>",
+            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+        ],
+    ]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
 
@@ -22,11 +29,36 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'min_goods_amount')->textInput(['maxlength' => 10]) ?>
 
-    <?= $form->field($model, 'started_at')->textInput() ?>
+    <div class="form-group field-car-started_at">
+        <?= Html::activeLabel($model, 'started_at', ['class' => 'col-lg-1 control-label']); ?>
+        <div class="col-lg-3">
+            <?php
+            echo \yii\jui\DatePicker::widget([
+                'model' => $model,
+                'attribute' => 'started_at',
+                'dateFormat' => 'yyyy-MM-dd',
+            ]);
+            ?>
+        </div>
+        <?= Html::error($model, 'started_at', ['class' => 'col-lg-5']); ?>
+    </div>
 
-    <?= $form->field($model, 'ended_at')->textInput() ?>
+    <div class="form-group field-car-started_at">
+        <?= Html::activeLabel($model, 'ended_at', ['class' => 'col-lg-1 control-label']); ?>
+        <div class="col-lg-3">
+            <?php
+            echo \yii\jui\DatePicker::widget([
+                'model' => $model,
+                'attribute' => 'ended_at',
+                'dateFormat' => 'yyyy-MM-dd',
+            ]);
+            ?>
+        </div>
+        <?= Html::error($model, 'ended_at', ['class' => 'col-lg-5']); ?>
+    </div>
 
     <div class="form-group">
+        <label class="col-lg-2 control-label" for="">&nbsp;</label>
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

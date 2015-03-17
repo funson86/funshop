@@ -31,11 +31,9 @@ $i = 0;
                     <ul id="addr-list">
                         <?php foreach ($addresses as $address) { ?>
                         <li class='<?php if (!$i) echo 'selected'; ?>'>
-                            <?= Html::radio('address_id', [
+                            <?= Html::radio('address_id', ($i === 0), [
                                 'value' => $address->id,
                                 'label' => null,
-                                'id' => null,
-                                'uncheck' => 'uncheck',
                             ]); ?>
                             <span class="addr-flag"><?= $address->name ?></span>
                             <span class="addr-con"><?= isset($allRegion[$address['country']]) ? $allRegion[$address['country']] : '' ?>&nbsp;<?= isset($allRegion[$address['province']]) ? $allRegion[$address['province']] : '' ?>&nbsp;<?= isset($allRegion[$address['city']]) ? $allRegion[$address['city']] : '' ?>&nbsp;<?= isset($allRegion[$address['district']]) ? $allRegion[$address['district']] : '' ?>&nbsp;<?= $address['address'] ?><em>（<?= $address['consignee'] ?>&nbsp;<?= $address['mobile'] ?>）</em></span> <a href="<?= Yii::$app->urlManager->createUrl(['cart/address', 'id' => $address->id]) ?>">修改</a>
