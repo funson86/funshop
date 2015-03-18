@@ -27,7 +27,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'change-password'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -143,5 +143,24 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionChangePassword()
+    {
+        $model = new \backend\models\User(['scenario' => 'admin-change-password']);
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $user = User::findOne(Yii::$app->user->identity->id);
+            $user->setPassword($model->password);
+            $user->generateAuthKey();
+            if ($user->save()) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'New password was saved.'));
+            }
+            return $this->redirect(['change-password']);
+        }
+
+        return $this->render('changePassword', [
+            'model' => $model,
+        ]);
     }
 }

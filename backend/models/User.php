@@ -24,6 +24,7 @@ class User extends \common\models\User
 {
     public $password;
     public $repassword;
+    public $oldpassword;
     private $_statusLabel;
     private $_roleLabel;
     private $_authRoleLabel;
@@ -88,18 +89,20 @@ class User extends \common\models\User
     public function rules()
     {
         return [
-            [['username', 'email'], 'required'],
+            [['username', 'email'], 'required', 'on' => ['admin-create', 'admin-update']],
             [['password', 'repassword'], 'required', 'on' => ['admin-create']],
-            [['username', 'email', 'password', 'repassword'], 'trim'],
-            [['password', 'repassword'], 'string', 'min' => 6, 'max' => 30],
+            [['password', 'repassword', 'oldpassword'], 'required', 'on' => ['admin-change-password']],
+            [['username', 'email', 'password', 'repassword'], 'trim', 'on' => ['admin-create', 'admin-update']],
+            [['password', 'repassword'], 'string', 'min' => 6, 'max' => 30, 'on' => ['admin-create', 'admin-update']],
+            [['password', 'repassword', 'oldpassword'], 'string', 'min' => 6, 'max' => 30, 'on' => ['admin-change-password']],
             // Unique
-            [['username', 'email'], 'unique'],
+            [['username', 'email'], 'unique', 'on' => ['admin-create', 'admin-update']],
             // Username
-            ['username', 'match', 'pattern' => '/^[a-zA-Z0-9_-]+$/'],
-            ['username', 'string', 'min' => 3, 'max' => 30],
+            ['username', 'match', 'pattern' => '/^[a-zA-Z0-9_-]+$/', 'on' => ['admin-create', 'admin-update']],
+            ['username', 'string', 'min' => 3, 'max' => 30, 'on' => ['admin-create', 'admin-update']],
             // E-mail
-            ['email', 'string', 'max' => 100],
-            ['email', 'email'],
+            ['email', 'string', 'max' => 100, 'on' => ['admin-create', 'admin-update']],
+            ['email', 'email', 'on' => ['admin-create', 'admin-update']],
             // Repassword
             ['repassword', 'compare', 'compareAttribute' => 'password'],
             //['status', 'default', 'value' => self::STATUS_ACTIVE],
@@ -107,6 +110,7 @@ class User extends \common\models\User
 
             // Status
             //['role', 'in', 'range' => array_keys(self::getArrayRole())],
+            ['oldpassword', 'validateOldPassword', 'on' => ['admin-change-password']],
         ];
     }
 
@@ -116,8 +120,9 @@ class User extends \common\models\User
     public function scenarios()
     {
         return [
-            'admin-create' => ['username', 'email', 'password', 'repassword', 'status', 'role', 'auth_role'],
-            'admin-update' => ['username', 'email', 'password', 'repassword', 'status', 'role', 'auth_role']
+            'admin-create' => ['username', 'email', 'password', 'repassword', 'status', 'auth_role'],
+            'admin-update' => ['username', 'email', 'password', 'repassword', 'status', 'auth_role'],
+            'admin-change-password' => ['oldpassword', 'password', 'repassword'],
         ];
     }
 
@@ -133,6 +138,7 @@ class User extends \common\models\User
             [
                 'password' => Yii::t('app', 'Password'),
                 'repassword' => Yii::t('app', 'Repassword'),
+                'oldpassword' => Yii::t('app', 'Oldpassword'),
             ]
         );
     }
@@ -152,4 +158,24 @@ class User extends \common\models\User
         }
         return false;
     }
+
+
+    /**
+     * Validates the password.
+     * This method serves as the inline validation for password.
+     *
+     * @param string $attribute the attribute currently being validated
+     * @param array $params the additional name-value pairs given in the rule
+     */
+    public function validateOldPassword($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $user = self::findOne(Yii::$app->user->identity->id);
+            if (!$user || !$user->validatePassword($this->oldpassword)) {
+                $this->addError($attribute, Yii::t('app', 'Incorrect old password.'));
+            }
+        }
+    }
+
+
 }
