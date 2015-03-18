@@ -252,4 +252,7 @@ return [
     'My Profile' => '个人资料',
     'Security' => '安全设置',
 
+    'New password was saved.' => '修改密码已经成功',
+    'New profile was saved.' => '用户资料保存成功',
+
 ];

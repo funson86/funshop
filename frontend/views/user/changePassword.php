@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= Html::activePasswordInput($model, 'repassword', ['class' => 'txt']) ?>
                     </li>
                     <li>
-                        <?= Html::error($model, 'oldpassword'); ?><?= Html::error($model, 'password'); ?><?= Html::error($model, 'repassword'); ?>
+                        <?= Yii::$app->getSession()->getFlash('success') ?><?= Html::error($model, 'oldpassword'); ?><?= Html::error($model, 'password'); ?><?= Html::error($model, 'repassword'); ?>
                     </li>
                     <li class="last"><?= Html::submitButton( Yii::t('app', 'Submit'), ['class' => 'btn',]) ?><a href="<?= Yii::$app->request->referrer ?>" hidefocus="true" class="btn">返 回</a></li>
                 </ul>

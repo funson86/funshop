@@ -77,7 +77,7 @@ class ChangePasswordForm extends Model
      */
     public function getUser()
     {
-        if ($this->_user === false) {var_dump(Yii::$app->user->identity->id);
+        if ($this->_user === false) {
             $this->_user = User::findOne(Yii::$app->user->identity->id);
         }
 

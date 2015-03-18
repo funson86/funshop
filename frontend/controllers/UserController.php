@@ -6,6 +6,7 @@ use common\models\Coupon;
 use common\models\Order;
 use common\models\PointLog;
 use common\models\Product;
+use common\models\Profile;
 use frontend\models\ChangePasswordForm;
 use Yii;
 use common\models\Favorite;
@@ -85,8 +86,7 @@ class UserController extends \frontend\components\Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changePassword()) {
             Yii::$app->getSession()->setFlash('success', Yii::t('app', 'New password was saved.'));
-
-            return $this->goHome();
+            return $this->redirect(['change-password']);
         }
 
         return $this->render('changePassword', [
@@ -128,6 +128,38 @@ class UserController extends \frontend\components\Controller
         return $this->render('coupon', [
             'models' => $dataProvider->getModels(),
             'pagination' => $dataProvider->pagination,
+        ]);
+    }
+
+    public function actionProfile()
+    {
+        $model = Profile::findOne(['user_id' => Yii::$app->user->id]);
+        if (!$model) {
+            $model = new Profile();
+            $model->user_id = Yii::$app->user->id;
+        }
+
+        if ($model->birthday) {
+            $model->year = substr($model->birthday, 0, 4);
+            $model->month = substr($model->birthday, 5, 2);
+            $model->day = substr($model->birthday, 8, 2);
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->year = intval(Yii::$app->request->post()['Profile']['year']);
+            $model->month = intval(Yii::$app->request->post()['Profile']['month']);
+            $model->day = intval(Yii::$app->request->post()['Profile']['day']);
+            if ($model->year || $model->month || $model->day) {
+                $model->birthday = date('Y-m-d H:i:s', mktime(0, 0, 0, $model->month, $model->day, $model->year));
+            }
+
+            if ($model->save()) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'New profile was saved.'));
+            }
+        }
+
+        return $this->render('profile', [
+            'model' => $model,
         ]);
     }
 
