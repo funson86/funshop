@@ -55,14 +55,14 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'keywords',
             // 'description:ntext',
             [
-                'attribute' => 'is_gift',
+                'attribute' => 'type',
                 'format' => 'html',
                 'value' => function ($model) {
-                    return YesNo::labels($model->is_gift);
+                    return YesNo::labels($model->type);
                 },
                 'filter' => Html::activeDropDownList(
                     $searchModel,
-                    'is_gift',
+                    'type',
                     YesNo::labels(),
                     ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
                 )

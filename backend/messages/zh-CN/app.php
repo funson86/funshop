@@ -159,7 +159,7 @@ return [
     'Price' => '商城价',
     'Thumb' => '缩略图',
     'Image' => '图片',
-    'Is Gift' => '是否礼品',
+    'Type' => '类型',
 
     'Comment' => '评价',
     'Comments' => '评价',

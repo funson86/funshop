@@ -154,7 +154,7 @@ class CartController extends \frontend\components\Controller
                     $orderProduct->market_price = $product->market_price;
                     $orderProduct->price = $product->price;
                     $orderProduct->thumb = $product->thumb;
-                    $orderProduct->is_gift = $product->is_gift;
+                    $orderProduct->type = $product->type;
 
                     $orderProduct->save();
                 }
@@ -377,7 +377,7 @@ class CartController extends \frontend\components\Controller
                     $cart->market_price = $model->market_price;
                     $cart->price = $model->price;
                     $cart->thumb = $model->thumb;
-                    $cart->is_gift = $model->is_gift;
+                    $cart->type = $model->type;
 
                     $cart->save();
 

@@ -18,7 +18,7 @@ use yii\db\Expression;
  * @property integer $goods_number
  * @property string $market_price
  * @property string $price
- * @property integer $is_gift
+ * @property integer $type
  *
  * @property Order $order
  * @property Goods $goods
@@ -53,7 +53,7 @@ class OrderGoods extends \yii\db\ActiveRecord
     {
         return [
             [['order_id', 'goods_id', 'goods_sku', 'goods_name'], 'required'],
-            [['order_id', 'goods_id', 'goods_number', 'is_gift'], 'integer'],
+            [['order_id', 'goods_id', 'goods_number', 'type'], 'integer'],
             [['market_price', 'price'], 'number'],
             [['goods_sku'], 'string', 'max' => 64],
             [['goods_name'], 'string', 'max' => 255]
@@ -74,7 +74,7 @@ class OrderGoods extends \yii\db\ActiveRecord
             'goods_number' => Yii::t('app', 'Goods Number'),
             'market_price' => Yii::t('app', 'Market Price'),
             'price' => Yii::t('app', 'Price'),
-            'is_gift' => Yii::t('app', 'Is Gift'),
+            'type' => Yii::t('app', 'Type'),
         ];
     }
 

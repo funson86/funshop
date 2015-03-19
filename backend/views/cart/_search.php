@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'thumb') ?>
 
-    <?php // echo $form->field($model, 'is_gift') ?>
+    <?php // echo $form->field($model, 'type') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

@@ -25,7 +25,7 @@ use yii\db\Expression;
  * @property string $origin
  * @property string $keywords
  * @property string $description
- * @property integer $is_gift
+ * @property integer $type
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -66,7 +66,7 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['category_id', 'name', 'sku'], 'required'],
-            [['category_id', 'stock', 'is_gift', 'sales', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['category_id', 'stock', 'type', 'sales', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['weight', 'market_price', 'price', 'star'], 'number'],
             [['content', 'description'], 'string'],
             [['name'], 'string', 'max' => 128],
@@ -96,7 +96,7 @@ class Product extends \yii\db\ActiveRecord
             'origin' => Yii::t('app', 'Origin'),
             'keywords' => Yii::t('app', 'Keywords'),
             'description' => Yii::t('app', 'Description'),
-            'is_gift' => Yii::t('app', 'Is Gift'),
+            'type' => Yii::t('app', 'Type'),
             'star' => Yii::t('app', 'Star'),
             'sales' => Yii::t('app', 'Sales'),
             'status' => Yii::t('app', 'Status'),

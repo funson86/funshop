@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'thumb')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'is_gift')->textInput() ?>
+    <?= $form->field($model, 'type')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

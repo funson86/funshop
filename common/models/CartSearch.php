@@ -18,7 +18,7 @@ class CartSearch extends Cart
     public function rules()
     {
         return [
-            [['id', 'user_id', 'product_id', 'number', 'is_gift', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'user_id', 'product_id', 'number', 'type', 'created_at', 'updated_at'], 'integer'],
             [['session_id', 'sku', 'name', 'thumb'], 'safe'],
             [['market_price', 'price'], 'number'],
         ];
@@ -61,7 +61,7 @@ class CartSearch extends Cart
             'number' => $this->number,
             'market_price' => $this->market_price,
             'price' => $this->price,
-            'is_gift' => $this->is_gift,
+            'type' => $this->type,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

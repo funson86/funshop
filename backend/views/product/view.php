@@ -56,8 +56,8 @@ td img{width:100px;}
             'keywords',
             'description:ntext',
             [
-                'attribute' => 'is_gift',
-                'value' => \common\models\YesNo::labels($model->is_gift),
+                'attribute' => 'type',
+                'value' => \common\models\YesNo::labels($model->type),
             ],
             [
                 'attribute' => 'status',

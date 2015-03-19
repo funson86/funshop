@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'market_price',
             'price',
             'thumb',
-            'is_gift',
+            'type',
             'created_at:datetime',
             'updated_at:datetime',
         ],

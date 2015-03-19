@@ -49,7 +49,7 @@ use mihaildev\ckeditor\CKEditor;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'is_gift')->dropDownList(\common\models\YesNo::labels()) ?>
+    <?= $form->field($model, 'type')->dropDownList(\common\models\YesNo::labels()) ?>
 
     <?= $form->field($model, 'status')->dropDownList(\common\models\Status::labels()) ?>
 

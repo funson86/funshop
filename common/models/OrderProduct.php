@@ -19,7 +19,7 @@ use yii\db\Expression;
  * @property string $market_price
  * @property string $price
  * @property string $thumb
- * @property integer $is_gift
+ * @property integer $type
  * @property integer $created_at
  * @property integer $updated_at
  *
@@ -56,7 +56,7 @@ class OrderProduct extends \yii\db\ActiveRecord
     {
         return [
             [['order_id', 'product_id', 'sku', 'name'], 'required'],
-            [['order_id', 'product_id', 'number', 'is_gift', 'created_at', 'updated_at'], 'integer'],
+            [['order_id', 'product_id', 'number', 'type', 'created_at', 'updated_at'], 'integer'],
             [['market_price', 'price'], 'number'],
             [['sku'], 'string', 'max' => 64],
             [['name', 'thumb'], 'string', 'max' => 255]
@@ -78,7 +78,7 @@ class OrderProduct extends \yii\db\ActiveRecord
             'market_price' => Yii::t('app', 'Market Price'),
             'price' => Yii::t('app', 'Price'),
             'thumb' => Yii::t('app', 'Thumb'),
-            'is_gift' => Yii::t('app', 'Is Gift'),
+            'type' => Yii::t('app', 'Type'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];

@@ -45,7 +45,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'description') ?>
 
-    <?php // echo $form->field($model, 'is_gift') ?>
+    <?php // echo $form->field($model, 'type') ?>
 
     <?php // echo $form->field($model, 'status') ?>
 

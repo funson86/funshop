@@ -20,7 +20,7 @@ use yii\db\Expression;
  * @property string $market_price
  * @property string $price
  * @property string $thumb
- * @property integer $is_gift
+ * @property integer $type
  */
 class Cart extends \yii\db\ActiveRecord
 {
@@ -51,7 +51,7 @@ class Cart extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'product_id', 'number', 'is_gift', 'created_at', 'updated_at'], 'integer'],
+            [['user_id', 'product_id', 'number', 'type', 'created_at', 'updated_at'], 'integer'],
             [['product_id', 'sku', 'name'], 'required'],
             [['market_price', 'price'], 'number'],
             [['session_id', 'name', 'thumb'], 'string', 'max' => 255],
@@ -83,7 +83,7 @@ class Cart extends \yii\db\ActiveRecord
             'market_price' => Yii::t('app', 'Market Price'),
             'price' => Yii::t('app', 'Price'),
             'thumb' => Yii::t('app', 'Thumb'),
-            'is_gift' => Yii::t('app', 'Is Gift'),
+            'type' => Yii::t('app', 'Type'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
