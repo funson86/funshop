@@ -212,6 +212,7 @@ class ProductController extends Controller
 
         $str = '';
 
+        // 生成csv标题行
         $product = new Product();
         $start = true;
         foreach ($format as $column) {
@@ -222,9 +223,11 @@ class ProductController extends Controller
                 $str .= ',"' . iconv('utf-8', 'gb2312', $product->attributeLabels()[$column]) . '"';
             }
         }
+        $str .= ',' . iconv('utf-8', 'gb2312', Yii::t('app', 'Thumbs')) . ',' . iconv('utf-8', 'gb2312', Yii::t('app', 'Images'));
         $str .= "\n";
 
         foreach ($products as $row) {
+            // 导出 product表中的数据
             $start = true;
             foreach ($format as $column) {
                 $value = iconv('utf-8', 'gb2312', $row[$column]);
@@ -235,6 +238,23 @@ class ProductController extends Controller
                     $str .= ',"' . $value . '"';
                 }
             }
+
+            // 导出product_image表中的数据
+            $start = true;
+            $strThumb = $strImage = '';
+            $productImages = ProductImage::find()->where(['product_id' => $row->id])->all();
+            foreach ($productImages as $item) {
+                if ($start) {
+                    $strThumb .= $item->thumb;
+                    $strImage .= $item->image;
+                    $start = false;
+                } else {
+                    $strThumb .= '|' . $item->thumb;
+                    $strImage .= '|' . $item->image;
+                }
+            }
+            $str .= ',"' . $strThumb . '","' . $strImage . '"';
+
             $str .= "\n";
         }
 

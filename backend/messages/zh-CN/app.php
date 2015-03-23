@@ -168,6 +168,8 @@ return [
     'Type' => '类型',
     'Import' => '导入',
     'Export' => '导出',
+    'Thumbs' => '缩略图集',
+    'Images' => '图片集',
 
     'Comment' => '评价',
     'Comments' => '评价',
