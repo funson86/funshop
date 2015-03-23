@@ -51,6 +51,14 @@ $menuItemsMain = [
                 'label' => Yii::t('app', 'Search Log'),
                 'url' => ['/search-log'],
             ],
+            [
+                'label' => Yii::t('app', 'Import'),
+                'url' => ['/product/import'],
+            ],
+            [
+                'label' => Yii::t('app', 'Export'),
+                'url' => ['/product/export'],
+            ],
         ],
         //'visible' => Yii::$app->user->can('readPost'),
     ],

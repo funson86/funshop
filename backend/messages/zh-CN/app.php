@@ -166,6 +166,8 @@ return [
     'Thumb' => '缩略图',
     'Image' => '图片',
     'Type' => '类型',
+    'Import' => '导入',
+    'Export' => '导出',
 
     'Comment' => '评价',
     'Comments' => '评价',

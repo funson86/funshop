@@ -193,9 +193,61 @@ class ProductController extends Controller
     {
         //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        return $this->render('view', [
+        return $this->render('import', [
 
         ]);
     }
+
+    /**
+     * batch export product
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionExport()
+    {
+        //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+        $format = ['id', 'category_id', 'name', 'sku', 'weight', 'market_price', 'price', 'brief', 'content', 'thumb', 'image', 'keywords', 'description', 'type'];
+
+        $products = Product::find()->orderBy(['id' => SORT_DESC])->all();
+
+        $str = '';
+
+        $product = new Product();
+        $start = true;
+        foreach ($format as $column) {
+            if ($start) {
+                $str .= '"' . iconv('utf-8', 'gb2312', $product->attributeLabels()[$column]) . '"';
+                $start = false;
+            } else {
+                $str .= ',"' . iconv('utf-8', 'gb2312', $product->attributeLabels()[$column]) . '"';
+            }
+        }
+        $str .= "\n";
+
+        foreach ($products as $row) {
+            $start = true;
+            foreach ($format as $column) {
+                $value = iconv('utf-8', 'gb2312', $row[$column]);
+                if ($start) {
+                    $str .= '"' . $value . '"';
+                    $start = false;
+                } else {
+                    $str .= ',"' . $value . '"';
+                }
+            }
+            $str .= "\n";
+        }
+
+        $filename = date('Ymd').'.csv';
+
+        header("Content-type:text/csv");
+        header("Content-Disposition:attachment;filename=".$filename);
+        header('Cache-Control:must-revalidate,post-check=0,pre-check=0');
+        header('Expires:0');
+        header('Pragma:public');
+        echo $str;
+    }
+
+
 
 }
