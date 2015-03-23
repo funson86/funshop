@@ -151,6 +151,12 @@ return [
     'COUPON_TYPE_AMOUNT' => '按金额发送',
     'COUPON_TYPE_OFFLINE' => '生成优惠码',
 
+    'IS_NEW' => '新品',
+    'IS_HOT' => '新品',
+    'IS_GIFT' => '赠品',
+    'IS_PROMOTE' => '促销',
+    'IS_GROUP' => '团购',
+
     'Product' => '商品',
     'Products' => '商品',
     'Stock' => '库存',

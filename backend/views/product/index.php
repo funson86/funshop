@@ -58,14 +58,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'type',
                 'format' => 'html',
                 'value' => function ($model) {
-                    return YesNo::labels($model->type);
+                    return \common\models\ProductType::labels($model->type);
                 },
-                'filter' => Html::activeDropDownList(
+                /*'filter' => Html::activeDropDownList(
                     $searchModel,
                     'type',
                     YesNo::labels(),
                     ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
-                )
+                )*/
             ],
             [
                 'attribute' => 'status',

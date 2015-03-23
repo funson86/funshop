@@ -10,9 +10,12 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$file = Yii::getAlias('@frontend/web' . $model->thumb);
-$fileType = \yii\helpers\FileHelper::getMimeType($file);
-$data = base64_encode(file_get_contents($file));
+if ($model->thumb) {
+    $file = Yii::getAlias('@frontend/web' . $model->thumb);
+    $fileType = \yii\helpers\FileHelper::getMimeType($file);
+    $data = base64_encode(file_get_contents($file));
+}
+
 ?>
 <style>
 td img{width:100px;}
@@ -49,15 +52,16 @@ td img{width:100px;}
             [
                 'attribute' => 'thumb',
                 'format' => 'image',
-                'value' => "data:" . $fileType .";base64," . $data . "",
+                'value' => isset($data) ? "data:" . $fileType .";base64," . $data . "" : '',
                 'options' => ['style' => 'width:100px' ],
+                'visible' => intval($model->thumb),
             ],
             'image',
             'keywords',
             'description:ntext',
             [
                 'attribute' => 'type',
-                'value' => \common\models\YesNo::labels($model->type),
+                'value' => \common\models\ProductType::labels($model->type),
             ],
             [
                 'attribute' => 'status',

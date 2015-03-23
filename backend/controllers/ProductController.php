@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\widgets\image\RemoveAction;
 use backend\widgets\image\UploadAction;
 use common\models\ProductImage;
+use common\models\ProductType;
 use Yii;
 use common\models\Product;
 use common\models\ProductSearch;
@@ -98,13 +99,16 @@ class ProductController extends Controller
         $model = new Product();
         $model->loadDefaultValues();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['update', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+        if ($model->load(Yii::$app->request->post())) {
+            $model->type = ProductType::arrayToInt($model->type);
+            if ($model->save()) {
+                return $this->redirect(['update', 'id' => $model->id]);
+            }
+       }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -119,26 +123,31 @@ class ProductController extends Controller
 
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (isset(Yii::$app->request->post()['imageSort'])) {
-                foreach (Yii::$app->request->post()['imageSort'] as $key => $sortOrder) {
-                    ProductImage::updateAll(['sort_order' => $sortOrder], ['id' => $key]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->type = ProductType::arrayToInt($model->type);
+            if ($model->save()) {
+                if (isset(Yii::$app->request->post()['imageSort'])) {
+                    foreach (Yii::$app->request->post()['imageSort'] as $key => $sortOrder) {
+                        ProductImage::updateAll(['sort_order' => $sortOrder], ['id' => $key]);
+                    }
                 }
-            }
 
-            $productImage = ProductImage::find()->where(['product_id' => $id])->orderBy(['sort_order' => SORT_ASC])->one();
-            if ($productImage) {
-                $model->image = $productImage->image;
-                $model->thumb = $productImage->thumb;
-                $model->save();
-            }
+                $productImage = ProductImage::find()->where(['product_id' => $id])->orderBy(['sort_order' => SORT_ASC])->one();
+                if ($productImage) {
+                    $model->image = $productImage->image;
+                    $model->thumb = $productImage->thumb;
+                    $model->save();
+                }
 
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
+
+        $model->type = ProductType::intToArray($model->type);
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+
     }
 
     /**
@@ -174,4 +183,19 @@ class ProductController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /**
+     * batch import product
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionImport()
+    {
+        //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+
+        return $this->render('view', [
+
+        ]);
+    }
+
 }
