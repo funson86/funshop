@@ -14,6 +14,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -193,11 +194,130 @@ class ProductController extends Controller
     {
         //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
+        $format = Product::getImportExportFormat();
+
+        if (Yii::$app->request->post()) {
+            $countCreate = $countUpdate = 0;
+
+            $file = UploadedFile::getInstanceByName('importFile');
+            $handle = fopen($file->tempName, 'r');
+            $result = $this->inputCsv($handle);
+
+            $arrData = [];
+            if (count($result) <= 1) {
+                Yii::$app->getSession()->setFlash('danger', Yii::t('app', 'No Record, please check file.'));
+            } else {
+                // 将数据的key从数字变成固定的格式
+                for ($i = 1; $i < count($result); $i++) {
+                    $j = 0;
+                    foreach ($format as $item) {
+                        $data[$item] = $result[$i][$j];
+                        $j++;
+                    }
+                    $data['thumbs'] = $result[$i][$j];
+                    $data['images'] = $result[$i][$j + 1];
+
+                    array_push($arrData, $data);
+                }
+
+                // 处理数据，如果ID大于0，则更新，否则新增
+                foreach($arrData as $item) {
+                    if ($item['id'] > 0) { // 已存在的值，则更新数据，以及判断缩略图和图片
+                        $model = $this->findModel($item['id']);
+                        foreach ($item as $k => $v) {
+                            if ($k == 'id' || $k == 'thumbs' || $k == 'images')
+                                continue;
+
+                            $model[$k] = iconv('gb2312', 'utf-8', trim($v));
+                        }
+                        $model->save();
+                        $countUpdate++;
+
+                        if ($item['thumbs'] && $item['images']) {
+                            $arrThumb = explode('|', $item['thumbs']);
+                            $arrImage = explode('|', $item['images']);
+                            $i = 0;
+                            $ids = [];
+                            foreach ($arrThumb as $thumb) {
+                                $thumb = trim($thumb);
+                                $image = trim($arrImage[$i]);
+                                $productImage = ProductImage::find()->where(['product_id' => $item['id'], 'thumb' => $thumb, 'image' => $image])->one();
+                                if ($productImage) { //如果图片在数据库中已经存在，则假如到ids数组，防止后续被删除
+                                    array_push($ids, $productImage->id);
+                                } else { //不存在的话，新增记录并将id加入到ids
+                                    $productImage = new ProductImage([
+                                        'product_id' => $item['id'],
+                                        'thumb' => $thumb,
+                                        'image' => $image,
+                                    ]);
+                                    $productImage->save();
+
+                                    array_push($ids, $productImage->id);
+                                }
+
+                                $i++;
+                            }
+
+                            //删除在ids数组中记录
+                            ProductImage::deleteAll(['and', 'product_id=' . $item['id'], ['not in', 'id', $ids]]);
+                        }
+                    } else { // 新的数据，插入，并将缩略图和图片插入
+                        $model = new Product();
+                        foreach ($item as $k => $v) {
+                            if ($k == 'id' || $k == 'thumbs' || $k == 'images')
+                                continue;
+
+                            $model[$k] = iconv('gb2312', 'utf-8', trim($v));
+                        }
+                        $model->save();
+                        $countCreate++;
+
+                        if ($item['thumbs'] && $item['images']) {
+                            $arrThumb = explode('|', $item['thumbs']);
+                            $arrImage = explode('|', $item['images']);
+                            $i = 0;
+                            foreach ($arrThumb as $thumb) {
+                                $thumb = trim($thumb);
+                                $image = trim($arrImage[$i]);
+                                if ($thumb && $image) { // 缩略图和图片都有才加入
+                                    $productImage = new ProductImage([
+                                        'product_id' => $model->id,
+                                        'thumb' => $thumb,
+                                        'image' => $image,
+                                    ]);
+                                    $productImage->save();
+                                }
+
+                                $i++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            Yii::$app->getSession()->setFlash('success', Yii::t('app', "Import Data Success. Create: {countCreate}  Update: {countUpdate}", ['countCreate' => $countCreate, 'countUpdate' => $countUpdate] ));
+        }
+
         return $this->render('import', [
 
         ]);
     }
 
+    public function inputCsv($handle)
+    {
+        $out = array ();
+        $n = 0;
+        while ($data = fgetcsv($handle, 10000))
+        {
+            $num = count($data);
+            for ($i = 0; $i < $num; $i++)
+            {
+                $out[$n][$i] = $data[$i];
+            }
+            $n++;
+        }
+        return $out;
+    }
     /**
      * batch export product
      * @param integer $id
@@ -206,9 +326,9 @@ class ProductController extends Controller
     public function actionExport()
     {
         //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
-        $format = ['id', 'category_id', 'name', 'sku', 'weight', 'market_price', 'price', 'brief', 'content', 'thumb', 'image', 'keywords', 'description', 'type'];
+        $format = Product::getImportExportFormat();
 
-        $products = Product::find()->orderBy(['id' => SORT_DESC])->all();
+        $products = Product::find()->orderBy(['id' => SORT_ASC])->all();
 
         $str = '';
 

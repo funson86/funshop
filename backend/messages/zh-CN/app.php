@@ -29,6 +29,7 @@ return [
     'Update' => '更新',
     'Delete' => '删除',
     'Send' => '发送',
+    'Submit' => '更新',
     'Are you sure you want to delete this item?' => '您确定要删除此项吗？',
     'Login' => '登录',
     'Incorrect username or password.' => '帐号或密码不正确',
@@ -170,6 +171,8 @@ return [
     'Export' => '导出',
     'Thumbs' => '缩略图集',
     'Images' => '图片集',
+    'Import File CSV' => '导入CSV文件',
+    'Import Data Success. Create: {countCreate}  Update: {countUpdate}' => '导入成功，新建{countCreate}条，更新{countUpdate}条',
 
     'Comment' => '评价',
     'Comments' => '评价',
