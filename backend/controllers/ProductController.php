@@ -221,9 +221,16 @@ class ProductController extends Controller
                 }
 
                 // 处理数据，如果ID大于0，则更新，否则新增
+                $line = 2;
+                $errorLines = [];
                 foreach($arrData as $item) {
                     if ($item['id'] > 0) { // 已存在的值，则更新数据，以及判断缩略图和图片
-                        $model = $this->findModel($item['id']);
+                        $model = Product::findOne($item['id']);
+                        if ($model === null) {
+                            array_push($errorLines, $line);
+                            $line++;
+                            continue;
+                        }
                         foreach ($item as $k => $v) {
                             if ($k == 'id' || $k == 'thumbs' || $k == 'images')
                                 continue;
@@ -292,10 +299,14 @@ class ProductController extends Controller
                             }
                         }
                     }
+                    $line++;
                 }
+                if (count($errorLines)) {
+                    $strLine = implode(', ', $errorLines);
+                    Yii::$app->getSession()->setFlash('danger', Yii::t('app', "Line {strLine} error.", ['strLine' => $strLine] ));
+                }
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', "Import Data Success. Create: {countCreate}  Update: {countUpdate}", ['countCreate' => $countCreate, 'countUpdate' => $countUpdate] ));
             }
-
-            Yii::$app->getSession()->setFlash('success', Yii::t('app', "Import Data Success. Create: {countCreate}  Update: {countUpdate}", ['countCreate' => $countCreate, 'countUpdate' => $countUpdate] ));
         }
 
         return $this->render('import', [
