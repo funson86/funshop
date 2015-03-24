@@ -56,7 +56,7 @@ class CartController extends \frontend\components\Controller
             return;
         }
 
-        $products = Cart::find()->where(['session_id' => Yii::$app->session->id])->all();
+        $products = Cart::find()->where(['or', 'session_id = "' . Yii::$app->session->id . '"', 'user_id = ' . (Yii::$app->user->id ? Yii::$app->user->id : -1)])->all();
         if (count($products)) {
             return $this->render('index', [
                 'products' => $products,
@@ -288,7 +288,7 @@ class CartController extends \frontend\components\Controller
     {
         $totalNumber = 0;
         $totalPrice = 0;
-        $products = Cart::find()->where(['session_id' => Yii::$app->session->id])->asArray()->all();
+        $products = Cart::find()->where(['or', 'session_id = "' . Yii::$app->session->id . '"', 'user_id = ' . (Yii::$app->user->id ? Yii::$app->user->id : -1)])->asArray()->all();
         foreach ($products as $product) {
             $totalNumber += $product['number'];
             $totalPrice += $product['number'] * $product['price'];

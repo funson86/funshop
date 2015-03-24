@@ -2,7 +2,7 @@
 use frontend\components\Nav;
 
 $query = new \yii\db\Query();
-$result = $query->select('sum(number) as number')->from('cart')->where(['or', 'session_id = "' . Yii::$app->session->id . '"', 'user_id = ' . (Yii::$app->user->id ? Yii::$app->user->id : 0)])->createCommand()->queryOne();
+$result = $query->select('sum(number) as number')->from('cart')->where(['or', 'session_id = "' . Yii::$app->session->id . '"', 'user_id = ' . (Yii::$app->user->id ? Yii::$app->user->id : -1)])->createCommand()->queryOne();
 $totalNumber = $result['number'];
 
 ?>
