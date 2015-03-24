@@ -39,6 +39,35 @@ $this->title = $model->name;
     </div>
 </div>
 <div class="maincon">
+    <?php if ($price) { $span = $price['span']; ?>
+    <div class="search-options" id="search-options">
+        <div class="bd">
+            <dl>
+                <dt>价格：</dt>
+                <dd class="dd-price">
+                    <div class="items cle">
+                        <?php for ($i = $price['start']; $i < $price['end']; $i += $span) { ?>
+                        <div class="link"> <a href="<?= Yii::$app->urlManager->createUrl(['category/view', 'id' => $model->id, 'min' => $i, 'max' => $i + $span]) ?>" class="item" ><?= $i . ' - ' . ($i + $span) ?></a> </div>
+                        <?php } ?>
+                    </div>
+                    <div class="priceform" id="priceform">
+                        <div class="form-bg">
+                            <form action="" method="post" id="freepriceform">
+                                <span class="rmb"></span>
+                                <input type="text" value="" name="pricemin" id="pricemin"/>
+                                <span class="rmb rmb2"></span>
+                                <input type="text" value="" name="pricemax" id="pricemax"/>
+                                <p>
+                                    <input type="submit" value="确定" class="submit"/>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <?php } ?>
     <div class="productlist">
         <ul class="cle">
             <?php if (count($products)) { foreach ($products as $product) { ?>
@@ -66,3 +95,19 @@ $this->title = $model->name;
 </div>
 </div>
 </div>
+<?php
+$js = <<<JS
+
+$(".submit").click(function(){
+    if (parseInt($("#pricemin").val()) < 0 || parseInt($("#pricemax").val()) < 0) {
+        alert("请输入正确的价格区间");
+    } else {
+        location.href = "?min=" + parseInt($("#pricemin").val()) + '&max=' + parseInt($("#pricemax").val());
+    }
+    return false;
+});
+
+JS;
+
+$this->registerJs($js);
+?>

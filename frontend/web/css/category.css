@@ -297,6 +297,9 @@
 .fixed-want .brand p.more a {
     color:#999
 }
+a.more-btn, .rmb, .search-selected a.item, .sort .bd a span {
+    background:url(../images/search-page-bg.png) 0 -9999px no-repeat
+}
 .search-selected {
     background-color:#fff;
     border:1px solid #eee;
@@ -373,7 +376,7 @@
     overflow:hidden
 }
 .search-options dd.dd-price .link {
-    width:102px
+    width:82px
 }
 .search-options dd a.more-btn {
     position:absolute;
@@ -450,7 +453,8 @@
     background-position:8px -272px
 }
 .priceform form p {
-    display:none;
+    display: inline;
+    padding-left: 15px;
     text-align:right;
     padding-top:4px
 }
