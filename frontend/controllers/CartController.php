@@ -158,6 +158,9 @@ class CartController extends \frontend\components\Controller
                     $orderProduct->type = $product->type;
 
                     $orderProduct->save();
+
+                    // 减少商品的库存
+                    Product::updateAll(['stock' => - $product->number], ['id' => $product->product_id]);
                 }
 
                 // 生成订单后，清空购物车，设置优惠码，更新积分和积分记录
@@ -192,6 +195,7 @@ class CartController extends \frontend\components\Controller
                 ]);
                 $orderLog->save();
 
+                // 不同的付款方式到不同的页面
                 if ($model->payment_method == Order::PAYMENT_METHOD_COD) {
                     return $this->redirect(['cart/cod',
                         'id' => $model->id,

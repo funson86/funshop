@@ -152,7 +152,7 @@ $i = 0;
                 </div>
                 <div class="total-count">
                     <div class="tobe-pay">需支付： <?= Html::hiddenInput('totalPrice', $totalPrice) ?><span class="red">￥ <em id="total-price"><?= $totalPrice ?></em> </span> </div>
-                    <p class="get-intg gray">可得积分：8</p>
+                    <p class="get-intg gray">可得积分：<?= intval($totalPrice) ?></p>
                     <!--div id="btm-addr" class="btm-addr"> 广东省&nbsp;深圳市&nbsp;福田区&nbsp;&nbsp;sddfdsfsdfs <em>（funson86&nbsp;13246669876）</em> </div-->
                     <div><?= Html::submitButton( Yii::t('app', '确认提交'), ['class' => 'btn',]) ?></div>
                 </div>
