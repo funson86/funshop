@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\CheckboxColumn'],
 
             'id',
             [
@@ -66,6 +66,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     YesNo::labels(),
                     ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
                 )*/
+            ],
+            [
+                'attribute' => 'brand_id',
+                'value' => function ($model) {
+                    return $model->brand ? $model->brand->name : '-';
+                },
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'type',
+                    ArrayHelper::map(\common\models\Brand::find()->all(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
+                )
             ],
             [
                 'attribute' => 'status',

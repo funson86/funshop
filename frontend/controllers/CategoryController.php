@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Brand;
 use Yii;
 use common\models\Category;
 use common\models\Product;
@@ -22,7 +23,7 @@ class CategoryController extends \frontend\components\Controller
         $arrayCategoryIdName = ArrayHelper::map($allCategory, 'id', 'name');
         $arrSubCat = Category::getArraySubCatalogId($id, $allCategory);
 
-        // 价格区间
+        /****** 价格筛选 ****/
         $result = (new Query())->select('min(price) as min, max(price) as max')->from('product')->where(['category_id' => $arrSubCat, 'status' => Status::STATUS_ACTIVE])->one();
         $min = $result['min'];
         $max = $result['max'];
@@ -40,11 +41,18 @@ class CategoryController extends \frontend\components\Controller
             for($i = 1; $min > $span * $i; $i++);
             for($j = 1; $min > ($span * ($i - 1) + $priceGrade * $j); $j++);
 
-            $price['start'] = $span * ($i - 1) + $priceGrade * ($j - 1);
+            $priceFilter['start'] = $span * ($i - 1) + $priceGrade * ($j - 1);
             for(; $max >= $span * $i; $i++);
-            $price['end'] = $span * ($i) + $priceGrade * ($j - 1);
-            $price['span'] = $span;
+            $priceFilter['end'] = $span * ($i) + $priceGrade * ($j - 1);
+            $priceFilter['span'] = $span;
         }
+        /****** 价格筛选 end ****/
+
+        /****** 品牌筛选 start ****/
+        $result = (new Query())->select('distinct(brand_id)')->from('product')->where(['category_id' => $arrSubCat, 'status' => Status::STATUS_ACTIVE])->all();
+        $ids = ArrayHelper::map($result, 'brand_id', 'brand_id');
+        $brandFilter = Brand::find()->where(['id' => $ids])->orderBy(['name' => SORT_ASC])->all();
+        /****** 品牌筛选 end ****/
 
         $query = Product::find()->where(['category_id' => $arrSubCat, 'status' => Status::STATUS_ACTIVE]);
 
@@ -54,6 +62,14 @@ class CategoryController extends \frontend\components\Controller
             $max = intval(Yii::$app->request->get('max'));
             if ($min >= 0 && $max) {
                 $query->andWhere(['and', ['>', 'price', $min], ['<=', 'price', $max]]);
+            }
+        }
+
+        // 如果选择了品牌
+        if (Yii::$app->request->get('brand_id')) {
+            $brandId = intval(Yii::$app->request->get('brand_id'));
+            if ($brandId >= 0) {
+                $query->andWhere(['brand_id' => $brandId]);
             }
         }
 
@@ -69,7 +85,8 @@ class CategoryController extends \frontend\components\Controller
             'arrayCategoryIdName' => $arrayCategoryIdName,
             'products' => $dataProvider->getModels(),
             'pagination' => $dataProvider->pagination,
-            'price' => isset($price) ? $price : null,
+            'priceFilter' => isset($priceFilter) ? $priceFilter : null,
+            'brandFilter' => $brandFilter,
         ]);
     }
 

@@ -2,6 +2,9 @@
 
 namespace frontend\controllers;
 
+use common\models\OrderLog;
+use common\models\OrderProduct;
+use common\models\Product;
 use Yii;
 use common\models\Order;
 use yii\web\Response;
@@ -67,8 +70,25 @@ class OrderController extends \frontend\components\Controller
         $model= $this->findModel($id);
 
         if ($model) {
+            $oldStatus = $model->status;
             $model->status = $status;
             $model->save();
+
+            // 记录订单日志
+            $orderLog = new OrderLog([
+                'order_id' => $model->id,
+                'status' => $model->status,
+            ]);
+            $orderLog->save();
+
+            // 如果订单为取消，则恢复对应的库存
+            if ($oldStatus > 0 && $status == Order::STATUS_CANCEL) {
+                $orderProducts = OrderProduct::find()->where(['order_id' => $model->id])->all();
+                foreach ($orderProducts as $product) {
+                    Product::updateAll(['stock' => $product->number], ['id' => $product->product_id]);
+                }
+            }
+
             return [
                 'status' => 1,
             ];

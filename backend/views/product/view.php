@@ -11,9 +11,11 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 
 if ($model->thumb) {
-    $file = Yii::getAlias('@frontend/web' . $model->thumb);
-    $fileType = \yii\helpers\FileHelper::getMimeType($file);
-    $data = base64_encode(file_get_contents($file));
+    if (strpos($model->thumb, 'http://') === null) {
+        $file = Yii::getAlias('@frontend/web' . $model->thumb);
+        $fileType = \yii\helpers\FileHelper::getMimeType($file);
+        $data = base64_encode(file_get_contents($file));
+    }
 }
 
 ?>
@@ -52,9 +54,9 @@ td img{width:100px;}
             [
                 'attribute' => 'thumb',
                 'format' => 'image',
-                'value' => isset($data) ? "data:" . $fileType .";base64," . $data . "" : '',
+                'value' => isset($data) ? "data:" . $fileType .";base64," . $data . "" : ($model->thumb ? $model->thumb : ''),
                 'options' => ['style' => 'width:100px' ],
-                'visible' => intval($model->thumb),
+                'visible' => isset($model->thumb),
             ],
             'image',
             'keywords',
@@ -62,6 +64,10 @@ td img{width:100px;}
             [
                 'attribute' => 'type',
                 'value' => \common\models\ProductType::labels($model->type),
+            ],
+            [
+                'attribute' => 'brand_id',
+                'value' => $model->brand ? $model->brand->name : '-',
             ],
             [
                 'attribute' => 'status',
@@ -84,8 +90,12 @@ td img{width:100px;}
 
 <?php
 foreach ($model->productImagesSort as $item) {
-    $file = Yii::getAlias('@frontend/web' . $item->thumb);
-    $fileType = \yii\helpers\FileHelper::getMimeType($file);
-    $data = base64_encode(file_get_contents($file));
-    echo "<img src='data:" . $fileType .";base64," . $data . "' width=100>";
+    if (strpos($model->thumb, 'http://') === null) {
+        $file = Yii::getAlias('@frontend/web' . $item->thumb);
+        $fileType = \yii\helpers\FileHelper::getMimeType($file);
+        $data = base64_encode(file_get_contents($file));
+        echo "<img src='data:" . $fileType . ";base64," . $data . "' width=100>";
+    } else {
+        echo "<img src='$item->thumb' width=100>";
+    }
 }

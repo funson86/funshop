@@ -51,18 +51,24 @@ use mihaildev\ckeditor\CKEditor;
 
     <?= $form->field($model, 'type')->checkboxList(\common\models\ProductType::labels()) ?>
 
+    <?= $form->field($model, 'brand_id')->dropDownList(ArrayHelper::map(\common\models\Brand::find()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Please Select')]) ?>
+
     <?= $form->field($model, 'status')->dropDownList(\common\models\Status::labels()) ?>
 
     <?php if (!$model->isNewRecord) { ?>
         <div class="form-group">
             <?php
             foreach ($model->productImages as $image) {
-                $file = Yii::getAlias('@frontend/web' . $image->thumb);
-                $fileType = \yii\helpers\FileHelper::getMimeType($file);
-                $data = base64_encode(file_get_contents($file));
                 echo '<div style="width:150px; float: left; text-align: center">';
-                echo '<a href="'. \Yii::$app->getUrlManager()->createUrl(['product/remove', 'id' => $image->id]) .'" title="' . Yii::t('app', 'Delete') . '" data-confirm="' . Yii::t('app', 'Are you sure you want to delete this item?') . '" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a><br>';
-                echo "<img src='data:" . $fileType .";base64," . $data . "' width=100><br>";
+                echo '<a href="' . \Yii::$app->getUrlManager()->createUrl(['product/remove', 'id' => $image->id]) . '" title="' . Yii::t('app', 'Delete') . '" data-confirm="' . Yii::t('app', 'Are you sure you want to delete this item?') . '" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a><br>';
+                if (strpos($image->thumb, 'http://') === null) {
+                    $file = Yii::getAlias('@frontend/web' . $image->thumb);
+                    $fileType = \yii\helpers\FileHelper::getMimeType($file);
+                    $data = base64_encode(file_get_contents($file));
+                    echo "<img src='data:" . $fileType . ";base64," . $data . "' width=100><br>";
+                } else {
+                    echo "<img src='$image->thumb' width=100><br>";
+                }
                 echo Yii::t('app', 'Sort Order') . ' <input style="width:50px" name="imageSort[' . $image->id . ']" value="' . $image->sort_order . '">';
                 echo '</div>';
             } ?>

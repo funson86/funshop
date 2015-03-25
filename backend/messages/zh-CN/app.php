@@ -153,7 +153,7 @@ return [
     'COUPON_TYPE_OFFLINE' => '生成优惠码',
 
     'IS_NEW' => '新品',
-    'IS_HOT' => '新品',
+    'IS_HOT' => '热销',
     'IS_GIFT' => '赠品',
     'IS_PROMOTE' => '促销',
     'IS_GROUP' => '团购',
@@ -177,6 +177,7 @@ return [
 
     'Brand' => '品牌',
     'Brands' => '品牌',
+    'Brand ID' => '品牌',
 
     'Comment' => '评价',
     'Comments' => '评价',

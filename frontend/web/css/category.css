@@ -352,7 +352,7 @@ a.more-btn, .rmb, .search-selected a.item, .sort .bd a span {
 .search-options dd {
     position:relative;
     padding:0 50px 0 63px;
-    height:24px;
+    max-height:48px;
     overflow:hidden;
     -webkit-transition:height 0.3s;
     -moz-transition:height 0.3s;
@@ -370,13 +370,12 @@ a.more-btn, .rmb, .search-selected a.item, .sort .bd a span {
 }
 .search-options dd .link {
     float:left;
-    width:162px;
+    padding-right: 20px;
     height:18px;
     margin:0 10px 8px 0;
     overflow:hidden
 }
 .search-options dd.dd-price .link {
-    width:82px
 }
 .search-options dd a.more-btn {
     position:absolute;

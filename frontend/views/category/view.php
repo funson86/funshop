@@ -39,14 +39,26 @@ $this->title = $model->name;
     </div>
 </div>
 <div class="maincon">
-    <?php if ($price) { $span = $price['span']; ?>
+    <?php if ($priceFilter) { $span = $priceFilter['span']; ?>
     <div class="search-options" id="search-options">
         <div class="bd">
+            <?php if (count($brandFilter)) { ?>
+            <dl>
+                <dt>品牌：</dt>
+                <dd>
+                    <div class="items cle">
+                        <?php foreach ($brandFilter as $item) { ?>
+                        <div class="link"> <a href="<?= Yii::$app->urlManager->createUrl(['category/view', 'id' => $model->id, 'brand_id' => $item->id]) ?>" class="item" ><?= $item->name ?></a> </div>
+                        <?php } ?>
+                    </div>
+                    <a class="more-btn" href="javascript:;">更多</a> </dd>
+            </dl>
+            <?php } ?>
             <dl>
                 <dt>价格：</dt>
                 <dd class="dd-price">
                     <div class="items cle">
-                        <?php for ($i = $price['start']; $i < $price['end']; $i += $span) { ?>
+                        <?php for ($i = $priceFilter['start']; $i < $priceFilter['end']; $i += $span) { ?>
                         <div class="link"> <a href="<?= Yii::$app->urlManager->createUrl(['category/view', 'id' => $model->id, 'min' => $i, 'max' => $i + $span]) ?>" class="item" ><?= $i . ' - ' . ($i + $span) ?></a> </div>
                         <?php } ?>
                     </div>

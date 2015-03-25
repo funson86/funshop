@@ -66,7 +66,7 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['category_id', 'name', 'sku'], 'required'],
-            [['category_id', 'stock', 'type', 'sales', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['category_id', 'stock', 'type', 'brand_id', 'sales', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['weight', 'market_price', 'price', 'star'], 'number'],
             [['content', 'description'], 'string'],
             [['name'], 'string', 'max' => 128],
@@ -97,6 +97,7 @@ class Product extends \yii\db\ActiveRecord
             'keywords' => Yii::t('app', 'Keywords'),
             'description' => Yii::t('app', 'Description'),
             'type' => Yii::t('app', 'Type'),
+            'brand_id' => Yii::t('app', 'Brand ID'),
             'star' => Yii::t('app', 'Star'),
             'sales' => Yii::t('app', 'Sales'),
             'status' => Yii::t('app', 'Status'),
@@ -121,6 +122,14 @@ class Product extends \yii\db\ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBrand()
+    {
+        return $this->hasOne(Brand::className(), ['id' => 'brand_id']);
     }
 
     /**
