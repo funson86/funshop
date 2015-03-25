@@ -20,6 +20,10 @@ $menuItemsMain = [
                 'url' => ['/order'],
             ],
             [
+                'label' => Yii::t('app', 'Order Log'),
+                'url' => ['/order-log'],
+            ],
+            [
                 'label' => Yii::t('app', 'Cart'),
                 'url' => ['/cart'],
             ],
@@ -46,6 +50,10 @@ $menuItemsMain = [
             [
                 'label' => Yii::t('app', 'Consultation'),
                 'url' => ['/consultation'],
+            ],
+            [
+                'label' => Yii::t('app', 'Brand'),
+                'url' => ['/brand'],
             ],
             [
                 'label' => Yii::t('app', 'Search Log'),

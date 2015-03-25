@@ -175,6 +175,9 @@ return [
     'Line {strLine} error.' => '第 {strLine} 行数据错误',
     'Import Data Success. Create: {countCreate}  Update: {countUpdate}' => '导入成功，新建{countCreate}条，更新{countUpdate}条',
 
+    'Brand' => '品牌',
+    'Brands' => '品牌',
+
     'Comment' => '评价',
     'Comments' => '评价',
     'Product ID' => '商品',
@@ -222,6 +225,8 @@ return [
     'Number' => '数量',
     'Total' => '总额',
 
+    'Order Log' => '订单日志',
+    'Order Logs' => '总额',
 
     'Cart' => '购物车',
     'Carts' => '购物车',

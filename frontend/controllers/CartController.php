@@ -6,6 +6,7 @@ use common\models\Address;
 use common\models\Cart;
 use common\models\Coupon;
 use common\models\Order;
+use common\models\OrderLog;
 use common\models\OrderProduct;
 use common\models\PointLog;
 use common\models\Product;
@@ -183,6 +184,13 @@ class CartController extends \frontend\components\Controller
                     ]);
                     $pointLog->save();
                 }
+
+                // 记录订单日志
+                $orderLog = new OrderLog([
+                    'order_id' => $model->id,
+                    'status' => $model->status,
+                ]);
+                $orderLog->save();
 
                 if ($model->payment_method == Order::PAYMENT_METHOD_COD) {
                     return $this->redirect(['cart/cod',
