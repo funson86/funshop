@@ -37,6 +37,26 @@ $this->title = $model->name;
             <?php }} ?>
         </dl>
     </div>
+    <div class="right_box hot_items" id="cate-menu">
+        <div class="hd">热销商品</div>
+        <div class="bd">
+            <ul class="cle">
+                <?php foreach ($sameCategoryProducts as $item) { ?>
+                    <li>
+                        <span class="productimg">
+                            <a href="<?= Yii::$app->urlManager->createUrl(['product/view', 'id' => $item->id]) ?>" target="_blank">
+                                <img width="150" height="150" title="<?= $item->name ?>" alt="<?= $item->name ?>" src="<?= $item->thumb ?>">
+                            </a>
+                        </span>
+                        <span class="productname">
+                            <a href="<?= Yii::$app->urlManager->createUrl(['product/view', 'id' => $item->id]) ?>" target="_blank"><?= $item->name ?></a>
+                        </span>
+                        <span class="nalaprice">￥<b><?= $item->price ?></b></span>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
 </div>
 <div class="maincon">
     <?php if ($priceFilter) { $span = $priceFilter['span']; ?>

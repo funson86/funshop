@@ -4,6 +4,9 @@ return [
     'defaultPageSizeProduct' => 2,
     'defaultPageSizeOrder' => 2,
 
+    'productHotCount' => 5,
+    'productHistoryCount' => 5,
+
     'cmsTheme' => 'cms',
     'mainMenu2' => '1',
     'cmsTitle' => 'HikeCms',

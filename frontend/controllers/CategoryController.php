@@ -73,6 +73,9 @@ class CategoryController extends \frontend\components\Controller
             }
         }
 
+        // 侧边热销商品
+        $sameCategoryProducts = Product::find()->where(['category_id' => $id])->orderBy(['sales' => SORT_DESC])->limit(5)->all();
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => ['defaultPageSize' => Yii::$app->params['defaultPageSizeProduct']],
@@ -87,6 +90,7 @@ class CategoryController extends \frontend\components\Controller
             'pagination' => $dataProvider->pagination,
             'priceFilter' => isset($priceFilter) ? $priceFilter : null,
             'brandFilter' => $brandFilter,
+            'sameCategoryProducts' => $sameCategoryProducts,
         ]);
     }
 

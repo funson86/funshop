@@ -792,3 +792,61 @@ a.more-btn, .rmb, .search-selected a.item, .sort .bd a span {
 .week-hot .item a:hover .hot-ico {
     background-position:0 0
 }
+
+.right_box {
+    border:1px solid #ccc;
+    background-color:#fff;
+    margin-bottom:20px
+}
+.right_box .hd {
+    border-bottom:1px solid #ccc;
+    background:#f3f3f3 url(../images/temai_right_h3.png) 15px 12px no-repeat;
+    height:40px;
+    line-height:40px;
+    overflow:hidden;
+    font-size:14px;
+    padding-left:30px
+}
+.right_box .hd strong {
+    color:#e4393c;
+    margin-right:10px;
+    font-weight:400
+}
+.right_box .cms_list {
+    margin:10px 14px
+}
+.right_box .cms_list li {
+    height:24px;
+    line-height:24px;
+    list-style:disc inside;
+    overflow:hidden;
+    color:#999
+}
+.hot_items .bd {
+    padding:0 14px
+}
+.hot_items li {
+    border-bottom:1px dashed #ccc;
+    padding-bottom:14px;
+    margin-bottom:-1px
+}
+.hot_items li span {
+    display:block
+}
+.hot_items li .nalaprice {
+    color:#e4393c;
+    font-size:14px;
+    margin-top:2px
+}
+.hot_items li .nalaprice b {
+    font-weight:400
+}
+.hot_items li .productimg {
+    padding-top:10px;
+    text-align:center
+}
+.hot_items li .productimg img {
+    width:120px;
+    height:120px;
+    vertical-align:top
+}

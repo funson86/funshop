@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
+use yii\web\Cookie;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -27,8 +28,41 @@ class ProductController extends \frontend\components\Controller
         $rootCategoryId = Category::getRootCatalogId($model->category_id, $allCategory);
         $arraySameRootCategory = Category::getArraySubCatalogId($rootCategoryId, $allCategory);
 
+        // 同类商品  和 同大类商品
         $sameCategoryProducts = Product::find()->where(['category_id' => $model->category_id])->orderBy(['sales' => SORT_DESC])->limit(3)->all();
-        $sameRootCategoryProducts = Product::find()->where(['category_id' => $arraySameRootCategory])->orderBy(['sales' => SORT_DESC])->limit(8)->all();
+        $sameRootCategoryProducts = Product::find()->where(['category_id' => $arraySameRootCategory])->orderBy(['sales' => SORT_DESC])->limit(Yii::$app->params['productHotCount'])->all();
+
+        // 记录浏览日志
+        $historyProducts = [];
+        $cookies = Yii::$app->request->cookies;
+        if ($cookies->has('productHistory')) {
+            $arrHistory = explode(',', $cookies->getValue('productHistory'));
+
+            foreach ($arrHistory as $id) {
+                $product = Product::findOne($id);
+                if ($product) {
+                    array_push($historyProducts, $product);
+                }
+            }
+
+            array_unshift($arrHistory, $id);
+            $arrHistory = array_unique($arrHistory);
+            while (count($arrHistory) > Yii::$app->params['productHistoryCount']) {
+                array_pop($arrHistory);
+            }
+            Yii::$app->response->cookies->remove('productHistory');
+            Yii::$app->response->cookies->add(new Cookie([
+                'name' => 'productHistory',
+                'value' => implode(',', $arrHistory),
+                'expire' => time() + 3600 * 24 * 30,
+            ]));
+        } else {
+            Yii::$app->response->cookies->add(new Cookie([
+                'name' => 'productHistory',
+                'value' => $id,
+                'expire' => time() + 3600 * 24 * 30,
+            ]));
+        }
 
         return $this->render('view', [
             'model' => $model,
@@ -36,8 +70,8 @@ class ProductController extends \frontend\components\Controller
             'arrayCategoryIdName' => $arrayCategoryIdName,
             'sameCategoryProducts' => $sameCategoryProducts,
             'sameRootCategoryProducts' => $sameRootCategoryProducts,
+            'historyProducts' => $historyProducts,
         ]);
-
     }
 
     public function actionSearch($keyword = null, $type = self::PRODUCT_SORT_CREATED_AT)

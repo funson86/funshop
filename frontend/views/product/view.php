@@ -238,9 +238,7 @@ if ($countCommentsPassed > 0) {
 <!--详情页右侧栏-->
 <div class="z-detail-right">
     <div class="right_planes">
-        <div>
-        </div>
-         <div class="right_box hot_items">
+        <div class="right_box hot_items">
             <div class="hd">热销商品</div>
             <div class="bd">
                 <ul class="cle">
@@ -256,6 +254,26 @@ if ($countCommentsPassed > 0) {
                         </span>
                         <span class="nalaprice">￥<b><?= $item->price ?></b></span>
                     </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+        <div class="right_box hot_items">
+            <div class="hd">浏览记录</div>
+            <div class="bd">
+                <ul class="cle">
+                    <?php foreach ($historyProducts as $item) { ?>
+                        <li>
+                        <span class="productimg">
+                            <a href="<?= Yii::$app->urlManager->createUrl(['product/view', 'id' => $item->id]) ?>" target="_blank">
+                                <img width="150" height="150" title="<?= $item->name ?>" alt="<?= $item->name ?>" src="<?= $item->thumb ?>">
+                            </a>
+                        </span>
+                        <span class="productname">
+                            <a href="<?= Yii::$app->urlManager->createUrl(['product/view', 'id' => $item->id]) ?>" target="_blank"><?= $item->name ?></a>
+                        </span>
+                            <span class="nalaprice">￥<b><?= $item->price ?></b></span>
+                        </li>
                     <?php } ?>
                 </ul>
             </div>
