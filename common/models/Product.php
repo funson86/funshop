@@ -263,7 +263,7 @@ class Product extends \yii\db\ActiveRecord
 
     public static function getImportExportFormat()
     {
-        return ['id', 'category_id', 'name', 'sku', 'stock', 'weight', 'market_price', 'price', 'brief', 'content', 'thumb', 'image', 'keywords', 'description', 'type'];
+        return ['id', 'category_id', 'name', 'sku', 'stock', 'weight', 'market_price', 'price', 'brief', 'content', 'thumb', 'image', 'keywords', 'description', 'type', 'brand_id'];
     }
 
 }

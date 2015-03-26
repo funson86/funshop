@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use backend\widgets\image\RemoveAction;
 use backend\widgets\image\UploadAction;
+use common\models\Brand;
+use common\models\Category;
 use common\models\ProductImage;
 use common\models\ProductType;
 use Yii;
@@ -237,7 +239,13 @@ class ProductController extends Controller
 
                             $model[$k] = iconv('gb2312', 'utf-8', trim($v));
                         }
-                        $model->save();
+
+                        $result = $model->save();
+                        if (!$result) { //如果保存失败
+                            array_push($errorLines, $line);
+                            $line++;
+                            continue;
+                        }
                         $countUpdate++;
 
                         if ($item['thumbs'] && $item['images']) {
@@ -276,7 +284,19 @@ class ProductController extends Controller
 
                             $model[$k] = iconv('gb2312', 'utf-8', trim($v));
                         }
-                        $model->save();
+
+                        // 将分类和品牌转换成对应的ID
+                        $category = Category::find()->where(['name' => trim($model->category_id)])->one();
+                        $model->category_id = $category ? $category->id : 1;
+                        $brand = Brand::find()->where(['name' => trim($model->brand_id)])->one();
+                        $model->brand_id = $brand ? $brand->id : 0;
+
+                        $result = $model->save();
+                        if (!$result) { //如果保存失败
+                            array_push($errorLines, $line);
+                            $line++;
+                            continue;
+                        }
                         $countCreate++;
 
                         if ($item['thumbs'] && $item['images']) {
@@ -310,7 +330,6 @@ class ProductController extends Controller
         }
 
         return $this->render('import', [
-
         ]);
     }
 
@@ -361,12 +380,25 @@ class ProductController extends Controller
             // 导出 product表中的数据
             $start = true;
             foreach ($format as $column) {
-                $value = iconv('utf-8', 'gb2312', $row[$column]);
+                $value = '';
+                if ($column == 'category_id') {
+                    if ($row[$column] > 0) {
+                        $category = Category::findOne($row[$column]);
+                        $value = iconv('utf-8', 'gb2312', $category->name);
+                    }
+                } elseif ($column == 'brand_id') {
+                    if ($row[$column] > 0) {
+                        $brand = Brand::findOne($row[$column]);
+                        $value = iconv('utf-8', 'gb2312', $brand->name);
+                    }
+                } else {
+                    $value = iconv('utf-8', 'gb2312', $row[$column]);
+                }
                 if ($start) {
                     $str .= '"' . $value . '"';
                     $start = false;
                 } else {
-                    $str .= ',"' . $value . '"';
+                    $str .= ',"' . str_replace("\"", "\"\"", $value) . '"';
                 }
             }
 
