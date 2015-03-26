@@ -41,14 +41,17 @@ class CartController extends \frontend\components\Controller
     {
         Yii::$app->session['step'] = 1;
 
-        if (Yii::$app->request->get('minus') || Yii::$app->request->get('add') || (Yii::$app->request->get('change') && Yii::$app->request->get('value'))) {
-            if (Yii::$app->request->get('minus')) {
-                $productId = Yii::$app->request->get('minus');
+        if (Yii::$app->request->get('type') && Yii::$app->request->get('product_id')) {
+            $type = Yii::$app->request->get('type');
+            $productId = Yii::$app->request->get('product_id');
+            $product = Product::findOne($productId);
+            $cartProduct = Cart::find()->where(['session_id' => Yii::$app->session->id, 'product_id' => $productId])->one();
+
+            if ($type == 'minus' && $cartProduct->number > 1) { //减少一个
                 Cart::updateAllCounters(['number' => -1], ['session_id' => Yii::$app->session->id, 'product_id' => $productId]);
-            } elseif (Yii::$app->request->get('add')) {
-                $productId = Yii::$app->request->get('add');
+            } elseif ($type == 'add' && $cartProduct->number < $product->stock) { //增加一个
                 Cart::updateAllCounters(['number' => 1], ['session_id' => Yii::$app->session->id, 'product_id' => $productId]);
-            } elseif (Yii::$app->request->get('change') && Yii::$app->request->get('value')) {
+            } elseif ($type == 'change' && Yii::$app->request->get('value')) { //修改为指定的数量
                 $productId = Yii::$app->request->get('change');
                 $value = Yii::$app->request->get('value');
                 Cart::updateAll(['number' => $value], ['session_id' => Yii::$app->session->id, 'product_id' => $productId]);
@@ -59,6 +62,7 @@ class CartController extends \frontend\components\Controller
 
         $products = Cart::find()->where(['or', 'session_id = "' . Yii::$app->session->id . '"', 'user_id = ' . (Yii::$app->user->id ? Yii::$app->user->id : -1)])->all();
         if (count($products)) {
+            // 如果购物车的数量大于商品的库存，则设置为最大的库存
             return $this->render('index', [
                 'products' => $products,
             ]);
@@ -160,7 +164,7 @@ class CartController extends \frontend\components\Controller
                     $orderProduct->save();
 
                     // 减少商品的库存
-                    Product::updateAll(['stock' => - $product->number], ['id' => $product->product_id]);
+                    Product::updateAllCounters(['stock' => - $product->number], ['id' => $product->product_id]);
                 }
 
                 // 生成订单后，清空购物车，设置优惠码，更新积分和积分记录
@@ -370,15 +374,25 @@ class CartController extends \frontend\components\Controller
         $productId = Yii::$app->request->post('productId');
         $number = Yii::$app->request->post('number');
         if ($productId && $number) {
+            // 如果购物车已有，则更新，否则在购物车中增加
             if ($cart = Cart::find()->where(['and', 'product_id=' . $productId, ['or', 'session_id="' . Yii::$app->session->id . '"', 'user_id=' . Yii::$app->user->isGuest ? 0 : Yii::$app->user->id]])->one()) {
-                $cart->updateAllCounters(['number' => $number], ['and', 'product_id=' . $productId, ['or', 'session_id="' . Yii::$app->session->id . '"', 'user_id=' . Yii::$app->user->isGuest ? 0 : Yii::$app->user->id]]);
-                return [
-                    'status' => 1,
-                    'productId' => $productId,
-                    'number' => $number,
-                ];
+                $product = Product::findOne($productId);
+                if ($cart->number + $number <= $product->stock) {
+                    $cart->updateAllCounters(['number' => $number], ['and', 'product_id=' . $productId, ['or', 'session_id="' . Yii::$app->session->id . '"', 'user_id=' . Yii::$app->user->isGuest ? 0 : Yii::$app->user->id]]);
+                    return [
+                        'status' => 1,
+                        'productId' => $productId,
+                        'number' => $number,
+                    ];
+                } else {
+                    return [
+                        'status' => -2,
+                        'productId' => $productId,
+                        'number' => $number,
+                    ];
+                }
             } elseif ($model = Product::findOne($productId)) {
-                if ($model->stock > $number) {
+                if ($model->stock >= $number) {
                     $cart = new Cart();
                     $cart->session_id = Yii::$app->session->id;
                     $cart->user_id = Yii::$app->user->isGuest ? 0 : Yii::$app->user->id;

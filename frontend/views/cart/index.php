@@ -15,15 +15,19 @@ foreach($products as $product) {
         <div class="fr"> <a href="http://www.mayicun.com/item/newsearch" class="graybtn">继续购物</a> <a href="javascript:;" class="btn" id="checkout-top">&nbsp;去下单&nbsp;</a> </div>
     </div>
     <div class="cart-box" id="cart-box">
-        <div class="hd"> <span class="no1">
-      <input type="checkbox" name="checkall" checked="checked" />
-      </span> <span class="no2" id="itemsnum-top"><?= $totalNumber ?>件商品</span> <span class="no3">单价</span> <span>数量</span> <span>小计</span> </div>
+        <div class="hd">
+            <span class="no1">&nbsp;</span>
+            <span class="no2" id="itemsnum-top"><?= $totalNumber ?>件商品</span>
+            <span class="no3">单价</span>
+            <span>数量</span>
+            <span>小计</span>
+        </div>
         <div class="goods-list">
             <ul>
                 <?php foreach ($products as $product) { ?>
                 <li class="cle hover">
                     <div class="check">
-                        <input type="checkbox" name="goodsId" value="728286208" checked="checked" />
+                        &nbsp;<!--input type="checkbox" name="goodsId" value="728286208" checked="checked" /-->
                     </div>
                     <div class="pic"> <a href="<?= Yii::$app->urlManager->createUrl(['product/view', 'id' => $product->product_id]) ?>" target="_blank"> <img alt="<?= $product->name ?>" src="<?= $product->thumb ?>"></a> </div>
                     <div class="name"> <a href="<?= Yii::$app->urlManager->createUrl(['product/view', 'id' => $product->product_id]) ?>" target="_blank"> <?= $product->name ?> </a>
@@ -33,12 +37,12 @@ foreach($products as $product) {
                         <p>￥<em><?= $product->price ?></em></p>
                     </div>
                     <div class="nums">
-                        <span class="minus" title="减少1个数量" lang="<?= $product->product_id ?>">-</span>
-                        <input type="text" data-limit="99" lang="<?= $product->product_id ?>" value="<?= $product->number ?>">
-                        <span class="add" title="增加1个数量" lang="<?= $product->product_id ?>">+</span>
+                        <span class="minus" title="减少1个数量" data-link="<?= Yii::$app->urlManager->createUrl(['cart/index', 'type' => 'minus', 'product_id' => $product->product_id]) ?>">-</span>
+                        <input type="text" data-limit="99"  data-link="<?= Yii::$app->urlManager->createUrl(['cart/index', 'type' => 'change', 'product_id' => $product->product_id]) ?>" value="<?= $product->number ?>">
+                        <span class="add" title="增加1个数量" data-link="<?= Yii::$app->urlManager->createUrl(['cart/index', 'type' => 'add', 'product_id' => $product->product_id]) ?>">+</span>
                     </div>
                     <div class="price-xj"><span>￥</span> <em><?= $product->number * $product->price ?></em> </div>
-                    <div class="del"> <a class="btn-del" href="<?= Yii::$app->urlManager->createUrl(['cart/delete', 'id' => $product->product_id]) ?>">删除</div>
+                    <div class="del"> <a class="btn-del" href="<?= Yii::$app->urlManager->createUrl(['cart/delete', 'id' => $product->product_id]) ?>">删除</a></div>
                 </li>
                 <?php } ?>
             </ul>
@@ -64,23 +68,26 @@ $urlCurrent = Yii::$app->urlManager->baseUrl;
 $urlCheckout = Yii::$app->urlManager->createUrl(['cart/checkout']);
 $js = <<<JS
 jQuery(".minus").click(function(){
-    $.get("{$urlCurrent}?minus=" + this.lang, function(data, status) {
+    var link = $(this).data('link');
+    $.get(link, function(data, status) {
         if (status == "success") {
-            location.reload()
+            location.reload();
         }
     });
 });//end click
 jQuery(".add").click(function(){
-    $.get("{$urlCurrent}?add=" + this.lang, function(data, status) {
+    var link = $(this).data('link');
+    $.get(link, function(data, status) {
         if (status == "success") {
-            location.reload()
+            location.reload();
         }
     });
 });//end click
 jQuery(".nums input").change(function(){
-    $.get("{$urlCurrent}?change=" + this.lang + "&value=" + this.value, function(data, status) {
+    var link = $(this).data('link');
+    $.get(link + "&value=" + this.value, function(data, status) {
         if (status == "success") {
-            location.reload()
+            location.reload();
         }
     });
 });//end click

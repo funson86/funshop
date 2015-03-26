@@ -85,7 +85,7 @@ class OrderController extends \frontend\components\Controller
             if ($oldStatus > 0 && $status == Order::STATUS_CANCEL) {
                 $orderProducts = OrderProduct::find()->where(['order_id' => $model->id])->all();
                 foreach ($orderProducts as $product) {
-                    Product::updateAll(['stock' => $product->number], ['id' => $product->product_id]);
+                    Product::updateAllCounters(['stock' => $product->number], ['id' => $product->product_id]);
                 }
             }
 

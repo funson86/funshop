@@ -136,13 +136,13 @@ $totalNumber = $result['number'];
 $urlCoupon = Yii::$app->urlManager->createUrl(['cart/json-coupon']);
 $urlCouponCode = Yii::$app->urlManager->createUrl(['cart/ajax-coupon-code']);
 $js = <<<JS
-jQuery("#trade-showbtn").focus(function(){
-    $('.trade-detail').css('display', 'block');
+jQuery("#trade-showbtn").click(function(){
+    if ($('.trade-detail').css('display') == 'none') {
+        $('.trade-detail').css('display', 'block');
+    } else {
+        $('.trade-detail').css('display', 'none');
+    }
 });
-jQuery("#trade-showbtn").blur(function(){
-    $('.trade-detail').css('display', 'none');
-});
-
 JS;
 
 $this->registerJs($js);
