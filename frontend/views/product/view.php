@@ -172,26 +172,6 @@ if ($countCommentsPassed > 0) {
         全部评价（<?= $countCommentsPassed ?>）
     </div>
     <div class="z-com-list">
-        <!-- start -->
-        <?php foreach ($model->commentsPassed as $item) { ?>
-        <div class="z-com cle" id="comment_id_3231657">
-            <div class="z-com-left"> <img class="face_img" src="/images/default.png"> <span class="u-name" title="<?= \common\components\StringHelper::hideMiddle($item->username) ?>"><?= \common\components\StringHelper::hideMiddle($item->username) ?></span> <!--span class="vip-ico vip-ico-img"></span--> </div>
-            <div class="z-com-right">
-                <div class="left_arrow"> <i class="left_arrow-line">◆</i> <i class="left_arrow-bg">◆</i> </div>
-                <div class="z-com-right-head cle"> <span class="min_star"><cite class="ping_star"><i style="width:<?= Yii::$app->formatter->asPercent($item->star / 5) ?>;"></i></cite></span> <span class="com-time"><?= Yii::$app->formatter->asDatetime($item->created_at) ?> </span> </div>
-                <div class="z-coms" id="comment_id_3231657">
-                    <div class="z-coms-text">
-                        <div class="user-com cle"><span> <?= $item->content ?></span> </div>
-                    </div>
-                    <div class="z-coms-other cle"> <span class="z-com-click"> <a href="javascript:;" class="up" data-link="<?= Yii::$app->urlManager->createUrl(['/comment/ajax-up', 'id' => $item->id]) ?>">赞（<i><?= $item->up ?></i>）</a> <!--a href="javascript:;" class="reply"   data-id="3231657" data-user="15021162568">回应（<i class="comnum">0</i>）</a> </span--> </div>
-                </div>
-            </div>
-        </div>
-        <?php } ?>
-        <!-- end -->
-        <div id="compage">
-            <div class="pagenav"> <span class="currentStep">1</span> <a href="javascript:;" data-page="2" class="step">2</a> <a href="javascript:;" data-page="3" class="step">3</a> <a href="javascript:;" data-page="4" class="step">4</a> <a href="javascript:;" data-page="5" class="step">5</a> <a href="javascript:;" data-page="6" class="step">6</a> <a href="javascript:;" data-page="7" class="step">7</a> <a href="javascript:;" data-page="8" class="step">8</a> <a href="javascript:;" data-page="9" class="step">9</a> <a href="javascript:;" data-page="10" class="step">10</a> <span class="step">..</span> <a href="javascript:;" data-page="338" class="step">338</a> <a href="javascript:;" data-page="2" class="step">下一页</a> </div>
-        </div>
     </div>
 </div>
 </div>
@@ -210,24 +190,6 @@ if ($countCommentsPassed > 0) {
             </div>
         </div>
         <div class="ask-list" id="ask-list">
-            <?php foreach ($model->consultationsPassed as $item) { ?>
-            <dl>
-                <dt>
-                <h3><?= $item->question ?></h3>
-                <div class="q-info"> <span class="author"><?= \common\components\StringHelper::hideMiddle($item->username) ?>咨询</span> <span class="time"><?= Yii::$app->formatter->asDatetime($item->created_at) ?></span> </div>
-                </dt>
-                <dd> <em class="arrow"></em>
-                    <div class="ans-bd ans-nala cle">
-                        <div class="author">商城回复：</div>
-                        <div class="con">
-                            <p><?= $item->answer ?></p>
-                            <div class="time"><?= Yii::$app->formatter->asDatetime($item->updated_at) ?></div>
-                        </div>
-                    </div>
-                </dd>
-            </dl>
-            <?php } ?>
-            <div class="pagenav"> </div>
         </div>
     </div>
 </div>
@@ -296,6 +258,8 @@ $urlAddToCart = Yii::$app->urlManager->createUrl(['cart/add-to-cart']);
 $urlFavorite = Yii::$app->urlManager->createUrl(['product/favorite']);
 $urlLogin = Yii::$app->urlManager->createUrl(['site/login']);
 $urlConsultationAdd = Yii::$app->urlManager->createUrl(['consultation/ajax-add']);
+$urlComment = Yii::$app->urlManager->createUrl(['product/comment']);
+$urlConsultation = Yii::$app->urlManager->createUrl(['product/consultation']);
 $this->registerJs('
 var product = {productId:' . $model->id . ', stock:' . $model->stock . ', csrf:"' . Yii::$app->request->getCsrfToken() . '"};
 var user = {id:' . (Yii::$app->user->isGuest ? 0 : Yii::$app->user->id) . ', favorite:' . $isFavorite . '};
@@ -405,6 +369,7 @@ $("#fav_btn").click(function(){
     }
 });
 
+
 $(".spxqitem").click(function(){
     $("#tabs_bar li").removeClass('current_select');
     $(this).parent().addClass('current_select');
@@ -427,7 +392,34 @@ $(".askitem").click(function(){
     $("#askitem").show();
 });
 
-jQuery(".up").click(function(){
+$.ajax({
+    url: "{$urlComment}?productId=" + {$model->id},
+    type: "GET",
+    dataType: "html",
+    success: function(data){
+        $('.z-com-list').html(data);
+    }
+}).fail(function(){
+        alert("Error");
+});
+
+$('.z-com-list').on('click', '.pagination a', function(e){
+    e.preventDefault();
+    $.ajax({
+        url: $(this).attr('href'),
+        type: "GET",
+        dataType: "html",
+        success: function(data){
+            $('.z-com-list').html(data);
+        }
+
+    }).fail(function(){
+            alert("Error");
+    });
+
+});
+
+$('.z-com-list').on('click', 'a.up', function(e){
     var up = $(this);
     var link = $(this).data('link');
     $.get(link, function(data, status) {
@@ -454,6 +446,34 @@ $("#consultation-btn").click(function(){
     } else {
         location.href = '$urlLogin?returnUrl=' + window.location.href;
     }
+});
+
+
+$.ajax({
+    url: "{$urlConsultation}?productId=" + {$model->id},
+    type: "GET",
+    dataType: "html",
+    success: function(data){
+        $('.ask-list').html(data);
+    }
+}).fail(function(){
+        alert("Error");
+});
+
+$('.ask-list').on('click', '.pagination a', function(e){
+    e.preventDefault();
+    $.ajax({
+        url: $(this).attr('href'),
+        type: "GET",
+        dataType: "html",
+        success: function(data){
+            $('.ask-list').html(data);
+        }
+
+    }).fail(function(){
+        alert("Error");
+    });
+
 });
 
 JS;

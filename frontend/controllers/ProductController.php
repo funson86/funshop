@@ -2,8 +2,11 @@
 
 namespace frontend\controllers;
 
+use common\models\Comment;
+use common\models\Consultation;
 use common\models\Favorite;
 use common\models\SearchLog;
+use common\models\Status;
 use Yii;
 use common\models\Category;
 use common\models\Product;
@@ -23,6 +26,7 @@ class ProductController extends \frontend\components\Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+
         $allCategory = Category::find()->asArray()->all();
         $arrayCategoryIdName = ArrayHelper::map($allCategory, 'id', 'name');
         $rootCategoryId = Category::getRootCatalogId($model->category_id, $allCategory);
@@ -134,6 +138,42 @@ class ProductController extends \frontend\components\Controller
             ];
         } else {
             return $this->redirect('site/login');
+        }
+    }
+
+    public function actionComment($productId)
+    {
+        $this->layout = false;
+        if (Yii::$app->request->isAjax && $productId) {
+            $query = Comment::find()->where(['product_id' => $productId, 'status' => Status::STATUS_ACTIVE]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => ['defaultPageSize' => Yii::$app->params['defaultPageSizeProduct']],
+                'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            ]);
+
+            return $this->render('comment', [
+                'data' => $dataProvider->getModels(),
+                'pagination' => $dataProvider->pagination,
+            ]);
+        }
+    }
+
+    public function actionConsultation($productId)
+    {
+        $this->layout = false;
+        if (Yii::$app->request->isAjax && $productId) {
+            $query = Consultation::find()->where(['product_id' => $productId, 'status' => Status::STATUS_ACTIVE]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => ['defaultPageSize' => Yii::$app->params['defaultPageSizeProduct']],
+                'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            ]);
+
+            return $this->render('consultation', [
+                'data' => $dataProvider->getModels(),
+                'pagination' => $dataProvider->pagination,
+            ]);
         }
     }
 
