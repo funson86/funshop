@@ -10,10 +10,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <h1><?= $this->title ?></h1>
             <div class="trade_sort">
                 <ul class="cle_float">
-                    <li><a href="<?= Yii::$app->urlManager->createUrl(['order/index', 'status' => \common\models\Order::PAYMENT_STATUS_UNPAID]) ?>" class="">待付款订单( 2 )</a></li>
-                    <li><a href="<?= Yii::$app->urlManager->createUrl(['order/index']) . '?status=' . \common\models\Order::PAYMENT_STATUS_COD . ',' . \common\models\Order::PAYMENT_STATUS_PAID ?>" class="">待发货订单( 0 )</a></li>
-                    <li><a href="<?= Yii::$app->urlManager->createUrl(['order/index', 'status' => \common\models\Order::SHIPMENT_STATUS_SHIPPED]) ?>" class="">待收货订单( 0 )</a></li>
-                    <li><a href="<?= Yii::$app->urlManager->createUrl(['order/index', 'status' => \common\models\Order::SHIPMENT_STATUS_RECEIVED]) ?>" class="">待评价订单( 0 )</a></li>
+                    <li><a href="<?= Yii::$app->urlManager->createUrl(['order/index', 'status' => \common\models\Order::PAYMENT_STATUS_UNPAID]) ?>" class="">待付款订单</a></li>
+                    <li><a href="<?= Yii::$app->urlManager->createUrl(['order/index']) . '?status=' . \common\models\Order::PAYMENT_STATUS_COD . ',' . \common\models\Order::PAYMENT_STATUS_PAID ?>" class="">待发货订单</a></li>
+                    <li><a href="<?= Yii::$app->urlManager->createUrl(['order/index', 'status' => \common\models\Order::SHIPMENT_STATUS_SHIPPED]) ?>" class="">待收货订单</a></li>
+                    <li><a href="<?= Yii::$app->urlManager->createUrl(['order/index', 'status' => \common\models\Order::SHIPMENT_STATUS_RECEIVED]) ?>" class="">待评价订单</a></li>
                 </ul>
             </div>
             <h3 class="h301"><strong>我的全部订单</strong><a class="r" href="<?= Yii::$app->urlManager->createUrl(['order/index', 'status' => \common\models\Order::STATUS_DELETED]) ?>">订单回收站</a></h3>
