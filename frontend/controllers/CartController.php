@@ -290,7 +290,7 @@ class CartController extends \frontend\components\Controller
 
     public function actionDelete($id)
     {
-        Cart::deleteAll(['session_id' => Yii::$app->session->id, 'product_id' => $id]);
+        Cart::deleteAll(['and', ['or', 'session_id = "' . Yii::$app->session->id . '"', 'user_id = ' . (Yii::$app->user->id ? Yii::$app->user->id : -1)], 'product_id = ' . $id]);
         $this->redirect(['/cart']);
     }
 
@@ -375,10 +375,13 @@ class CartController extends \frontend\components\Controller
         $number = Yii::$app->request->post('number');
         if ($productId && $number) {
             // 如果购物车已有，则更新，否则在购物车中增加
-            if ($cart = Cart::find()->where(['and', 'product_id=' . $productId, ['or', 'session_id="' . Yii::$app->session->id . '"', 'user_id=' . Yii::$app->user->isGuest ? 0 : Yii::$app->user->id]])->one()) {
+            if ($cart = Cart::find()->where(['and', 'product_id = ' . $productId, ['or', 'session_id="' . Yii::$app->session->id . '"', 'user_id=' . (Yii::$app->user->isGuest ? 0 : Yii::$app->user->id)]])->one()) {
                 $product = Product::findOne($productId);
                 if ($cart->number + $number <= $product->stock) {
-                    $cart->updateAllCounters(['number' => $number], ['and', 'product_id=' . $productId, ['or', 'session_id="' . Yii::$app->session->id . '"', 'user_id=' . Yii::$app->user->isGuest ? 0 : Yii::$app->user->id]]);
+                    if (!Yii::$app->user->isGuest) { //如果已登录，将session id更新为当前session
+                        $cart->updateAll(['session_id' => Yii::$app->session->id], ['user_id' => Yii::$app->user->id]);
+                    }
+                    $cart->updateAllCounters(['number' => $number], ['and', 'product_id=' . $productId, ['or', 'session_id="' . Yii::$app->session->id . '"', 'user_id=' . (Yii::$app->user->isGuest ? 0 : Yii::$app->user->id)]]);
                     return [
                         'status' => 1,
                         'productId' => $productId,
