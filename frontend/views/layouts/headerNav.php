@@ -43,9 +43,9 @@ $totalNumber = $result['number'];
         <ul class="sub_nav cle" id="sub_nav">
             <li><a href="<?= Yii::$app->homeUrl ?>" rel="nofollow">首页</a></li>
 
-            <li><a target="_blank" href="<?= Yii::$app->homeUrl ?>">折扣信息</a></li>
-            <li><a target="_blank" href="<?= Yii::$app->homeUrl ?>" rel="nofollow">100%正品</a></li>
-            <li><a target="_blank" href="<?= Yii::$app->homeUrl ?>">手机商城</a></li>
+            <li><a href="<?= Yii::$app->homeUrl ?>">海外团购</a></li>
+            <li><a href="<?= Yii::$app->homeUrl ?>">折扣信息</a></li>
+            <li><a href="<?= Yii::$app->homeUrl ?>">海淘转运</a></li>
         </ul>
         <div class="hd_cart" id="head_cart">
             <a class="tit" href="<?= Yii::$app->urlManager->createUrl(['/cart']) ?>"><b class="glyphicon glyphicon-shopping-cart"></b>去购物车结算<span><i class="glyphicon glyphicon-play"></i></span><em class="num" id="hd_cartnum" <?php if ($totalNumber > 0) { ?>style="visibility: visible"<?php } ?>><?= $totalNumber ?></em></a>
