@@ -57,7 +57,7 @@ foreach($products as $product) {
             </div>
             <div id="price-total" class="fr">
                 <p><?= $totalNumber ?>件商品，总价：<span class="red">¥<strong><?= $totalPrice ?></strong></span></p>
-                <p><span class="green">恭喜您，已免邮！</span><a class="btn" href="javascript:;">去下单</a></p>
+                <p><?php if ($totalPrice >= Yii::$app->params['freeShipmentAmount']) { ?><span class="green">恭喜您，已免邮！</span><?php } else { ?><span class="red">运费<?= Yii::$app->params['defaultShipmentFee'] ?>元，满<?= Yii::$app->params['freeShipmentAmount'] ?>元包邮</span><?php } ?><a class="btn" href="javascript:;">去下单</a></p>
             </div>
         </div>
     </div>

@@ -12,6 +12,9 @@ foreach($products as $product) {
     $totalProduct += $product->number;
     $totalPrice += $product->number * $product->price;
 }
+if ($totalPrice < Yii::$app->params['freeShipmentAmount']) {
+    $totalPrice += Yii::$app->params['defaultShipmentFee'];
+}
 $i = 0;
 ?>
 
@@ -44,7 +47,7 @@ $i = 0;
                 </div>
                 <div class="add-newaddr-line"> <a href="<?= Yii::$app->urlManager->createUrl(['cart/address']) ?>" id="add-newaddr">使用新地址</a> </div>
             </div>
-            <div class="ck-box">
+            <!--div class="ck-box">
                 <div class="hd cle">
                     <h3>确认送货方式</h3>
                 </div>
@@ -56,7 +59,7 @@ $i = 0;
                         <p> <a class="graybtn" id="2" lang="18" href="javascript:;"><i class="iconfont">$</i>货到付款-快递18元</a> <span class="gray">支持“银行卡刷卡” 和“现金”两种付款方式，在家等待快递公司送货上门，先验货后付款</span> </p>
                     </div>
                 </div>
-            </div>
+            </div-->
             <div class="ck-box">
                 <div class="hd cle">
                     <h3>商品列表</h3>
@@ -131,16 +134,16 @@ $i = 0;
                         <input type="text" value="">
                         <a class="btn" href="javascript:;">确定</a> </div>
                 </div-->
-                <div id="use-fapiao" class="use-dixiao cle">
+                <!--div id="use-fapiao" class="use-dixiao cle">
                     <span class="tit"><input type="checkbox" name="fapiao"> 开具发票</span>
                     <span class="bd">
                         <input type="text" value="" class="txt" name="fapiao_title">
                         <span class="gray">日用品</span>
                     </span>
                     <span class="gray cancel">【<a href="javascript:;">取消</a>】</span>
-                </div>
+                </div-->
             </div>
-            <div id="postage-tip" class="postage-tip"> <em>邮费：￥8</em> </div>
+            <div id="postage-tip" class="postage-tip"> <em><?php if ($totalPrice >= Yii::$app->params['freeShipmentAmount']) { ?><span class="green">恭喜您，已免邮！</span><?php } else { ?><span class="red">运费<?= Yii::$app->params['defaultShipmentFee'] ?>元，满<?= Yii::$app->params['freeShipmentAmount'] ?>元包邮</span><?php } ?></em> </div>
             <div class="btm-box cle">
                 <div class="other">
                     <dl class="cle">

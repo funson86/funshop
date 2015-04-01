@@ -145,6 +145,10 @@ class CartController extends \frontend\components\Controller
             } else {
                 $this->redirect('/cart');
             }
+            // 判断是否免邮
+            if ($model->amount < Yii::$app->params['freeShipmentAmount']) {
+                $model->shipment_fee = Yii::$app->params['defaultShipmentFee'];
+            }
             $model->amount += floatval($model->shipment_fee) - $feeCouponUser - $feeCouponCode - $feePoint;
 
             if ($model->save()) {
