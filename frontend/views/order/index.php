@@ -6,7 +6,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
     <div class="trade_mod">
-        <div class="my_point">
+        <div class="my_nala_detail">
             <h1><?= $this->title ?></h1>
             <div class="trade_sort">
                 <ul class="cle_float">
