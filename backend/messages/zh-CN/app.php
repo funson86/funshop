@@ -216,7 +216,7 @@ return [
     'Payment Fee' => '支付费用',
     'Shipment Status' => '配送状态',
     'Shipment ID' => '配送ID',
-    'Shipment Name' => '配送名称',
+    'Shipment Name' => '配送单',
     'Shipment Fee' => '配送费用',
     'Amount' => '总额',
     'Tax' => '税费',
@@ -270,5 +270,7 @@ return [
     'Config' => '配置',
     'Print' => '打印',
     'Is Cod' => '支持货到付款',
+    'Prepare' => '准备发货',
+    'Are sure to prepare shipment?' => '您确定要准备发货吗？',
 
 ];

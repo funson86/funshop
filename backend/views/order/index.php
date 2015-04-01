@@ -142,7 +142,47 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'created_by',
             // 'updated_by',
 
-            ['class' => 'yii\grid\ActionColumn'],
+
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete} {prepare} {shipment}',
+                'buttons' => [
+                    'prepare' => function ($url, $model) {
+                        if ($model->status == Order::PAYMENT_STATUS_PAID) {
+                            return Html::a('<span class="glyphicon glyphicon-exclamation-sign"></span>', $url, [
+                                'title' => Yii::t('app', 'Prepare'),
+                                'data-confirm' => Yii::t('app', 'Are sure to prepare shipment?'),
+                                'data-method' => 'post',
+                                'data-pjax' => 0,
+                            ]);
+                        } else {
+                            return;
+                        }
+                    },
+                    'shipment' => function ($url, $model) {
+                        if ($model->status == Order::SHIPMENT_STATUS_PREPARING) {
+                            return Html::a('<span class="glyphicon glyphicon-th-large"></span>', $url, [
+                                'title' => Yii::t('app', 'Shipment'),
+                            ]);
+                        } else {
+                            return;
+                        }
+                    }
+                ],
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'view') {
+                        return ['view', 'id' => $model->id];
+                    } else if ($action === 'update') {
+                        return ['update', 'id' => $model->id];
+                    } else if ($action == 'delete') {
+                        return ['delete', 'id' => $model->id];
+                    } else if ($action == 'prepare') {
+                        return ['prepare', 'id' => $model->id];
+                    } else if ($action === 'shipment') {
+                        return ['shipment', 'id' => $model->id];
+                    }
+                }
+            ],
         ],
     ]); ?>
 

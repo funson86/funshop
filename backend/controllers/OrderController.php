@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\OrderLog;
 use common\models\OrderProduct;
 use Yii;
 use common\models\Order;
@@ -140,6 +141,61 @@ class OrderController extends Controller
         $model->save();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Prepare products of an order
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionPrepare($id)
+    {
+        //if(!Yii::$app->user->can('deleteYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+
+        //$this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->shipment_status = Order::SHIPMENT_STATUS_PREPARING;
+        $model->status = Order::SHIPMENT_STATUS_PREPARING;
+        $model->save();
+
+        // 记录订单日志
+        $orderLog = new OrderLog([
+            'order_id' => $model->id,
+            'status' => $model->status,
+        ]);
+        $orderLog->save();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Shipment
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionShipment($id)
+    {
+        //if(!Yii::$app->user->can('updateYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            // 记录订单日志
+            $orderLog = new OrderLog([
+                'order_id' => $model->id,
+                'status' => $model->status,
+            ]);
+            $orderLog->save();
+
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('shipment', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

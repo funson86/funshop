@@ -28,12 +28,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'order_id',
-            'status',
+            [
+                'attribute' => 'status',
+                'value' => \common\models\Order::getStatusLabels($model->status),
+            ],
             'remark',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            'created_at:datetime',
+            'updated_at:datetime',
+            [
+                'attribute' => 'created_by',
+                'value' => $model->createdBy->username,
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => $model->updatedBy->username,
+            ],
         ],
     ]) ?>
 

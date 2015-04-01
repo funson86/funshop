@@ -82,7 +82,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'shipment_status',
                 'value' => $model->shipment_status ? Order::getShipmentStatusLabels($model->shipment_status) : '-',
             ],
-            'shipment_id',
+            [
+                'attribute' => 'shipment_id',
+                'value' => $model->shipment ? $model->shipment->name : '-',
+            ],
             'shipment_name',
             'shipment_fee',
             'amount',
