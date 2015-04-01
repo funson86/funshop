@@ -261,8 +261,14 @@ return [
 
 
     'Payment' => '支付',
+    'Payments' => '支付',
 
 
     'Shipment' => '配送',
+    'Shipments' => '配送',
+    'Code' => '代码',
+    'Config' => '配置',
+    'Print' => '打印',
+    'Is Cod' => '支持货到付款',
 
 ];

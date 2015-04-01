@@ -13,14 +13,14 @@ use yii\db\Expression;
  * @property integer $id
  * @property string $code
  * @property string $name
- * @property string $fee
  * @property string $description
+ * @property string $config
+ * @property string $print
+ * @property integer $is_cod
  * @property integer $sort_order
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
- * @property integer $created_by
- * @property integer $updated_by
  */
 class Shipment extends \yii\db\ActiveRecord
 {
@@ -51,11 +51,12 @@ class Shipment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'name', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
-            [['description'], 'string'],
-            [['sort_order', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['code', 'name'], 'required'],
+            [['config', 'print'], 'string'],
+            [['is_cod', 'sort_order', 'status', 'created_at', 'updated_at'], 'integer'],
             [['code'], 'string', 'max' => 32],
-            [['name', 'fee'], 'string', 'max' => 64]
+            [['name'], 'string', 'max' => 64],
+            [['description', 'url'], 'string', 'max' => 255]
         ];
     }
 
@@ -68,14 +69,14 @@ class Shipment extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'code' => Yii::t('app', 'Code'),
             'name' => Yii::t('app', 'Name'),
-            'fee' => Yii::t('app', 'Fee'),
             'description' => Yii::t('app', 'Description'),
+            'config' => Yii::t('app', 'Config'),
+            'print' => Yii::t('app', 'Print'),
+            'is_cod' => Yii::t('app', 'Is Cod'),
             'sort_order' => Yii::t('app', 'Sort Order'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_by' => Yii::t('app', 'Updated By'),
         ];
     }
 
