@@ -71,6 +71,11 @@ class User extends ActiveRecord implements IdentityInterface
             'password' => Yii::t('app', 'Password'),
             'repassword' => Yii::t('app', 'Repassword'),
             'email' => Yii::t('app', 'Email'),
+            'balance' => Yii::t('app', 'Balance'),
+            'point' => Yii::t('app', 'Point'),
+            'recommended_by' => Yii::t('app', 'Recommended By'),
+            'recommended_name' => Yii::t('app', 'Recommended Name'),
+            'supported_by' => Yii::t('app', 'Supported By'),
             'role' => Yii::t('app', 'Role'),
             'auth_role' => Yii::t('app', 'Auth Role'),
             'status' => Yii::t('app', 'Status'),
@@ -87,6 +92,70 @@ class User extends ActiveRecord implements IdentityInterface
     public function getProfile()
     {
         return $this->hasOne(Profile::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRecommendedBy()
+    {
+        return $this->hasOne(self::className(), ['id' => 'recommended_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSupportedBy()
+    {
+        return $this->hasOne(self::className(), ['id' => 'supported_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAddresses()
+    {
+        return $this->hasMany(Address::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getConsultations()
+    {
+        return $this->hasMany(Consultation::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavorites()
+    {
+        return $this->hasMany(Favorite::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrders()
+    {
+        return $this->hasMany(Order::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPointLogs()
+    {
+        return $this->hasMany(PointLog::className(), ['user_id' => 'id']);
     }
 
     /**

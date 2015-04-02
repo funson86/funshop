@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create ') . Yii::t('app', 'User'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Update ') . Yii::t('app', 'Supported By'), ['support'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -56,6 +57,27 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
                     )
             ],
+            //'balance',
+            'point',
+            [
+                'attribute' => 'recommended_by',
+                'value' => function ($model) {
+                    return $model->recommendedBy ? $model->recommendedBy->username : '-';
+                },
+            ],
+            'recommended_name',
+            [
+                'attribute' => 'supported_by',
+                'value' => function ($model) {
+                    return $model->supportedBy ? $model->supportedBy->username : '-';
+                },
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'supported_by',
+                    ArrayHelper::map(\common\models\User::find()->where(['<', 'id', 10])->all(), 'id', 'username'),
+                    ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
+                )
+            ],
             [
                 'attribute' => 'status',
                 'format' => 'html',
@@ -77,11 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]
                     )
             ],
-            //'created_at',
-            [
-                'attribute' => 'created_at',
-                'format' => ['date', 'Y-M-d H:i:s'],
-            ],
+            'created_at:date',
             //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],

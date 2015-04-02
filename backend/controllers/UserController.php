@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Status;
 use Yii;
 use backend\models\User;
 use backend\models\UserSearch;
@@ -127,8 +128,39 @@ class UserController extends Controller
     {
         //if(!Yii::$app->user->can('deleteUser')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $this->findModel($id)->delete();
+        //$this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->setScenario('admin-update');
+        $model->status = Status::STATUS_DELETED;
+        $model->save();
 
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Update all users supported user.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionSupport()
+    {
+        //if(!Yii::$app->user->can('deleteUser')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+
+        $Users = User::find()->all();
+        foreach ($Users as $user) {
+            if ($user->supported_by != 1) {//如果不是默认，则不再运算
+                continue;
+            } else {
+                if ($user->recommended_by > 0) {//根据推荐人的客服来计算当前的客服
+                    $user->setScenario('admin-update');
+                    $user->supported_by = $user->recommendedBy->supported_by;
+                    $user->save();
+                } else { //如果没有推荐人，就不更新
+                    continue;
+                }
+            }
+        }
         return $this->redirect(['index']);
     }
 

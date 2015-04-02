@@ -58,6 +58,8 @@ return [
     'Username' => '账户',
     'Password' => '密码',
     'Repassword' => '确认密码',
+    'Recommended Name' => '推荐人',
+    'Recommend' => '推广链接',
     'Remember Me' => '自动登录',
     'Email' => '电子邮箱',
     'Auth Role' => '角色',

@@ -17,12 +17,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-                <?= $form->field($model, 'username') ?>
-                <?= $form->field($model, 'email') ?>
-                <?= $form->field($model, 'password')->passwordInput() ?>
-                <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'Signup'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
-                </div>
+
+            <?= $form->field($model, 'username') ?>
+            <?= $form->field($model, 'email') ?>
+            <?= $form->field($model, 'password')->passwordInput() ?>
+            <?php if (Yii::$app->request->get('recommendedId') && $recommend = \common\models\User::findOne(Yii::$app->request->get('recommendedId'))) { ?>
+            <?= Html::activeHiddenInput($model, 'recommendedName', ['value' => $recommend->username]); ?>
+            <?php } else { ?>
+            <?= $form->field($model, 'recommendedName') ?>
+            <?php } ?>
+            <div class="form-group">
+                <?= Html::submitButton(Yii::t('app', 'Signup'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+            </div>
             <?php ActiveForm::end(); ?>
         </div>
     </div>

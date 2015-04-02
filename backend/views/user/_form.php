@@ -21,6 +21,11 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'repassword')->passwordInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
+
+    <?= $form->field($model, 'recommended_by')->textInput(['maxlength' => 255]) ?>
+
+    <?= $form->field($model, 'supported_by')->dropDownList(ArrayHelper::map(\common\models\User::find()->where(['<', 'id', 10])->all(), 'id', 'username')) ?>
+
     <?= $form->field($model, 'auth_role')->dropDownList(User::getArrayAuthRole()) ?>
 
     <?= $form->field($model, 'status')->dropDownList(User::getArrayStatus()) ?>

@@ -120,8 +120,8 @@ class User extends \common\models\User
     public function scenarios()
     {
         return [
-            'admin-create' => ['username', 'email', 'password', 'repassword', 'status', 'auth_role'],
-            'admin-update' => ['username', 'email', 'password', 'repassword', 'status', 'auth_role'],
+            'admin-create' => ['username', 'email', 'recommended_by', 'supported_by', 'password', 'repassword', 'status', 'auth_role'],
+            'admin-update' => ['username', 'email', 'recommended_by', 'supported_by', 'password', 'repassword', 'status', 'auth_role'],
             'admin-change-password' => ['oldpassword', 'password', 'repassword'],
         ];
     }

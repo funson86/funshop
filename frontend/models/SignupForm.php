@@ -12,6 +12,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $recommendedName;
 
     /**
      * @inheritdoc
@@ -23,6 +24,7 @@ class SignupForm extends Model
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => '\frontend\models\User', 'message' => Yii::t('app', 'This username has already been taken.')],
             ['username', 'string', 'min' => 2, 'max' => 255],
+            ['recommendedName', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
@@ -42,12 +44,16 @@ class SignupForm extends Model
             'password' => Yii::t('app', 'Password'),
             'repassword' => Yii::t('app', 'Repassword'),
             'email' => Yii::t('app', 'Email'),
+            'balance' => Yii::t('app', 'Balance'),
+            'point' => Yii::t('app', 'Point'),
+            'recommended_by' => Yii::t('app', 'Recommended By'),
+            'recommended_name' => Yii::t('app', 'Recommended Name'),
+            'supported_by' => Yii::t('app', 'Supported By'),
             'role' => Yii::t('app', 'Role'),
             'status' => Yii::t('app', 'Status'),
+            'recommendedName' => Yii::t('app', 'Recommended Name'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
-            'create_user_id' => Yii::t('app', 'Create User Id'),
-            'update_user_id' => Yii::t('app', 'Update User Id'),
         ];
     }
 
@@ -63,6 +69,12 @@ class SignupForm extends Model
             $user->username = $this->username;
             $user->email = $this->email;
             $user->setPassword($this->password);
+            $user->recommended_name = $this->recommendedName;
+            if ($this->recommendedName) {
+                $recommended = User::find()->where(['username' => $this->recommendedName])->one();
+                if ($recommended)
+                    $user->recommended_by = $recommended->id;
+            }
             $user->generateAuthKey();
             if ($user->save()) {
                 return $user;

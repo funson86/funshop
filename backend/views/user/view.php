@@ -36,6 +36,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'role',
                 'value' => $model->roleLabel,
             ],*/
+            'balance',
+            'point',
+            [
+                'attribute' => 'recommended_by',
+                'value' => $model->recommendedBy ? $model->recommendedBy->username : '-',
+            ],
+            'recommended_name',
+            [
+                'attribute' => 'supported_by',
+                'value' => $model->supportedBy ? $model->supportedBy->username : '-',
+            ],
             [
                 'attribute' => 'auth_role',
                 'value' => $model->authRole ? $model->authRole->name : '-',

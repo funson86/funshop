@@ -7,6 +7,7 @@ use common\models\Order;
 use common\models\PointLog;
 use common\models\Product;
 use common\models\Profile;
+use common\models\User;
 use frontend\models\ChangePasswordForm;
 use Yii;
 use common\models\Favorite;
@@ -161,6 +162,16 @@ class UserController extends \frontend\components\Controller
         return $this->render('profile', [
             'model' => $model,
         ]);
+    }
+
+    public function actionRecommend()
+    {
+        $recommends = User::find()->where(['recommended_by' => Yii::$app->user->id])->all();
+
+        return $this->render('recommend', [
+            'recommends' => $recommends,
+        ]);
+
     }
 
     public function actionAjaxDeleteFavorite($id)

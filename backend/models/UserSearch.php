@@ -19,7 +19,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'status'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'role', 'auth_role', 'created_at',], 'safe'],
+            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'point', 'recommended_by', 'recommended_name', 'supported_by', 'role', 'auth_role', 'created_at',], 'safe'],
         ];
     }
 
@@ -53,6 +53,8 @@ class UserSearch extends User
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'recommended_by' => $this->recommended_by,
+            'supported_by' => $this->supported_by,
             'role' => $this->role,
             'auth_role' => $this->auth_role,
             'status' => $this->status,
@@ -65,6 +67,7 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
             ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
             ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'recommended_name', $this->recommended_name])
             ->andFilterWhere(['>', 'created_at', strtotime($this->created_at)]);
 
         return $dataProvider;
