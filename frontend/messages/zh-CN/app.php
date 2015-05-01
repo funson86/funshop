@@ -118,6 +118,8 @@ return [
     'POINT_TYPE_BOUGHT' => '购买商品',
     'POINT_TYPE_COMMENT' => '评价商品',
     'POINT_TYPE_BUYING' => '消费积分',
+    'POINT_TYPE_REGISTER' => '注册送积分',
+    'POINT_TYPE_RECOMMEND' => '推荐送积分',
 
     'Product' => '商品',
     'Products' => '商品',
