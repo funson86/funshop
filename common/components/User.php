@@ -4,6 +4,12 @@ namespace common\components;
 use common\models\Cart;
 use Yii;
 
+/**
+ * User
+ *
+ * @author Funson86 <funson86@gmail.com>
+ * @since 2.0
+ */
 class User extends \funson86\auth\User
 {
     public $oldSessionId;
