@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create ') . Yii::t('app', 'Product'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Batch ') . Yii::t('app', 'Delete'), '#', ['class' => 'btn btn-danger', 'id' => 'batchDelete']) ?>
     </p>
 
     <?= GridView::widget([
@@ -111,3 +112,18 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
 </div>
+
+<?php
+$script = '
+    jQuery(document).ready(function() {
+      $("#batchDelete").click(function() {
+        var keys = $("#w0").yiiGridView("getSelectedRows");
+        $.ajax({
+            type: "POST",
+            url: "' . \yii\helpers\Url::to(['/product/batch-delete']) . '",
+            dataType: "json",
+            data: {ids: keys}
+        });
+      });
+    });';
+$this->registerJs($script, \yii\web\View::POS_END);

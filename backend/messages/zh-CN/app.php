@@ -28,6 +28,7 @@ return [
     'Update ' => '更新',
     'Update' => '更新',
     'Delete' => '删除',
+    'Batch ' => '批量',
     'Send' => '发送',
     'Submit' => '提交',
     'Are you sure you want to delete this item?' => '您确定要删除此项吗？',

@@ -8,6 +8,7 @@ use common\models\Brand;
 use common\models\Category;
 use common\models\ProductImage;
 use common\models\ProductType;
+use common\models\Status;
 use Yii;
 use common\models\Product;
 use common\models\ProductSearch;
@@ -163,10 +164,33 @@ class ProductController extends Controller
     {
         //if(!Yii::$app->user->can('deleteYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $this->findModel($id)->delete();
-        /*$model = $this->findModel($id);
+        /*$this->findModel($id)->delete();*/
+        $model = $this->findModel($id);
         $model->status = Status::STATUS_DELETED;
-        $model->save();*/
+        $model->save();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Batch delete existing Product models.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionBatchDelete()
+    {
+        //if(!Yii::$app->user->can('deleteYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+
+        $ids = Yii::$app->request->post('ids');
+        if (is_array($ids)) {
+            foreach ($ids as $id) {
+                /*$this->findModel($id)->delete();*/
+                $model = $this->findModel($id);
+                $model->status = Status::STATUS_DELETED;
+                $model->save();
+            }
+        }
 
         return $this->redirect(['index']);
     }
