@@ -127,3 +127,4 @@ $script = '
       });
     });';
 $this->registerJs($script, \yii\web\View::POS_END);
+
