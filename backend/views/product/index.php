@@ -114,17 +114,19 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <?php
-$script = '
-    jQuery(document).ready(function() {
-      $("#batchDelete").click(function() {
+$urlBatchDelete = \yii\helpers\Url::to(['/product/batch-delete']);
+$js = <<<JS
+jQuery(document).ready(function() {
+    $("#batchDelete").click(function() {
         var keys = $("#w0").yiiGridView("getSelectedRows");
         $.ajax({
             type: "POST",
-            url: "' . \yii\helpers\Url::to(['/product/batch-delete']) . '",
+            url: "{$urlBatchDelete}",
             dataType: "json",
             data: {ids: keys}
         });
-      });
-    });';
-$this->registerJs($script, \yii\web\View::POS_END);
+    });
+});
+JS;
+$this->registerJs($js, \yii\web\View::POS_END);
 
