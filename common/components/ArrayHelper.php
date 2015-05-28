@@ -34,18 +34,18 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
      */
     public static function keyToCamel($array)
     {
-        $newArray = [];
+        $result = [];
         foreach ($array as $k => $element) {
             if (is_array($element)) {
                 $value = self::keyToCamel($element);
                 $newKey = lcfirst(str_replace(' ', '', ucwords(implode(' ', explode('_', $k)))));
-                $newArray[$newKey] = $value;
+                $result[$newKey] = $value;
             } else {
                 $newKey = lcfirst(str_replace(' ', '', ucwords(implode(' ', explode('_', $k)))));
-                $newArray[$newKey] = $element;
+                $result[$newKey] = $element;
             }
         }
-        return $newArray;
+        return $result;
     }
 
 }
