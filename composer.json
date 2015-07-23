@@ -1,8 +1,8 @@
 {
-    "name": "funson86/yii2-advanced-funson86",
-    "description": "Customized on Yii 2 Advanced Application Template",
-    "keywords": ["yii2", "framework", "advanced", "application template"],
-    "homepage": "http://www.mayicun.com/",
+    "name": "funson86/funshop",
+    "description": "An agile shop based on Yii2",
+    "keywords": ["yii2", "framework", "shop", "B2C"],
+    "homepage": "http://www.jiajiayoupin.com/",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
