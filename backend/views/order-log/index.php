@@ -27,11 +27,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'order_id',
-            'status',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    return \common\models\Order::getStatusLabels($model->status);
+                },
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'status',
+                    \common\models\Order::getStatusLabels(),
+                    ['class' => 'form-control', 'prompt' => Yii::t('app', 'PROMPT_STATUS')]
+                )
+            ],
             'remark',
-            'created_at',
+            'created_at:datetime',
             // 'updated_at',
-            // 'created_by',
+            [
+                'attribute' => 'created_by',
+                'value' => function ($model) {
+                    return $model->createdBy ? $model->createdBy->username : '-';
+                },
+            ],
             // 'updated_by',
 
             ['class' => 'yii\grid\ActionColumn'],
