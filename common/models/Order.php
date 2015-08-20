@@ -233,6 +233,10 @@ class Order extends \yii\db\ActiveRecord
             self::PAYMENT_STATUS_UNPAID => Yii::t('app', 'PAYMENT_STATUS_UNPAID'),
             self::PAYMENT_STATUS_PAYING => Yii::t('app', 'PAYMENT_STATUS_PAYING'),
             self::PAYMENT_STATUS_PAID => Yii::t('app', 'PAYMENT_STATUS_PAID'),
+            self::SHIPMENT_STATUS_UNSHIPPED => Yii::t('app', 'SHIPMENT_STATUS_UNSHIPPED'),
+            self::SHIPMENT_STATUS_PREPARING => Yii::t('app', 'SHIPMENT_STATUS_PREPARING'),
+            self::SHIPMENT_STATUS_SHIPPED => Yii::t('app', 'SHIPMENT_STATUS_SHIPPED'),
+            self::SHIPMENT_STATUS_RECEIVED => Yii::t('app', 'SHIPMENT_STATUS_RECEIVED'),
         ];
 
         if ($id !== null && isset($data[$id])) {
