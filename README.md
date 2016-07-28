@@ -1,7 +1,7 @@
 Funshop -- An agile shop based on Yii2
 ==========
 
-
+[![Total Downloads](https://poser.pugx.org/funson86/funshop/downloads)](https://packagist.org/packages/funson86/funshop)
 
 功能列表
 --------
